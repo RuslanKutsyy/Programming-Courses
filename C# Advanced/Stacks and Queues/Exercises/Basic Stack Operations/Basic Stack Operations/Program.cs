@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Basic_Stack_Operations
 {
@@ -8,39 +7,40 @@ namespace Basic_Stack_Operations
     {
         static void Main(string[] args)
         {
-            int[] data = Console.ReadLine().Split().Select(int.Parse).ToArray();
-            int[] numbers = Console.ReadLine().Split().Select(int.Parse).ToArray();
-            Stack<int> stack = new Stack<int>();
-            int minValue = int.MaxValue;
-            int numsToPush = data[0];
-            int numbersToPop = data[1];
-            int mainNum = data[2];
+            var input = Console.ReadLine().Split();
+            var numbers = Console.ReadLine().Split();
+            int numberOfElements = int.Parse(input[0]);
+            int elementsToPop = int.Parse(input[1]);
+            int xInteger = int.Parse(input[2]);
+            var stack = new Stack<int>();
+            int smallest = int.MaxValue;
 
-            for (int i = 0; i < numsToPush; i++)
+            for (int i = 0; i < numberOfElements; i++)
             {
-                int number = numbers[i];
-                if (number < minValue)
+                int num = int.Parse(numbers[i]);
+                if (num < smallest)
                 {
-                    minValue = number;
+                    smallest = num;
                 }
-                stack.Push(number);
+                stack.Push(num);
             }
-            for (int i = 0; i < numbersToPop; i++)
+            for (int i = 0; i < elementsToPop; i++)
             {
-                if (stack.Count > 0)
+                stack.Pop();
+                if (stack.Count == 0)
                 {
-                    stack.Pop();
+                    break;
                 }
             }
-            if (stack.Count > 0)
+            if (stack.Count != 0)
             {
-                if (stack.Contains(mainNum))
+                if (stack.Contains(xInteger))
                 {
                     Console.WriteLine("true");
                 }
                 else
                 {
-                    Console.WriteLine(minValue);
+                    Console.WriteLine(smallest);
                 }
             }
             else
