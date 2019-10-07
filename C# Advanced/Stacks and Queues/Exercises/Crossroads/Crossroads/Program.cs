@@ -12,60 +12,89 @@ namespace Crossroads
             var queue = new Queue<string>();
             string input = Console.ReadLine();
             string stop = "END";
-            bool crashed = false;
-            string crashedLetter = string.Empty;
+            bool toEnd = false;
             int carCounter = 0;
-            int genTime = greenLightDuration + freeWindow;
 
-            while (true)
+            while (input != stop)
             {
-                if (input == stop)
-                {
-                    break;
-                }
-                else if (input != "green")
+                if (input != "green")
                 {
                     queue.Enqueue(input);
                 }
-                else if (input == "green")
+                else
                 {
-                    var tempQueue = new Queue<char>();
-
-                    while (queue.Count != 0)
+                    if (queue.Count == 0)
                     {
-                        string car = queue.Dequeue();
-                        carCounter++;
-                        foreach (var @char in car)
+                        input = Console.ReadLine();
+                        continue;
+                    }
+                    string car = queue.Dequeue();
+                    if (car == "")
+                    {
+                        while (car.Length == 0)
                         {
-                            tempQueue.Enqueue(@char);
+                            car = queue.Dequeue();
                         }
+                    }
+                    var tempQueue = new Queue<char>(car.ToCharArray());
+                    carCounter++;
 
-                        for (int i = 0; i < genTime; i++)
+                    for (int i = 1; i <= greenLightDuration; i++)
+                    {
+
+                        if (queue.Count != 0 && tempQueue.Count == 0)
                         {
-                            if (tempQueue.Count == 0)
+                            car = queue.Dequeue();
+                            if (car != "")
+                            {
+                                carCounter++;
+                                foreach (var @char in car)
+                                {
+                                    tempQueue.Enqueue(@char);
+                                }
+                            }
+                            else
                             {
                                 break;
                             }
-                            tempQueue.Dequeue();
                         }
-
-                        if (tempQueue.Count > 0)
+                        else if (queue.Count == 0 && tempQueue.Count == 0)
                         {
-                            crashed = true;
-                            crashedLetter += tempQueue.Peek();
-                            Console.WriteLine("A crash happened!");
-                            Console.WriteLine($"{car} was hit at {crashedLetter}.");
                             break;
                         }
-                    }  
+                        tempQueue.Dequeue();
+                    }
+                    if (tempQueue.Count != 0)
+                    {
+                        for (int j = 1; j <= freeWindow; j++)
+                        {
+                            tempQueue.Dequeue();
+                            if (j == freeWindow && tempQueue.Count != 0)
+                            {
+                                carCounter -= 1;
+                                Console.WriteLine("A crash happened!");
+                                Console.WriteLine($"{car} was hit at {tempQueue.Peek()}.");
+                                return;
+                            }
+                            else if (tempQueue.Count == 0)
+                            {
+                                toEnd = true;
+                                break;
+                            }
+                        }
+                    }
                 }
-                input = Console.ReadLine();
+                if (!toEnd)
+                {
+                    input = Console.ReadLine();
+                }
+                else
+                {
+                    break;
+                }
             }
-            if (!crashed)
-            {
-                Console.WriteLine("Everyone is safe.");
-                Console.WriteLine($"{carCounter} total cars passed the crossroads.");
-            }
+            Console.WriteLine("Everyone is safe.");
+            Console.WriteLine($"{carCounter} total cars passed the crossroads.");
         }
     }
 }
