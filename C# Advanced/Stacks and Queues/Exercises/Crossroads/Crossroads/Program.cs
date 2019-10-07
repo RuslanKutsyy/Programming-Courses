@@ -15,6 +15,7 @@ namespace Crossroads
             bool crashed = false;
             string crashedLetter = string.Empty;
             int carCounter = 0;
+            int genTime = greenLightDuration + freeWindow;
 
             while (true)
             {
@@ -28,28 +29,36 @@ namespace Crossroads
                 }
                 else if (input == "green")
                 {
-                    string car = queue.Dequeue();
-                    carCounter++;
-                    var tempQueue = new Queue<char>(car);
-                    int genTime = greenLightDuration + freeWindow;
-                    for (int i = 0; i < genTime; i++)
+                    var tempQueue = new Queue<char>();
+
+                    while (queue.Count != 0)
                     {
-                        if (tempQueue.Count == 0)
+                        string car = queue.Dequeue();
+                        carCounter++;
+                        foreach (var @char in car)
                         {
+                            tempQueue.Enqueue(@char);
+                        }
+
+                        for (int i = 0; i < genTime; i++)
+                        {
+                            if (tempQueue.Count == 0)
+                            {
+                                break;
+                            }
+                            tempQueue.Dequeue();
+                        }
+
+                        if (tempQueue.Count > 0)
+                        {
+                            crashed = true;
+                            crashedLetter += tempQueue.Peek();
+                            Console.WriteLine("A crash happened!");
+                            Console.WriteLine($"{car} was hit at {crashedLetter}.");
                             break;
                         }
-                        tempQueue.Dequeue();
-                    }
-                    if (tempQueue.Count > 0)
-                    {
-                        crashed = true;
-                        crashedLetter += tempQueue.Peek();
-                        Console.WriteLine("A crash happened!");
-                        Console.WriteLine($"{car} was hit at {crashedLetter}.");
-                        break;
-                    }
+                    }  
                 }
-                
                 input = Console.ReadLine();
             }
             if (!crashed)
