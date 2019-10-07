@@ -7,50 +7,58 @@ namespace Simple_Text_Editor
     {
         static void Main(string[] args)
         {
-            int operations = int.Parse(Console.ReadLine());
-            string mainText = string.Empty;
-            Stack<string> stack = new Stack<string>();
+            int number = int.Parse(Console.ReadLine());
+            string text = string.Empty;
+            var stack = new Stack<string>();
 
-            for (int i = 0; i < operations; i++)
+            for (int i = 0; i < number; i++)
             {
-                string[] command = Console.ReadLine().Split();
-                string cmdType = command[0];
+                var input = Console.ReadLine().Split();
+                string action = input[0];
 
-                switch (cmdType)
+                switch (action)
                 {
                     case "1":
                         {
-                            mainText += command[1];
-                            stack.Push(mainText);
+                            string items = input[1];
+                            stack.Push(text);
+                            text += items;
                             break;
                         }
                     case "2":
                         {
-                            int numOfElements = int.Parse(command[1]);
-                            mainText = mainText.Remove(mainText.Length - numOfElements);
-                            stack.Push(mainText);
+                            string items = input[1];
+                            stack.Push(text);
+                            int numberOfCharsToRemove = int.Parse(items);
+                            if (text.Length > numberOfCharsToRemove)
+                            {
+                                text = text.Substring(0, text.Length - numberOfCharsToRemove);
+                            }
+                            else
+                            {
+                                text = string.Empty;
+                            }
                             break;
                         }
                     case "3":
                         {
-                            Console.WriteLine(mainText[int.Parse(command[1]) - 1]);
+                            string items = input[1];
+                            int positionToPrint = int.Parse(items);
+                            if (text.Length>=positionToPrint)
+                            {
+                                Console.WriteLine(text[positionToPrint-1]);
+                            }
                             break;
                         }
                     case "4":
                         {
-                            string temp = stack.Peek();
-                            if (temp == mainText)
-                            {
-                                stack.Pop();
-                            }
-                            mainText = stack.Pop();
+                            text = stack.Pop();
                             break;
                         }
                     default:
                         break;
                 }
             }
-            
         }
     }
 }
