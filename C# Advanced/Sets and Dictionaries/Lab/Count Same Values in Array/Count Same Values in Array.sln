@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.852
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Count Same Values in Array", "Count Same Values in Array\Count Same Values in Array.csproj", "{1482822D-D5E3-4275-87E3-F2ED9D205A32}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1482822D-D5E3-4275-87E3-F2ED9D205A32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1482822D-D5E3-4275-87E3-F2ED9D205A32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1482822D-D5E3-4275-87E3-F2ED9D205A32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1482822D-D5E3-4275-87E3-F2ED9D205A32}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BE4FEAC8-2C31-4846-A2B3-3DE1A452AFA2}
+	EndGlobalSection
+EndGlobal
