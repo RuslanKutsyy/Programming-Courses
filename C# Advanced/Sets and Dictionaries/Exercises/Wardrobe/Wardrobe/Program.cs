@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Wardrobe
 {
@@ -20,32 +20,11 @@ namespace Wardrobe
                 if (!wardrobe.ContainsKey(color))
                 {
                     wardrobe.Add(color, new Dictionary<string, int>());
-                    for (int clothing = 0; clothing < items.Length; clothing++)
-                    {
-                        if (!wardrobe[color].ContainsKey(items[clothing]))
-                        {
-                            wardrobe[color].Add(items[clothing], 1);
-                        }
-                        else
-                        {
-                            wardrobe[color][items[clothing]]++;
-                        }
-                    }
+                    wardrobe = AddDataToItems(wardrobe, items, color);
                 }
                 else
                 {
-                    for (int clothing = 0; clothing < items.Length; clothing++)
-                    {
-                        if (!wardrobe[color].ContainsKey(items[clothing]))
-                        {
-                            wardrobe[color].Add(items[clothing], 1);
-                        }
-                        else
-                        {
-                            wardrobe[color][items[clothing]]++;
-                        }
-                    }
-
+                    wardrobe = AddDataToItems(wardrobe, items, color);
                 }
             }
 
@@ -70,13 +49,30 @@ namespace Wardrobe
                 }
                 else
                 {
-                    foreach(var cloth in item.Value)
+                    foreach (var cloth in item.Value)
                     {
                         Console.Write($"* {cloth.Key} - {cloth.Value}");
                         Console.WriteLine();
                     }
                 }
             }
+        }
+
+        static Dictionary<string, Dictionary<string, int>> AddDataToItems(Dictionary<string, Dictionary<string, int>> temp, string[] items, string color)
+        {
+
+            for (int clothing = 0; clothing < items.Length; clothing++)
+            {
+                if (!temp[color].ContainsKey(items[clothing]))
+                {
+                    temp[color].Add(items[clothing], 1);
+                }
+                else
+                {
+                    temp[color][items[clothing]]++;
+                }
+            }
+            return temp;
         }
     }
 }
