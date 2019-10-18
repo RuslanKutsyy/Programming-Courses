@@ -7,7 +7,8 @@ namespace Sum_Numbers
     {
         static void Main(string[] args)
         {
-            var numbers = Console.ReadLine().Split(", ").Select(x=>int.Parse(x)).ToArray();
+            Func<string, int> parser = x => int.Parse(x);
+            var numbers = Console.ReadLine().Split(", ").Select(parser).ToArray();
             Console.WriteLine(numbers.Length);
             Console.WriteLine(numbers.Sum());
         }
