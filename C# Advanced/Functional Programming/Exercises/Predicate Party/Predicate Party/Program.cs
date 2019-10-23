@@ -1,36 +1,36 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Predicate_Party
 {
-    public class Guest
-    {
-        public string Name { get; set; }
-
-        public Guest(string name)
-        {
-            this.Name = name;
-        }
-    }
     class Program
     {
         static void Main(string[] args)
         {
-            var guests = Console.ReadLine().Split(" ",StringSplitOptions.RemoveEmptyEntries).ToList();
+            var guests = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList();
             string command = Console.ReadLine();
 
             while (command != "Party!")
             {
-                var data = command.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+                var data = command.Split(" ", StringSplitOptions.RemoveEmptyEntries).ToArray();
+                if (data.Length < 3)
+                {
+                    command = Console.ReadLine();
+                    continue;
+                }
                 string cmd = data[0];
                 string criteria1 = data[1];
                 string criteria2 = data[2];
 
+                if (cmd != "Remove" && cmd != "Double")
+                {
+                    command = Console.ReadLine();
+                    continue;
+                }
                 Predicate<string> Filter = GetFilter(criteria1, criteria2);
-                
 
-                if (command.StartsWith("Double"))
+                if (cmd == "Double")
                 {
                     var tempList = new List<string>();
 
@@ -43,12 +43,12 @@ namespace Predicate_Party
                     {
                         if (Filter(guests[i]))
                         {
-                            tempList.Insert(i+1, guests[i]);
+                            tempList.Insert(i, guests[i]);
                         }
                     }
                     guests = tempList;
                 }
-                if (command.StartsWith("Remove"))
+                else if (cmd == "Remove")
                 {
                     for (int i = 0; i < guests.Count; i++)
                     {
@@ -58,6 +58,12 @@ namespace Predicate_Party
                         }
                     }
                 }
+                else
+                {
+                    command = Console.ReadLine();
+                    continue;
+                }
+
 
                 command = Console.ReadLine();
             }
@@ -65,7 +71,7 @@ namespace Predicate_Party
             if (guests.Count > 0)
             {
 
-                Console.WriteLine(String.Join(", ", guests) + " are going to the party!");
+                Console.WriteLine(String.Join(", ", guests.OrderBy(x => x)) + " are going to the party!");
             }
             else
             {
@@ -78,10 +84,21 @@ namespace Predicate_Party
             switch (criteria1)
             {
                 case "StartsWith": return name => name.StartsWith(criteria2);
-                case "Length": return name => name.Length == int.Parse(criteria2);
+                case "Length":
+                    {
+                        bool validLength = int.TryParse(criteria2, out int lenght);
+                        if (validLength)
+                        {
+                            return name => name.Length == lenght;
+                        }
+                        else
+                        {
+                            return name => false;
+                        }
+                    }
                 case "EndsWith": return name => name.EndsWith(criteria2);
                 default:
-                    return null;
+                    return name => false;
             }
         }
     }
