@@ -4,26 +4,48 @@ namespace CarManufacturer
 {
     public class Car
     {
-        public string Make { get; set; }
-        public string Model { get; set; }
-        public int Year { get; set; }
-        public double FuelQuantity { get; set; }
-        public double FuelConsumption { get; set; }
+        private string make;
+        private string model;
+        private int year;
+        private double fuelQuantity;
+        private double fuelConsumption;
 
-        public Car()
+        public string Make
         {
+            get { return this.make; }
+            set { this.make = value; }
+        }
+        public string Model
+        {
+            get { return this.model; }
+            set { this.model = value; }
+        }
+        public int Year
+        {
+            get { return this.year; }
+            set { this.year = value; }
+        }
+        public double FuelQuantity
+        {
+            get { return this.fuelQuantity; }
+            set { this.fuelQuantity = value; }
+        }
+        public double FuelConsumption
+        {
+            get { return this.fuelConsumption; }
+            set { this.fuelConsumption = value; }
         }
 
         public void Drive(double distance)
         {
-            double expenceFuel = FuelConsumption * distance / 100;
-            if (expenceFuel > this.FuelQuantity )
+            double fuelQNeeded = distance / 100 * FuelConsumption;
+            if (fuelQNeeded >= FuelQuantity)
             {
                 Console.WriteLine("Not enough fuel to perform this trip!");
             }
             else
             {
-                this.FuelQuantity = distance / 100 * this.FuelConsumption;
+                FuelQuantity = FuelQuantity - fuelQNeeded;
             }
         }
 
@@ -37,16 +59,16 @@ namespace CarManufacturer
     {
         static void Main(string[] args)
         {
-            Car car = new Car
-            {
-                Make = "VW",
-                Model = "MK3",
-                Year = 1992,
-                FuelQuantity = 200,
-                FuelConsumption = 200
-            };
+            Car car = new Car();
+
+            car.Make = "VW";
+            car.Model = "MK3";
+            car.Year = 1992;
+            car.FuelQuantity = 200;
+            car.FuelConsumption = 200;
             car.Drive(2000);
             Console.WriteLine(car.WhoAmI());
+
         }
     }
 }
