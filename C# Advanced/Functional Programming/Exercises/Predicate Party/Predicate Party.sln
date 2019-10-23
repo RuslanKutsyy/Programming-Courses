@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.902
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predicate Party", "Predicate Party\Predicate Party.csproj", "{6DBEBEB0-3EBF-46DA-9333-0461C8E0B007}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6DBEBEB0-3EBF-46DA-9333-0461C8E0B007}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DBEBEB0-3EBF-46DA-9333-0461C8E0B007}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DBEBEB0-3EBF-46DA-9333-0461C8E0B007}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DBEBEB0-3EBF-46DA-9333-0461C8E0B007}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {19DD1BE8-7AB4-4BF1-BC44-9BD1C366B4C3}
+	EndGlobalSection
+EndGlobal
