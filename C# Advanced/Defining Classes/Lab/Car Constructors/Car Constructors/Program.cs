@@ -38,14 +38,14 @@ namespace CarManufacturer
 
         public void Drive(double distance)
         {
-            double fuelQNeeded = distance / 100 * FuelConsumption;
+            double fuelQNeeded = FuelQuantity - distance * this.FuelConsumption;
             if (fuelQNeeded >= FuelQuantity)
             {
                 Console.WriteLine("Not enough fuel to perform this trip!");
             }
             else
             {
-                FuelQuantity = FuelQuantity - fuelQNeeded;
+                FuelQuantity -= fuelQNeeded;
             }
         }
 
@@ -54,21 +54,43 @@ namespace CarManufacturer
             string text = $"Make: {this.Make}\nModel: {this.Model}\nYear: {this.Year}\nFuel: {this.FuelQuantity:F2}L";
             return text;
         }
+
+        public Car()
+        {
+            this.Make = "VW";
+            this.Model = "Golf";
+            this.Year = 2025;
+            this.FuelQuantity = 200;
+            this.FuelConsumption = 10;
+        }
+
+        public Car(string make, string model, int year) : this()
+        {
+            this.Make = make;
+            this.model = model;
+            this.Year = year;
+        }
+
+        public Car(string make, string model, int year, double fuelQuantity, double fuelConsumption) : this(make, model, year)
+        {
+            this.FuelQuantity = fuelQuantity;
+            this.FuelConsumption = fuelConsumption;
+        }
     }
+
     public class StartUp
     {
         static void Main(string[] args)
         {
-            Car car = new Car();
+            string make = Console.ReadLine();
+            string model = Console.ReadLine();
+            int year = int.Parse(Console.ReadLine());
+            double fuelQuantity = double.Parse(Console.ReadLine());
+            double fuelConsumption = double.Parse(Console.ReadLine());
 
-            car.Make = "VW";
-            car.Model = "MK3";
-            car.Year = 1992;
-            car.FuelQuantity = 200;
-            car.FuelConsumption = 200;
-            car.Drive(2000);
-            Console.WriteLine(car.WhoAmI());
-
+            Car firstCar = new Car();
+            Car secondCar = new Car(make, model, year);
+            Car thirdCar = new Car(make, model, year, fuelQuantity, fuelConsumption);
         }
     }
 }
