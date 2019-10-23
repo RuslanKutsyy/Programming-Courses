@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CarManufacturer
 {
@@ -50,7 +52,7 @@ namespace CarManufacturer
             set { this.engine = value; }
         }
 
-        public Car(string make, string model, int year, double fuelQuantity, double fuelConsumption, Engine engine, Tire[] tires) : this (make, model, year, fuelQuantity, fuelConsumption)
+        public Car(string make, string model, int year, double fuelQuantity, double fuelConsumption, Engine engine, Tire[] tires) : this(make, model, year, fuelQuantity, fuelConsumption)
         {
             this.Engine = engine;
             this.Tires = tires;
@@ -150,16 +152,62 @@ namespace CarManufacturer
     {
         static void Main(string[] args)
         {
-            var tires = new Tire[4];
-            {
-                new Tire(1, 2.3);
-                new Tire(1, 2.1);
-                new Tire(2, 0.5);
-                new Tire(2, 2.3);
-            };
-            var engine = new Engine(560, 6300);
+            string data = Console.ReadLine();
+            List<Tire[]> tires = new List<Tire[]>();
+            int count = 0;
 
-            var car = new Car("Lamborghini", "Urus", 2010, 250, 9, engine, tires);
+            while (data != "No more tires")
+            {
+                count++;
+                var tiresInfo = data.Split().ToArray();
+                var tireExamples = new Tire[4];
+                for (int i = 0; i < tireExamples.Length; i++)
+                {
+                    var tempList = new List<Tire>();
+                    for (int j = 0; j < tiresInfo.Length; j+=2)
+                    {
+                        int yearInfo = int.Parse(tiresInfo[j]);
+                        double pressureInfo = double.Parse(tiresInfo[j]);
+
+                        tempList.Add(new Tire(yearInfo, pressureInfo));
+                    }
+                }
+
+                tires.Add(tireExamples);
+                data = Console.ReadLine();
+            }
+
+
+
+            List<Engine> engines = new List<Engine>();
+            string command = Console.ReadLine();
+
+            while (command != "Engines done")
+            {
+                var parts = command.Split().ToArray();
+                int horsePower = int.Parse(parts[0]);
+                double cubicCapacity = double.Parse(parts[1]);
+                engines.Add(new Engine(horsePower, cubicCapacity));
+                command = Console.ReadLine();
+            }
+            engines.ToArray();
+
+            string showSpecial = Console.ReadLine();
+
+            while (showSpecial != "Show special")
+            {
+                var parts = showSpecial.Split().ToArray();
+                string make = parts[0];
+                string model = parts[1];
+                int year = int.Parse(parts[2]);
+                double fuelQuantity = double.Parse(parts[3]);
+                double fuelConsumption = double.Parse(parts[4]);
+                int engineIndex = int.Parse(parts[5]);
+                int tiresIndex = int.Parse(parts[6]);
+
+                Car car = new Car(make, model, year, fuelQuantity, fuelConsumption, engines[engineIndex], tires);
+                showSpecial = Console.ReadLine();
+            }
         }
     }
 }
