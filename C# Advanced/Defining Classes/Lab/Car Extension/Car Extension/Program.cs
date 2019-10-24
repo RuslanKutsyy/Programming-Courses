@@ -38,14 +38,14 @@ namespace CarManufacturer
 
         public void Drive(double distance)
         {
-            double fuelQNeeded = distance / 100 * FuelConsumption;
-            if (fuelQNeeded >= FuelQuantity)
+            double fuelQNeeded = distance / 100 * this.fuelConsumption;
+            if (fuelQNeeded > FuelQuantity)
             {
                 Console.WriteLine("Not enough fuel to perform this trip!");
             }
             else
             {
-                FuelQuantity = FuelQuantity - fuelQNeeded;
+                FuelQuantity -= fuelQNeeded;
             }
         }
 
