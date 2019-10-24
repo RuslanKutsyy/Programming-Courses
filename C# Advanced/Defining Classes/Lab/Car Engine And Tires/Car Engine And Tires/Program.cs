@@ -60,8 +60,8 @@ namespace CarManufacturer
 
         public void Drive(double distance)
         {
-            double fuelQNeeded = FuelQuantity - distance * this.FuelConsumption;
-            if (fuelQNeeded >= FuelQuantity)
+            double fuelQNeeded = distance/100 * this.fuelConsumption;
+            if (fuelQNeeded > FuelQuantity)
             {
                 Console.WriteLine("Not enough fuel to perform this trip!");
             }
@@ -154,45 +154,51 @@ namespace CarManufacturer
         {
             string data = Console.ReadLine();
             List<Tire[]> tires = new List<Tire[]>();
-            int count = 0;
 
             while (data != "No more tires")
             {
-                count++;
-                var tiresInfo = data.Split().ToArray();
-                var tireExamples = new Tire[4];
-                for (int i = 0; i < tireExamples.Length; i++)
-                {
-                    var tempList = new List<Tire>();
-                    for (int j = 0; j < tiresInfo.Length; j+=2)
-                    {
-                        int yearInfo = int.Parse(tiresInfo[j]);
-                        double pressureInfo = double.Parse(tiresInfo[j]);
+                var input = data.Split().ToArray();
+                var tireSet = new Tire[4];
+                string[] temp = new string[4];
+                int year = 0;
+                double pressure = 0;
 
-                        tempList.Add(new Tire(yearInfo, pressureInfo));
+                for (int i = 0; i < temp.Length; i++)
+                {
+                    for (int j = 0; j < input.Length; j += 2)
+                    {
+                        string tempStr = $"{input[j]} {input[j + 1]}";
+                        temp[i] = tempStr;
+                        i++;
                     }
                 }
 
-                tires.Add(tireExamples);
+                for (int i = 0; i < tireSet.Length; i++)
+                {
+                    var values = temp[i].Split().ToArray();
+                    year = int.Parse(values[0]);
+                    pressure = double.Parse(values[1]);
+                    tireSet[i] = new Tire(year, pressure);
+                }
+                tires.Add(tireSet);
                 data = Console.ReadLine();
             }
 
-
-
             List<Engine> engines = new List<Engine>();
-            string command = Console.ReadLine();
-
-            while (command != "Engines done")
+            data = Console.ReadLine();
+            while (data != "Engines done")
             {
-                var parts = command.Split().ToArray();
+                var parts = data.Split().ToArray();
                 int horsePower = int.Parse(parts[0]);
                 double cubicCapacity = double.Parse(parts[1]);
-                engines.Add(new Engine(horsePower, cubicCapacity));
-                command = Console.ReadLine();
+                Engine engine = new Engine(horsePower, cubicCapacity);
+                engines.Add(engine);
+                data = Console.ReadLine();
             }
-            engines.ToArray();
 
             string showSpecial = Console.ReadLine();
+
+            List<Car> cars = new List<Car>();
 
             while (showSpecial != "Show special")
             {
@@ -205,9 +211,54 @@ namespace CarManufacturer
                 int engineIndex = int.Parse(parts[5]);
                 int tiresIndex = int.Parse(parts[6]);
 
-                Car car = new Car(make, model, year, fuelQuantity, fuelConsumption, engines[engineIndex], tires);
+                //тут проблемы з індексами енджина і тайрс
+                Car car = new Car(make, model, year, fuelQuantity, fuelConsumption, engines[engineIndex], tires[tiresIndex]);
+                cars.Add(car);
+
                 showSpecial = Console.ReadLine();
             }
+
+            List<Car> filteredCarsByYearAndHorses = cars.Where(x => x.Year >= 2017 && x.Engine.HorsePower > 330).ToList();
+            var finalFilteredCars = new List<Car>();
+            foreach (var car in filteredCarsByYearAndHorses)
+            {
+                bool result = FilterCars(car);
+                if (result)
+                {
+                    finalFilteredCars.Add(car);
+                }
+            }
+
+            for (int i = 0; i < finalFilteredCars.Count; i++)
+            {
+                finalFilteredCars[i].Drive(20);
+            }
+
+            foreach (var car in finalFilteredCars)
+            {
+                Console.WriteLine($"Make: {car.Make}");
+                Console.WriteLine($"Model: {car.Model}");
+                Console.WriteLine($"Year: {car.Year}");
+                Console.WriteLine($"HorsePowers: {car.Engine.HorsePower}");
+                Console.WriteLine($"FuelQuantity: {car.FuelQuantity}");
+            }
+        }
+
+        static public bool FilterCars(Car car)
+        {
+            double sum = 0;
+
+            for (int i = 0; i < car.Tires.Length; i++)
+            {
+                sum += car.Tires[i].Pressure;
+            }
+
+            if (sum > 9 && sum < 10)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
