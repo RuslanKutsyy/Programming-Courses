@@ -48,22 +48,18 @@ namespace HealthyHeaven
             return false;
         }
 
-        public string GetHealthiestSalad()
+        public Salad GetHealthiestSalad()
         {
-            int winIndex = 0;
-            int minCalories = int.MaxValue;
+            Salad healthiest = data[0];
             for (int i = 0; i < this.data.Count; i++)
             {
-                int cal = this.data[i].GetTotalCalories();
-
-                if (cal < minCalories)
+                if (data[i].GetTotalCalories() < healthiest.GetTotalCalories())
                 {
-                    minCalories = cal;
-                    winIndex = i;
+                    healthiest = data[i];
                 }
             }
 
-            return this.data[winIndex].Name;
+            return healthiest;
         }
 
         public string GenerateMenu()
