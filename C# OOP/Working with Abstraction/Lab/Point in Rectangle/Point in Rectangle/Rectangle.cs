@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Point_in_Rectangle
+﻿namespace Point_in_Rectangle
 {
     class Rectangle
     {
@@ -17,9 +13,15 @@ namespace Point_in_Rectangle
 
         public bool Contains(Point point)
         {
-            if (point.X >= this.points[0].X && point.X <= this.points[1].X && point.Y <= this.points[0].Y && point.Y >= this.points[1].Y)
+            int pointX = point.X;
+            int pointY = point.Y;
+
+            if (pointX >= this.points[0].X && pointX <= this.points[1].X)
             {
-                return true;
+                if (pointY <= this.points[0].Y && pointY >= this.points[1].Y)
+                {
+                    return true;
+                }
             }
             return false;
         }
