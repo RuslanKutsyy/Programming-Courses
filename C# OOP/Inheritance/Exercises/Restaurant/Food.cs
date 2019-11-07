@@ -6,17 +6,11 @@ namespace Restaurant
 {
     class Food : Product
     {
-        private double grams;
+        public double Grams { get; set; }
 
         public Food(string name, decimal price, double grams) : base(name, price)
         {
             this.Grams = grams;
-        }
-
-        public double Grams
-        {
-            get { return this.grams; }
-            set { this.grams = value; }
         }
     }
 }

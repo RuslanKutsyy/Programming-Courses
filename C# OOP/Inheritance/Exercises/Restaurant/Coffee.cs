@@ -6,32 +6,14 @@ namespace Restaurant
 {
     class Coffee : HotBeverage
     {
-        private double coffeeMilliliters;
-        private decimal coffeePrice;
-        private double caffein;
+        private const double milliliters = 50;
+        private const decimal price = 3.50m;
 
-        public Coffee(string name, decimal price, double milliliters) : base(name, price, milliliters)
-        {
-            this.coffeeMilliliters = 50;
-            this.coffeePrice = 3.50m;
-        }
+        public double Caffeine { get; set; }
 
-        public double CoffeeMilliliters
+        public Coffee(string name, double caffein) : base(name, price, milliliters)
         {
-            get { return this.coffeeMilliliters; }
-            set { this.coffeeMilliliters = value; }
-        }
-
-        public decimal CoffeePrice
-        {
-            get { return this.coffeePrice; }
-            set { this.coffeePrice = value; }
-        }
-
-        public double Caffein
-        {
-            get { return this.caffein; }
-            set { this.caffein = value; }
+            Caffeine = caffein;
         }
     }
 }
