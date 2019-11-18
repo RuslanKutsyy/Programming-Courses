@@ -47,7 +47,7 @@ namespace Shopping_Spree
             get { return this.bag; }
             set
             {
-                if (true)
+                if ()
                 {
 
                 }
