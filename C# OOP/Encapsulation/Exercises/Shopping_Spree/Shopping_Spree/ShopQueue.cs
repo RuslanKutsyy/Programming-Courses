@@ -6,7 +6,7 @@ namespace Shopping_Spree
 {
     class ShopQueue : List<Person>
     {
-        private List<Person> queue;
+        private List<Person> queue { get; set; }
 
         public List<Person> Queue
         {
@@ -16,21 +16,22 @@ namespace Shopping_Spree
 
         public ShopQueue()
         {
-            this.queue = new List<Person>();
+            this.Queue = new List<Person>();
         }
 
         public void AddToQueue(string input)
         {
             var data = input.Split(';', StringSplitOptions.RemoveEmptyEntries);
 
-            for (int personIndex = 0; personIndex < input.Length; personIndex++)
+            for (int personIndex = 0; personIndex < data.Length; personIndex++)
             {
                 var person = data[personIndex].Split('=', StringSplitOptions.RemoveEmptyEntries);
 
                 string name = person[0];
                 double money = double.Parse(person[1]);
 
-                this.Queue.Add(new Person(name, money));
+                Person buyer = new Person(name, money);
+                this.Queue.Add(buyer);
             }
         }
     }

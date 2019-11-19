@@ -14,6 +14,7 @@ namespace Shopping_Spree
         {
             this.Name = name;
             this.Money = money;
+            this.bag = new List<Product>();
         }
 
         public string Name
@@ -45,13 +46,7 @@ namespace Shopping_Spree
         public List<Product> Bag
         {
             get { return this.bag; }
-            set
-            {
-                if ()
-                {
-
-                }
-            }
+            set { this.bag = value; }
         }
     }
 }

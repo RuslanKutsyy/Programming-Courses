@@ -21,16 +21,16 @@ namespace Shopping_Spree
 
         public void AddToCart(string productsData)
         {
-            var prodInfo = productsData.Split('=', StringSplitOptions.RemoveEmptyEntries);
+            var prodInfo = productsData.Split(';', StringSplitOptions.RemoveEmptyEntries);
 
-            for (int productIndex = 0; productIndex < productsData.Length; productIndex++)
+            for (int productIndex = 0; productIndex < prodInfo.Length; productIndex++)
             {
                 var prod = prodInfo[productIndex].Split('=', StringSplitOptions.RemoveEmptyEntries);
 
-                string productName = prodInfo[0];
-                double prodCost = double.Parse(prodInfo[1]);
+                string productName = prod[0];
+                double prodCost = double.Parse(prod[1]);
 
-                this.Cart.Add(new Product(productName, prodCost)));
+                this.Cart.Add(new Product(productName, prodCost));
             }
         }
     }
