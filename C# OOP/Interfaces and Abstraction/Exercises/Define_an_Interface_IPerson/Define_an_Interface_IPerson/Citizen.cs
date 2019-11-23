@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PersonInfo
 {
-    class Citizen : IPerson, IIdentifiable, IBirthable
+    public class Citizen : IPerson, IIdentifiable, IBirthable
     {
         public string Name { get; set; }
         public int Age { get; set; }
