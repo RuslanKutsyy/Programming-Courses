@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Border_Control
@@ -7,39 +8,55 @@ namespace Border_Control
     {
         static void Main(string[] args)
         {
-            City city = new City();
-            string cmd = Console.ReadLine();
+            List<IBuyer> mammals = new List<IBuyer>();
+            List<Robot> robots = new List<Robot>();
 
-            while (cmd != "End")
+            int num = int.Parse(Console.ReadLine());
+            int boughtfood = 0;
+
+            for (int i = 0; i < num; i++)
             {
-                var data = cmd.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-
-                if (data.Length == 2)
+                var data = Console.ReadLine().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                if (data.Length == 3)
                 {
-                    string model = data[0];
-                    string id = data[1];
+                    string name = data[0];
+                    int age = int.Parse(data[1]);
+                    string group = data[2];
 
-                    Robot robot = new Robot(model, id);
-
-                    city.Robots.Add(robot);
+                    IBuyer rebel = new Rebel(name, age, group);
+                    mammals.Add(rebel);
                 }
-                else if (data.Length == 3)
+                else if (data.Length == 4)
                 {
                     string name = data[0];
                     int age = int.Parse(data[1]);
                     string id = data[2];
+                    string group = data[3];
 
-                    Citizen citizen = new Citizen(id, name, age);
-
-                    city.Citizens.Add(citizen);
+                    IBuyer citizen = new Citizen(name, age, id, group);
+                    mammals.Add(citizen);
                 }
-
-                cmd = Console.ReadLine();
             }
 
-            string fakeIDs = Console.ReadLine();
+            while (true)
+            {
+                string cmd = Console.ReadLine();
 
-            Console.Write(city.FakeCheck(fakeIDs));
+                if (cmd == "End")
+                {
+                    break;
+                }
+
+                for (int i = 0; i < mammals.Count; i++)
+                {
+                    if (mammals[i].Name == cmd)
+                    {
+                        boughtfood += mammals[i].BuyFood();
+                    }
+                }
+            }
+
+            Console.WriteLine(boughtfood);
         }
     }
 }
