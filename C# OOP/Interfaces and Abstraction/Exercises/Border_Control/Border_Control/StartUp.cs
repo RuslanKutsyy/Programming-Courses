@@ -8,8 +8,35 @@ namespace Border_Control
     {
         static void Main(string[] args)
         {
-            List<IMammal> mammals = new List<IMammal>();
+            List<IBuyer> mammals = new List<IBuyer>();
             List<Robot> robots = new List<Robot>();
+
+            int num = int.Parse(Console.ReadLine());
+            int boughtfood = 0;
+
+            for (int i = 0; i < num; i++)
+            {
+                var data = Console.ReadLine().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                if (data.Length == 3)
+                {
+                    string name = data[0];
+                    int age = int.Parse(data[1]);
+                    string group = data[2];
+
+                    IBuyer rebel = new Rebel(name, age, group);
+                    mammals.Add(rebel);
+                }
+                else if (data.Length == 4)
+                {
+                    string name = data[0];
+                    int age = int.Parse(data[1]);
+                    string id = data[2];
+                    string group = data[3];
+
+                    IBuyer citizen = new Citizen(name, age, id, group);
+                    mammals.Add(citizen);
+                }
+            }
 
             while (true)
             {
@@ -20,38 +47,16 @@ namespace Border_Control
                     break;
                 }
 
-                var data = cmd.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                if (data[0] == "Robot")
+                for (int i = 0; i < mammals.Count; i++)
                 {
-                    string model = data[1];
-                    string id = data[2];
-
-                    Robot robot = new Robot(model, id);
-                    robots.Add(robot);
-                }
-                else if (data[0] == "Citizen")
-                {
-                    string name = data[1];
-                    int age = int.Parse(data[2]);
-                    string id = data[3];
-                    string date = data[4];
-
-                    IMammal citizen = new Citizen(name, age, id, date);
-
-                    mammals.Add(citizen);
-                }
-                else if (data[0] == "Pet")
-                {
-                    string name = data[1];
-                    string birthdayDate = data[2];
-                    IMammal pet = new Pet(name, birthdayDate);
-                    mammals.Add(pet);
+                    if (mammals[i].Name == cmd)
+                    {
+                        boughtfood += mammals[i].BuyFood();
+                    }
                 }
             }
 
-            string year = Console.ReadLine();
-
-            mammals.Where(x => x.BirthdayDate.EndsWith(year)).Select(x => x.BirthdayDate).ToList().ForEach(Console.WriteLine);
+            Console.WriteLine(boughtfood);
         }
     }
 }
