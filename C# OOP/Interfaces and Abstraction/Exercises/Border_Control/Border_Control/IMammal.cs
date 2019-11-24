@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Border_Control
 {
-    public interface IIdentifiable
+    public interface IMammal
     {
-        string Id { get; }
-
+        string Name { get; set; }
+        string BirthdayDate { get; set; }
     }
 }

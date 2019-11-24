@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Border_Control
 {
@@ -8,7 +8,8 @@ namespace Border_Control
     {
         static void Main(string[] args)
         {
-            List<IIdentifiable> all = new List<IIdentifiable>();
+            List<IMammal> mammals = new List<IMammal>();
+            List<Robot> robots = new List<Robot>();
 
             while (true)
             {
@@ -20,36 +21,37 @@ namespace Border_Control
                 }
 
                 var data = cmd.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                if (data.Length == 2)
+                if (data[0] == "Robot")
                 {
-                    string model = data[0];
-                    string id = data[1];
-
-                    Robot robot = new Robot(model, id);
-                    all.Add(robot);
-                }
-                else if (data.Length == 3)
-                {
-                    string name = data[0];
-                    int age = int.Parse(data[1]);
+                    string model = data[1];
                     string id = data[2];
 
-                    Citizen citizen = new Citizen(name, age, id);
-
-                    all.Add(citizen);
+                    Robot robot = new Robot(model, id);
+                    robots.Add(robot);
                 }
-            }
-
-            string fake = Console.ReadLine();
-            var filteredAll = all.Where(x => x.Id.EndsWith(fake)).ToList();
-
-            if (filteredAll.Count > 0)
-            {
-                foreach (var one in filteredAll)
+                else if (data[0] == "Citizen")
                 {
-                    Console.WriteLine(one.Id);
+                    string name = data[1];
+                    int age = int.Parse(data[2]);
+                    string id = data[3];
+                    string date = data[4];
+
+                    IMammal citizen = new Citizen(name, age, id, date);
+
+                    mammals.Add(citizen);
+                }
+                else if (data[0] == "Pet")
+                {
+                    string name = data[1];
+                    string birthdayDate = data[2];
+                    IMammal pet = new Pet(name, birthdayDate);
+                    mammals.Add(pet);
                 }
             }
+
+            string year = Console.ReadLine();
+
+            mammals.Where(x => x.BirthdayDate.EndsWith(year)).Select(x => x.BirthdayDate).ToList().ForEach(Console.WriteLine);
         }
     }
 }
