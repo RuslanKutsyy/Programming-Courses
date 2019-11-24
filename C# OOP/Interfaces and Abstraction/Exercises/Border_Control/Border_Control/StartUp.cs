@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Border_Control
 {
@@ -7,21 +8,25 @@ namespace Border_Control
     {
         static void Main(string[] args)
         {
-            City city = new City();
-            string cmd = Console.ReadLine();
+            List<IIdentifiable> all = new List<IIdentifiable>();
 
-            while (cmd != "End")
+            while (true)
             {
-                var data = cmd.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                string cmd = Console.ReadLine();
 
+                if (cmd == "End")
+                {
+                    break;
+                }
+
+                var data = cmd.Split(' ', StringSplitOptions.RemoveEmptyEntries);
                 if (data.Length == 2)
                 {
                     string model = data[0];
                     string id = data[1];
 
                     Robot robot = new Robot(model, id);
-
-                    city.Robots.Add(robot);
+                    all.Add(robot);
                 }
                 else if (data.Length == 3)
                 {
@@ -29,17 +34,22 @@ namespace Border_Control
                     int age = int.Parse(data[1]);
                     string id = data[2];
 
-                    Citizen citizen = new Citizen(id, name, age);
+                    Citizen citizen = new Citizen(name, age, id);
 
-                    city.Citizens.Add(citizen);
+                    all.Add(citizen);
                 }
-
-                cmd = Console.ReadLine();
             }
 
-            string fakeIDs = Console.ReadLine();
+            string fake = Console.ReadLine();
+            var filteredAll = all.Where(x => x.Id.EndsWith(fake)).ToList();
 
-            Console.Write(city.FakeCheck(fakeIDs));
+            if (filteredAll.Count > 0)
+            {
+                foreach (var one in filteredAll)
+                {
+                    Console.WriteLine(one.Id);
+                }
+            }
         }
     }
 }

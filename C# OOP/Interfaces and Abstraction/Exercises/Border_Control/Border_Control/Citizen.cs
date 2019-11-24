@@ -1,16 +1,20 @@
-﻿namespace Border_Control
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Border_Control
 {
     public class Citizen : IIdentifiable
     {
-        public string Id { get; set; }
-        string Name { get; set; }
-        int Age { get; set; }
+        string Name { get; }
+        int Age { get; }
+        public string Id { get; }
 
-        public Citizen(string id, string name, int age)
+        public Citizen(string name, int age, string id)
         {
-            this.Id = id;
             this.Name = name;
             this.Age = age;
+            this.Id = id;
         }
     }
 }
