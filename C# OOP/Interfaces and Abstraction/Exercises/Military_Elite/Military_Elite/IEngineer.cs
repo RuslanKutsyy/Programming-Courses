@@ -6,6 +6,6 @@ namespace Military_Elite
 {
     public interface IEngineer : ISpecialisedSoldier
     {
-        List<IRepair> Repairs { get; set; }
+        List<Repair> Repairs { get; set; }
     }
 }

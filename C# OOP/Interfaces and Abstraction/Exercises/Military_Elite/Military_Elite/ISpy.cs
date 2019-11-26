@@ -4,9 +4,8 @@ using System.Text;
 
 namespace Military_Elite
 {
-    public interface IRepair
+    public interface ISpy : ISoldier
     {
-        string PartName { get; set; }
-        int WorkedHours { get; set; }
+        int CodeNumber { get; set; }
     }
 }
