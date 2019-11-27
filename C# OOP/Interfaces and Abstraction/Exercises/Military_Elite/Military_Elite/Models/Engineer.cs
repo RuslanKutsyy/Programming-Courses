@@ -22,5 +22,21 @@ namespace Military_Elite
             this.Corps = corps;
             this.Repairs = new List<Repair>();
         }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine($"Name: {this.FirstName} {this.LastName} Id: {this.ID} Salary: {this.Salary:F2}");
+            sb.AppendLine($"Corps: {this.Corps}");
+            sb.AppendLine("Repairs:");
+
+            foreach (var repair in Repairs)
+            {
+                sb.AppendLine("  " + repair.ToString());
+            }
+
+            return sb.ToString().Trim();
+        }
     } 
 }

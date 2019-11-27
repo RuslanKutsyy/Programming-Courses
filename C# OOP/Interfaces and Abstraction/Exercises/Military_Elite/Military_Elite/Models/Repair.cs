@@ -14,5 +14,14 @@ namespace Military_Elite
             this.PartName = partName;
             this.WorkedHours = hours;
         }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine($"Part Name: {this.PartName} Hours Worked: {this.WorkedHours}");
+
+            return sb.ToString().Trim();
+        }
     }
 }
