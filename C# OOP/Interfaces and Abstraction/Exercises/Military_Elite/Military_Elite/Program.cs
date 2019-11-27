@@ -31,6 +31,8 @@ namespace Military_Elite
                     decimal salary = decimal.Parse(data[4]);
 
                     Private privateSoldier = new Private(id, firstName, lastName, salary);
+
+                    troops.Add(privateSoldier);
                     privates.Add(privateSoldier);
                 }
                 else if (cmd.StartsWith("LieutenantGeneral"))
@@ -39,7 +41,7 @@ namespace Military_Elite
 
                     LieutenantGeneral soldier = new LieutenantGeneral(id, firstName, lastName, salary);
 
-                    troops.soldiers.Add(soldier);
+                    troops.Add(soldier);
 
                     for (int i = 5; i < data.Length; i++)
                     {
@@ -61,7 +63,7 @@ namespace Military_Elite
                     string corps = data[5];
 
                     IEngineer engineer = new Engineer(id, firstName, lastName, salary, corps);
-                    troops.soldiers.Add(engineer);
+                    troops.Add(engineer);
 
                     for (int i = 6; i < data.Length; i += 2)
                     {
@@ -77,7 +79,7 @@ namespace Military_Elite
                     string corps = data[5];
 
                     ICommando commando = new Commando(id, firstName, lastName, salary, corps);
-                    troops.soldiers.Add(commando);
+                    troops.Add(commando);
 
                     for (int i = 6; i < data.Length; i+=2)
                     {
@@ -94,7 +96,7 @@ namespace Military_Elite
 
                     Spy spy = new Spy(codeNumber, id, firstName, lastName);
 
-                    troops.soldiers.Add(spy);
+                    troops.Add(spy);
                 }
             }
 

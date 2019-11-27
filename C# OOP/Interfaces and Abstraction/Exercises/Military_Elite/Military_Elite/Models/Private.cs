@@ -18,5 +18,14 @@ namespace Military_Elite
             this.LastName = lastName;
             this.Salary = salary;
         }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine($"Name: {this.FirstName} {this.LastName} Id: {this.ID} Salary: {this.Salary:F2}");
+
+            return sb.ToString().Trim();
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace Military_Elite
             get { return this.state; }
             set
             {
-                if (value == "inProgress" || value == "Finished")
+                if (value == "inProgress" || value == "finished")
                 {
                     this.state = value;
                 }
@@ -30,6 +30,15 @@ namespace Military_Elite
         public void CompleteMission()
         {
             this.State = "Finished";
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine($"  Code Name: {this.CodeName} State: {this.State}");
+
+            return sb.ToString().Trim();
         }
     }
 }
