@@ -7,7 +7,8 @@ namespace Military_Elite
     {
         static void Main(string[] args)
         {
-            List<ISoldier> soldiers = new List<ISoldier>();
+            Troops troops = new Troops();
+
             List<Private> privates = new List<Private>();
 
             while (true)
@@ -32,24 +33,24 @@ namespace Military_Elite
                     Private privateSoldier = new Private(id, firstName, lastName, salary);
                     privates.Add(privateSoldier);
                 }
-                else if (cmd.StartsWith("LeutenantGeneral"))
+                else if (cmd.StartsWith("LieutenantGeneral"))
                 {
                     decimal salary = decimal.Parse(data[4]);
 
                     LieutenantGeneral soldier = new LieutenantGeneral(id, firstName, lastName, salary);
 
-                    soldiers.Add(soldier);
+                    troops.soldiers.Add(soldier);
 
                     for (int i = 5; i < data.Length; i++)
                     {
                         string privateId = data[i];
 
-                        foreach (var privateSoldier in privates)
+                        for (int privatesNum = 0; privatesNum < privates.Count; privatesNum++)
                         {
-                            if (privateSoldier.ID == privateId)
+                            if (privates[privatesNum].ID == privateId)
                             {
-                                soldier.Privates.Add(privateSoldier);
-
+                                soldier.Privates.Add(privates[privatesNum]);
+                                privates.RemoveAt(privatesNum);
                             }
                         }
                     }
@@ -60,7 +61,7 @@ namespace Military_Elite
                     string corps = data[5];
 
                     IEngineer engineer = new Engineer(id, firstName, lastName, salary, corps);
-                    soldiers.Add(engineer);
+                    troops.soldiers.Add(engineer);
 
                     for (int i = 6; i < data.Length; i += 2)
                     {
@@ -76,9 +77,9 @@ namespace Military_Elite
                     string corps = data[5];
 
                     ICommando commando = new Commando(id, firstName, lastName, salary, corps);
-                    soldiers.Add(commando);
+                    troops.soldiers.Add(commando);
 
-                    for (int i = 5; i < data.Length; i++)
+                    for (int i = 6; i < data.Length; i+=2)
                     {
                         string code = data[i];
                         string state = data[i + 1];
@@ -93,9 +94,11 @@ namespace Military_Elite
 
                     Spy spy = new Spy(codeNumber, id, firstName, lastName);
 
-                    soldiers.Add(spy);
+                    troops.soldiers.Add(spy);
                 }
             }
+
+            Console.WriteLine(troops.ToString());
         }
     }
 }
