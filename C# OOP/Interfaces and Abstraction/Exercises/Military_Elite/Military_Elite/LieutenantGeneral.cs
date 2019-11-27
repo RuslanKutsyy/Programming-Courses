@@ -18,6 +18,7 @@ namespace Military_Elite
             this.FirstName = firstName;
             this.LastName = lastName;
             this.Salary = salary;
+            this.Privates = new List<Private>();
         }
     }
 }
