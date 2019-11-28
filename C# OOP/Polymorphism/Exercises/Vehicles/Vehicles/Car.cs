@@ -6,16 +6,34 @@ namespace Vehicles
 {
     public class Car
     {
+        private double tankCapacity;
         public double FuelQuantity { get; set; }
         public double FuelConsumption { get; }
 
-        public Car(double fuelQuantity, double fuelConsumption)
+        public Car(double fuelQuantity, double fuelConsumption, double tankCapacity)
         {
             this.FuelQuantity = fuelQuantity;
             this.FuelConsumption = fuelConsumption;
+            this.TankCapacity = tankCapacity;
         }
 
-        public virtual void DriveCar(double km)
+        public double TankCapacity
+        {
+            get { return this.tankCapacity; }
+            set
+            {
+                if (value <= tankCapacity)
+                {
+                    this.tankCapacity = value;
+                }
+                else
+                {
+                    this.tankCapacity = 0;
+                }
+            }
+        }
+
+        public virtual void Drive(double km)
         {
             double neededFuel = (this.FuelConsumption + 0.9) * km;
 
@@ -32,7 +50,22 @@ namespace Vehicles
 
         public virtual void Refuel(double litters)
         {
-            this.FuelQuantity += litters;
+            if (litters > 0)
+            {
+                if (this.FuelQuantity + litters <= this.TankCapacity)
+                {
+                    this.FuelQuantity += litters;
+                }
+                else
+                {
+                    Console.WriteLine($"Cannot fit {litters} fuel in the tank");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Fuel must be a positive number");
+            }
+            
         }
     }
 }

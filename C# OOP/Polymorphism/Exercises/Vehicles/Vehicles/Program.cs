@@ -9,12 +9,20 @@ namespace Vehicles
             var carData = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
             double fuelQuantity = double.Parse(carData[1]);
             double fuelConsumption = double.Parse(carData[2]);
-            Car car = new Car(fuelQuantity, fuelConsumption);
+            double tankCapacity = double.Parse(carData[3]);
+            Car car = new Car(fuelQuantity, fuelConsumption, tankCapacity);
 
             var truckData = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
             fuelQuantity = double.Parse(truckData[1]);
             fuelConsumption = double.Parse(truckData[2]);
-            Truck truck = new Truck(fuelQuantity, fuelConsumption);
+            tankCapacity = double.Parse(truckData[3]);
+            Truck truck = new Truck(fuelQuantity, fuelConsumption, tankCapacity);
+
+            var busData = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
+            fuelQuantity = double.Parse(busData[1]);
+            fuelConsumption = double.Parse(busData[2]);
+            tankCapacity = double.Parse(busData[3]);
+            Bus bus = new Bus(fuelQuantity, fuelConsumption, tankCapacity);
 
             int num = int.Parse(Console.ReadLine());
 
@@ -30,11 +38,20 @@ namespace Vehicles
 
                     if (type == "Car")
                     {
-                        car.DriveCar(km);
+                        car.Drive(km);
                     }
                     else if (type == "Truck")
                     {
-                        truck.DriveCar(km);
+                        truck.Drive(km);
+                    }
+                }
+                else if (command == "DriveEmpty")
+                {
+                    string type = cmd[1];
+                    double km = double.Parse(cmd[2]);
+                    if (type == "Bus")
+                    {
+                        bus.Drive(km);
                     }
                 }
                 else if (command == "Refuel")
@@ -49,6 +66,10 @@ namespace Vehicles
                     else if (type == "Truck")
                     {
                         truck.Refuel(litters);
+                    }
+                    else if (type == "Bus")
+                    {
+                        bus.Refuel(litters);
                     }
                 }
             }
