@@ -1,33 +1,25 @@
-﻿using System;
+﻿using Military_Elite.Emums;
+using Military_Elite.Interfaces;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Military_Elite
+namespace Military_Elite.Models
 {
-    class Engineer : IEngineer
+    class Engineer : SpecialisedSoldier, IEngineer
     {
-        public List<Repair> Repairs { get; set; }
-        public string Corps { get; set; }
-        public string ID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public decimal Salary { get; set; }
+        public ICollection<IRepair> Repairs { get; }
 
-        public Engineer(string id, string firstName, string lastName, decimal salary, string corps)
+        public Engineer(string id, string firstName, string lastName, decimal salary, Corps corps, ICollection<IRepair> repairs) :
+            base(id, firstName, lastName, salary, corps)
         {
-            this.ID = id;
-            this.FirstName = firstName;
-            this.LastName = lastName;
-            this.Salary = salary;
-            this.Corps = corps;
-            this.Repairs = new List<Repair>();
+            this.Repairs = repairs;
         }
 
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.AppendLine($"Name: {this.FirstName} {this.LastName} Id: {this.ID} Salary: {this.Salary:F2}");
+            sb.AppendLine(base.ToString());
             sb.AppendLine($"Corps: {this.Corps}");
             sb.AppendLine("Repairs:");
 
@@ -36,7 +28,7 @@ namespace Military_Elite
                 sb.AppendLine("  " + repair.ToString());
             }
 
-            return sb.ToString().Trim();
+            return sb.ToString().TrimEnd();
         }
-    } 
+    }
 }

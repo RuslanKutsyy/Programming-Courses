@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Military_Elite.Emums;
 
-namespace Military_Elite
+namespace Military_Elite.Interfaces
 {
     public interface ISpecialisedSoldier : IPrivate
     {
-        string Corps { get; set; }
+        Corps Corps { get; }
     }
 }

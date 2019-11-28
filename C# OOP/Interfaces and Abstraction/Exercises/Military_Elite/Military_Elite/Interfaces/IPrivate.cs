@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Military_Elite
+﻿namespace Military_Elite.Interfaces
 {
     public interface IPrivate : ISoldier
     {
-        decimal Salary { get; set; }
+        decimal Salary { get; }
     }
 }
