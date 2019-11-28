@@ -1,27 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Military_Elite.Emums;
+using Military_Elite.Interfaces;
 
-namespace Military_Elite
+namespace Military_Elite.Models
 {
-    public class Mission
+    public class Mission : IMission
     {
-        private string state;
+        public string CodeName { get; }
+        public State State { get; private set; }
 
-        public string CodeName { get; set; }
-        public string State
-        {
-            get { return this.state; }
-            set
-            {
-                if (value == "inProgress" || value == "finished")
-                {
-                    this.state = value;
-                }
-            }
-        }
-
-        public Mission(string codeName, string state)
+        public Mission(string codeName, State state)
         {
             this.CodeName = codeName;
             this.State = state;
@@ -29,16 +16,12 @@ namespace Military_Elite
 
         public void CompleteMission()
         {
-            this.State = "Finished";
+            this.State = State.Finished;
         }
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-
-            sb.AppendLine($"  Code Name: {this.CodeName} State: {this.State}");
-
-            return sb.ToString().Trim();
+            return $"Code Name: {this.CodeName} State: {this.State}";
         }
     }
 }

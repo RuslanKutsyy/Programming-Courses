@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Military_Elite.Interfaces;
 
 namespace Military_Elite
 {
-    public class Repair
+    public class Repair : IRepair
     {
-        public string PartName { get; set; }
-        public int WorkedHours { get; set; }
+        public string PartName { get; }
+        public int WorkedHours { get; }
 
         public Repair(string partName, int hours)
         {
@@ -17,11 +15,7 @@ namespace Military_Elite
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-
-            sb.AppendLine($"Part Name: {this.PartName} Hours Worked: {this.WorkedHours}");
-
-            return sb.ToString().Trim();
+            return $"Part Name: {this.PartName} Hours Worked: {this.WorkedHours}";
         }
     }
 }

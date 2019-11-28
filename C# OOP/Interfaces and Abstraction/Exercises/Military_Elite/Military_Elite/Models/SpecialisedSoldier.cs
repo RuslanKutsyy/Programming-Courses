@@ -1,27 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Military_Elite.Emums;
+using Military_Elite.Interfaces;
 
 namespace Military_Elite
 {
-    public class SpecialisedSoldier : ISpecialisedSoldier
+    public class SpecialisedSoldier : Private, ISpecialisedSoldier
     {
-        private string corps;
+        public Corps Corps { get; }
 
-        public string Corps
+        public SpecialisedSoldier(string id, string firstName, string lastName, decimal salary, Corps corps) : base(id, firstName, lastName, salary)
         {
-            get => this.corps;
-            set
-            {
-                if (value == "Airforces" || value == "Marines")
-                {
-                    this.corps = value;
-                }
-            }
+            this.Corps = corps;
         }
-        public string ID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public decimal Salary { get; set; }
     }
 }

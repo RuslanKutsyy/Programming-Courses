@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace Military_Elite
+namespace Military_Elite.Interfaces
 {
     public interface ILieutenantGeneral : IPrivate
     {
-        List<Private> Privates { get; set; }
+        Dictionary<string, IPrivate> Privates { get; }
     }
 }

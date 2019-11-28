@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Military_Elite
+﻿namespace Military_Elite.Interfaces
 {
-    public interface ISpy : ISoldier
+    public interface ISpy
     {
-        int CodeNumber { get; set; }
+        int CodeNumber { get; }
     }
 }

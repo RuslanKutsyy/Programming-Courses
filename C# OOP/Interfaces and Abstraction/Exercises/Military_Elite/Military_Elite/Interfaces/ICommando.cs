@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Military_Elite.Interfaces;
+﻿using System.Collections.Generic;
 
-namespace Military_Elite
+namespace Military_Elite.Interfaces
 {
     public interface ICommando : ISpecialisedSoldier
     {
-        List<Mission> Missions { get; set; }
+        ICollection<IMission> Missions { get; }
     }
 }

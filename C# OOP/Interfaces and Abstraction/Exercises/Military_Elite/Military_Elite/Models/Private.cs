@@ -1,31 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Military_Elite.Interfaces;
 
 namespace Military_Elite
 {
-    public class Private : IPrivate
+    public class Private : Soldier, IPrivate
     {
-        public decimal Salary { get; set; }
-        public string ID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public decimal Salary { get; }
 
-        public Private(string id, string firstName, string lastName, decimal salary)
+        public Private(string id, string firstName, string lastName, decimal salary) : base(id, firstName, lastName)
         {
-            this.ID = id;
-            this.FirstName = firstName;
-            this.LastName = lastName;
             this.Salary = salary;
         }
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-
-            sb.AppendLine($"Name: {this.FirstName} {this.LastName} Id: {this.ID} Salary: {this.Salary:F2}");
-
-            return sb.ToString().Trim();
+            return base.ToString() + $" Salary: {this.Salary:F2}";
         }
     }
 }
