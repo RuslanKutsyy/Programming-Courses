@@ -29,7 +29,14 @@ namespace Vehicles
         {
             if (litters > 0)
             {
-                this.FuelQuantity += litters * 0.95;
+                if (this.FuelQuantity + litters <= this.TankCapacity)
+                {
+                    this.FuelQuantity += litters * 0.95;
+                }
+                else
+                {
+                    Console.WriteLine($"Cannot fit {litters} fuel in the tank");
+                }
             }
             else
             {

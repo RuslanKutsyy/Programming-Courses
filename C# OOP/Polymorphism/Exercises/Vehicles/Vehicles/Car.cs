@@ -6,29 +6,36 @@ namespace Vehicles
 {
     public class Car
     {
-        private double tankCapacity;
-        public double FuelQuantity { get; set; }
+        public double TankCapacity { get; }
+        private double fuelQuantity;
         public double FuelConsumption { get; }
 
         public Car(double fuelQuantity, double fuelConsumption, double tankCapacity)
         {
-            this.FuelQuantity = fuelQuantity;
+            if (fuelQuantity <= tankCapacity)
+            {
+                this.fuelQuantity = fuelQuantity;
+            }
+            else
+            {
+                this.FuelQuantity = 0;
+            }
             this.FuelConsumption = fuelConsumption;
             this.TankCapacity = tankCapacity;
         }
 
-        public double TankCapacity
+        public double FuelQuantity
         {
-            get { return this.tankCapacity; }
+            get { return this.fuelQuantity; }
             set
             {
-                if (value <= tankCapacity)
+                if (value <= this.TankCapacity)
                 {
-                    this.tankCapacity = value;
+                    this.fuelQuantity = value;
                 }
                 else
                 {
-                    this.tankCapacity = 0;
+                    this.fuelQuantity = 0;
                 }
             }
         }
@@ -66,6 +73,11 @@ namespace Vehicles
                 Console.WriteLine("Fuel must be a positive number");
             }
             
+        }
+
+        public override string ToString()
+        {
+            return $"{base.GetType().Name}: {this.FuelQuantity:F2}";
         }
     }
 }

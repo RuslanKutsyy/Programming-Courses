@@ -34,11 +34,11 @@ namespace Vehicles
             if (neededFuel < this.FuelQuantity)
             {
                 this.FuelQuantity -= neededFuel;
-                Console.WriteLine($"Car travelled {km} km");
+                Console.WriteLine($"Bus travelled {km} km");
             }
             else
             {
-                Console.WriteLine("Car needs refueling");
+                Console.WriteLine("Bus needs refueling");
             }
         }
     }
