@@ -44,6 +44,10 @@ namespace Vehicles
                     {
                         truck.Drive(km);
                     }
+                    else if (type == "Bus")
+                    {
+                        bus.Drive(km);
+                    }
                 }
                 else if (command == "DriveEmpty")
                 {
@@ -51,7 +55,7 @@ namespace Vehicles
                     double km = double.Parse(cmd[2]);
                     if (type == "Bus")
                     {
-                        bus.Drive(km);
+                        bus.DriveEmpty(km);
                     }
                 }
                 else if (command == "Refuel")
@@ -74,8 +78,13 @@ namespace Vehicles
                 }
             }
 
-            Console.WriteLine($"Car: {car.FuelQuantity:F2}");
-            Console.WriteLine($"Truck: {truck.FuelQuantity:F2}");
+            //Console.WriteLine($"Car: {car.FuelQuantity:F2}");
+            //Console.WriteLine($"Truck: {truck.FuelQuantity:F2}");
+            //Console.WriteLine($"");
+
+            Console.WriteLine(car.ToString());
+            Console.WriteLine(truck.ToString());
+            Console.WriteLine(bus.ToString());
         }
     }
 }
