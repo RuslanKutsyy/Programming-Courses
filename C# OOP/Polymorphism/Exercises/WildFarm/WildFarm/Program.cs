@@ -7,7 +7,7 @@ namespace WildFarm
     {
         static void Main(string[] args)
         {
-            List<Animal> animals = new List<Animal>();
+            var animals = new List<Animal>();
 
             while (true)
             {
