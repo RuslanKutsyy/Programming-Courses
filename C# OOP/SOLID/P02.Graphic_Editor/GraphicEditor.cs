@@ -20,6 +20,10 @@ namespace P02.Graphic_Editor
             {
                 Console.WriteLine("I'm Square");
             }
+            else
+            {
+                Console.WriteLine($"I'm {shape.GetType().Name}");
+            }
         }
     }
 }

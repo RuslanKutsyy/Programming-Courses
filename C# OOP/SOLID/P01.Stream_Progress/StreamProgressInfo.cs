@@ -6,12 +6,12 @@ namespace P01.Stream_Progress
 {
     public class StreamProgressInfo
     {
-        private File file;
+        private IStream file;
 
         // If we want to stream a music file, we can't
-        public StreamProgressInfo(File file)
+        public StreamProgressInfo(IStream data)
         {
-            this.file = file;
+            this.file = data;
         }
 
         public int CalculateCurrentPercent()
