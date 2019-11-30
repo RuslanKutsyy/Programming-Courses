@@ -25,7 +25,7 @@ namespace P04.Recharge
             set { this.currentPower = value; }
         }
 
-        public void Work(int hours)
+        public override void Work(int hours)
         {
             if (hours > this.currentPower)
             {

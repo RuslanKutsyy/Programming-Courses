@@ -6,6 +6,9 @@
     {
         static void Main()
         {
+            Robot robot = new Robot("sf12",45);
+
+            robot.Work(15);
         }
     }
 }

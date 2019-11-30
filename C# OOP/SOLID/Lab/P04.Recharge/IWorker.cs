@@ -4,8 +4,8 @@ using System.Text;
 
 namespace P04.Recharge
 {
-    public interface IRechargeable
+    public interface IWorker
     {
-        void Recharge();
+        void Work(int hours);
     }
 }
