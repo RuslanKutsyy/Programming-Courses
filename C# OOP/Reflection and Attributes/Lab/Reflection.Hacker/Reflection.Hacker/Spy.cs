@@ -22,4 +22,31 @@ public class Spy
 
         return sb.ToString().Trim();
     }
+
+    public string AnalyzeAcessModifiers(string className)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        Type classType = Type.GetType(className);
+        FieldInfo[] fields = classType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.Static);
+        MethodInfo[] classPublicMethods = classType.GetMethods(BindingFlags.Instance | BindingFlags.Public);
+        MethodInfo[] classNonPublicMethods = classType.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic);
+
+        foreach (FieldInfo field in fields)
+        {
+            sb.AppendLine($"{field.Name} must be private!");
+        }
+
+        foreach (MethodInfo method in classNonPublicMethods.Where(m => m.Name.StartsWith("get")))
+        {
+            sb.AppendLine($"{method.Name} have to be public!");
+        }
+
+        foreach (MethodInfo method in classPublicMethods.Where(m => m.Name.StartsWith("set")))
+        {
+            sb.AppendLine($"{method.Name} have to be private!");
+        }
+
+        return sb.ToString().Trim();
+    }
 }
