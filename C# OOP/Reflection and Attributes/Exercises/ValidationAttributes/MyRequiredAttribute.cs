@@ -8,7 +8,7 @@ namespace ValidationAttributes
     {
         public override bool IsValid(object obj)
         {
-            throw new NotImplementedException();
+            return obj != null;
         }
     }
 }
