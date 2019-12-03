@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace ValidationAttributes
 {
     class MyRangeAttribute : MyValidationAttribute
     {
 
-        private int MinValue { get; }
-        private int MaxValue;
+        private readonly int MinValue;
+        private readonly int MaxValue;
 
         public MyRangeAttribute(int minValue, int maxValue)
         {
@@ -18,7 +15,16 @@ namespace ValidationAttributes
 
         public override bool IsValid(object obj)
         {
-            throw new NotImplementedException();
+            if (obj is int ValueAsInt)
+            {
+                if (ValueAsInt >= MinValue && ValueAsInt <= MaxValue)
+                {
+                    return true;
+                }
+                return false;
+            }
+
+            throw new ArgumentException("Invalid type!");
         }
     }
 }
