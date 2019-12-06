@@ -1,4 +1,6 @@
 ﻿using NUnit.Framework;
+using Skeleton;
+using System;
 
 [TestFixture]
 public class DummyTests
@@ -6,11 +8,11 @@ public class DummyTests
     [Test]
     public void DummyLosesHealthIfAttacked()
     {
-        Dummy dummy = new Dummy(20, 10);
+        Dummy dummy = new Dummy(10, 10);
 
         dummy.TakeAttack(5);
 
-        Assert.AreEqual(15, dummy.Health);
+        Assert.AreEqual(5, dummy.Health);
     }
 
     [Test]
@@ -35,13 +37,12 @@ public class DummyTests
     }
 
     [Test]
-    public void AliveDummyCantGiveXP()
+    public void AliveDummyCantGiveXPAndThrowsException()
     {
         Dummy dummy = new Dummy(10, 10);
 
         dummy.TakeAttack(5);
-        dummy.GiveExperience();
 
-        Assert.AreEqual(Throws.InvalidOperationException.With.Message.EqualTo("Target is not dead."), dummy.GiveExperience());
+        Assert.Throws<InvalidOperationException>(() => dummy.GiveExperience());
     }
 }
