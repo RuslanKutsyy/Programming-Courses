@@ -92,6 +92,7 @@ namespace SpaceStationEstablishment
                                 }
                                 else if (galaxyMatrix[currrentRow + 1, currentCol] == '-')
                                 {
+                                    galaxyMatrix[currrentRow, currentCol] = '-';
                                     galaxyMatrix[currrentRow + 1, currentCol] = 'S';
                                     currrentRow += 1;
                                 }
@@ -129,7 +130,9 @@ namespace SpaceStationEstablishment
                                 else
                                 {
                                     starPower += (int)char.GetNumericValue(galaxyMatrix[currrentRow, currentCol - 1]);
+                                    galaxyMatrix[currrentRow, currentCol] = '-';
                                     currentCol = currentCol - 1;
+                                    galaxyMatrix[currrentRow, currentCol] = 'S';
                                 }
                             }
                             else
