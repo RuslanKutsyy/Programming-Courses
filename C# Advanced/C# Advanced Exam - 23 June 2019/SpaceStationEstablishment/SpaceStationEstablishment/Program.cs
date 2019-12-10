@@ -61,17 +61,21 @@ namespace SpaceStationEstablishment
                                 }
                                 else if (galaxyMatrix[currrentRow - 1, currentCol] == '-')
                                 {
+                                    galaxyMatrix[currrentRow, currentCol] = '-';
                                     galaxyMatrix[currrentRow - 1, currentCol] = 'S';
                                     currrentRow -= 1;
                                 }
                                 else
                                 {
+                                    galaxyMatrix[currrentRow, currentCol] = '-';
                                     starPower += (int)char.GetNumericValue(galaxyMatrix[currrentRow - 1, currentCol]);
+                                    galaxyMatrix[currrentRow - 1, currentCol] = 'S';
                                     currrentRow = currrentRow - 1;
                                 }
                             }
                             else
                             {
+                                galaxyMatrix[currrentRow, currentCol] = '-';
                                 @void = true;
                             }
                             break;
@@ -98,12 +102,15 @@ namespace SpaceStationEstablishment
                                 }
                                 else
                                 {
+                                    galaxyMatrix[currrentRow, currentCol] = '-';
                                     starPower += (int)char.GetNumericValue(galaxyMatrix[currrentRow + 1, currentCol]);
+                                    galaxyMatrix[currrentRow + 1, currentCol] = 'S';
                                     currrentRow = currrentRow + 1;
                                 }
                             }
                             else
                             {
+                                galaxyMatrix[currrentRow, currentCol] = '-';
                                 @void = true;
                             }
                             break;
@@ -124,19 +131,21 @@ namespace SpaceStationEstablishment
                                 }
                                 else if (galaxyMatrix[currrentRow, currentCol - 1] == '-')
                                 {
+                                    galaxyMatrix[currrentRow, currentCol] = '-';
                                     galaxyMatrix[currrentRow, currentCol - 1] = 'S';
                                     currentCol -= 1;
                                 }
                                 else
                                 {
-                                    starPower += (int)char.GetNumericValue(galaxyMatrix[currrentRow, currentCol - 1]);
                                     galaxyMatrix[currrentRow, currentCol] = '-';
+                                    starPower += (int)char.GetNumericValue(galaxyMatrix[currrentRow, currentCol - 1]);
+                                    galaxyMatrix[currrentRow, currentCol - 1] = 'S';
                                     currentCol = currentCol - 1;
-                                    galaxyMatrix[currrentRow, currentCol] = 'S';
                                 }
                             }
                             else
                             {
+                                galaxyMatrix[currrentRow, currentCol] = '-';
                                 @void = true;
                             }
                             break;
@@ -163,8 +172,8 @@ namespace SpaceStationEstablishment
                                 }
                                 else
                                 {
-                                    starPower += (int)char.GetNumericValue(galaxyMatrix[currrentRow, currentCol + 1]);
                                     galaxyMatrix[currrentRow, currentCol] = '-';
+                                    starPower += (int)char.GetNumericValue(galaxyMatrix[currrentRow, currentCol + 1]);
                                     galaxyMatrix[currrentRow, currentCol + 1] = 'S';
                                     currentCol = currentCol + 1;
                                 }
@@ -200,7 +209,6 @@ namespace SpaceStationEstablishment
                 }
                 Console.WriteLine();
             }
-
         }
     }
 }
