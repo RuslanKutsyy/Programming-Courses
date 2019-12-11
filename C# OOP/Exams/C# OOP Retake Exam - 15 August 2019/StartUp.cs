@@ -8,13 +8,8 @@ namespace SpaceStation
     {
         public static void Main(string[] args)
         {
-            //IEngine engine = new Engine();
-            //engine.Run();
-
-            Biologist astronaut = new Biologist("Ivan");
-            System.Console.WriteLine(astronaut.Name, astronaut.Oxygen);
-            astronaut.Breath();
-            System.Console.WriteLine(astronaut.Oxygen);
+            IEngine engine = new Engine();
+            engine.Run();
         }
     }
 }
