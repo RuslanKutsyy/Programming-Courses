@@ -27,37 +27,52 @@
 
         public string AddPlayer(string type, string username)
         {
-            IPlayer player = null;
-            if (type == "Beginner")
+            if (this.playerRepository.Find(username) == null)
             {
-                player = new Beginner(username);
+                IPlayer player = null;
+                if (type == "Beginner")
+                {
+                    player = new Beginner(username);
+                }
+                else if (type == "Advanced")
+                {
+                    player = new Advanced(username);
+                }
+
+                this.playerRepository.Add(player);
+
+                return $"Successfully added player of type {type} with username: {username}";
             }
-            else if (type == "Advanced")
+            else
             {
-                player = new Advanced(username);
+                throw new ArgumentException($"Player {username} already exists!");
+
             }
 
-            this.playerRepository.Add(player);
-
-            return $"Successfully added player of type {type} with username: {username}";
         }
 
         public string AddCard(string type, string name)
         {
-            ICard card = null;
-
-            if (type == "MagicCard" || type == "Magic")
+            if (this.cardRepository.Find(name) == null)
             {
-                card = new MagicCard(name);
+                ICard card = null;
+
+                if (type == "MagicCard" || type == "Magic")
+                {
+                    card = new MagicCard(name);
+                }
+                else if (type == "TrapCard" || type == "Trap")
+                {
+                    card = new TrapCard(name);
+                }
+
+                this.cardRepository.Add(card);
+                return $"Successfully added card of type {type}Card with name: {name}";
             }
-            else if (type == "TrapCard" || type == "Trap")
+            else
             {
-                card = new TrapCard(name);
+                throw new ArgumentException($"Card {name} already exists!");
             }
-
-            this.cardRepository.Add(card);
-
-            return $"Successfully added card of type {type}Card with name: {name}";
         }
 
         public string AddPlayerCard(string username, string cardName)

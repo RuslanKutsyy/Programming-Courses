@@ -31,6 +31,16 @@ namespace PlayersAndMonsters.Models.BattleFields
                     }
                 }
 
+                if (enemyPlayer is Beginner)
+                {
+                    enemyPlayer.Health += 40;
+
+                    foreach (var card in enemyPlayer.CardRepository.Cards)
+                    {
+                        card.DamagePoints += 30;
+                    }
+                }
+
                 while (true)
                 {
                     int damage = 0;
@@ -38,6 +48,11 @@ namespace PlayersAndMonsters.Models.BattleFields
                     foreach (var card in attackPlayer.CardRepository.Cards)
                     {
                         damage += card.DamagePoints;
+                    }
+
+                    if (damage > enemyPlayer.Health)
+                    {
+                        damage = enemyPlayer.Health;
                     }
 
                     enemyPlayer.TakeDamage(damage);
@@ -53,6 +68,10 @@ namespace PlayersAndMonsters.Models.BattleFields
                         damage += card.DamagePoints;
                     }
 
+                    if (damage > attackPlayer.Health)
+                    {
+                        damage = attackPlayer.Health;
+                    }
                     attackPlayer.TakeDamage(damage);
 
                     if (attackPlayer.IsDead)

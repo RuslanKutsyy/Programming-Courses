@@ -2,7 +2,6 @@
 using PlayersAndMonsters.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 
 namespace PlayersAndMonsters.Repositories
@@ -36,14 +35,7 @@ namespace PlayersAndMonsters.Repositories
             {
                 throw new ArgumentException("Player cannot be null");
             }
-            else
-            {
-                if (this.data.ContainsKey(player.Username))
-                {
-                    throw new ArgumentException($"Player {player.Username} already exists!");
-                }
-                this.data.Add(player.Username, player);
-            }
+            this.data.Add(player.Username, player);
         }
 
         public IPlayer Find(string username)
