@@ -11,26 +11,40 @@ namespace SpaceStation.Repositories
 {
     public class AstronautRepository : IRepository<IAstronaut>
     {
-        private List<IAstronaut> models;
+        private ICollection<IAstronaut> models;
+
+        public AstronautRepository()
+        {
+            this.models = new List<IAstronaut>();
+        }
 
         public IReadOnlyCollection<IAstronaut> Models
         {
-            get { return this.models.AsReadOnly(); }
+            get
+            {
+                List<IAstronaut> data = this.models.ToList();
+                return data.AsReadOnly();
+            }
         }
 
         public void Add(IAstronaut model)
         {
-            if (model != null)
+            if (model == null)
             {
                 string name = model.Name;
-                bool exists = this.models.Exists(x => x.Name == name);
+                List<IAstronaut> data = this.models.ToList();
+                bool exists = data.Exists(x => x.Name == name);
 
                 if (!exists)
                 {
                     this.models.Add(model);
                 }
+                else
+                {
+
+                }
             }
-            throw new ArgumentException(ExceptionMessages.InvalidAstronautName);
+            
         }
 
         public IAstronaut FindByName(string name)
@@ -42,7 +56,8 @@ namespace SpaceStation.Repositories
         public bool Remove(IAstronaut model)
         {
             string name = model.Name;
-            bool exists = this.models.Exists(x => x.Name == name);
+            List<IAstronaut> data = this.models.ToList();
+            bool exists = data.Exists(x => x.Name == name);
 
             if (exists)
             {

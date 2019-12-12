@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using SpaceStation.Utilities.Messages;
 
 namespace SpaceStation
 {
@@ -12,23 +13,30 @@ namespace SpaceStation
     {
         public void Explore(IPlanet planet, ICollection<IAstronaut> astronauts)
         {
-            foreach (var astronaut in astronauts)
+            if (astronauts.Count > 0)
             {
-                List<string> items = planet.Items.ToList();
-                for (int itemNum = 0; itemNum < planet.Items.Count; itemNum++)
+                foreach (var astronaut in astronauts)
                 {
-                    if (astronaut.Oxygen > 0)
+                    List<string> items = planet.Items.ToList();
+                    for (int itemNum = 0; itemNum < planet.Items.Count; itemNum++)
                     {
-                        astronaut.Bag.Items.Add(items[itemNum]);
-                        items.Remove(items[itemNum]);
-                        astronaut.Breath();
-                    }
+                        if (astronaut.Oxygen > 0)
+                        {
+                            astronaut.Bag.Items.Add(items[itemNum]);
+                            items.Remove(items[itemNum]);
+                            astronaut.Breath();
+                        }
 
-                    if (astronaut.Oxygen <= 0)
-                    {
-                        break;
+                        if (astronaut.Oxygen <= 0)
+                        {
+                            break;
+                        }
                     }
                 }
+            }
+            else
+            {
+                throw new ArgumentException(ExceptionMessages.InvalidAstronautCount);
             }
         }
     }

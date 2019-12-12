@@ -12,21 +12,29 @@ namespace SpaceStation.Repositories
 {
     public class PlanetRepository : IRepository<IPlanet>
     {
-        private List<IPlanet> models;
+        private ICollection<IPlanet> models;
+
+        public PlanetRepository()
+        {
+            this.models = new List<IPlanet>();
+        }
 
         public IReadOnlyCollection<IPlanet> Models
         {
-            get { return this.models.AsReadOnly(); }
+            get
+            {
+                List<IPlanet> data = this.models.ToList();
+                return data.AsReadOnly();
+            }
         }
-
-        public SerializationInfo ExceptionMessage { get; private set; }
 
         public void Add(IPlanet model)
         {
             string name = model.Name;
             if (model != null)
             {
-                bool exists = this.models.Exists(x => x.Name == name);
+                List<IPlanet> data = this.models.ToList();
+                bool exists = data.Exists(x => x.Name == name);
                 if (!exists)
                 {
                     this.models.Add(model);
@@ -46,7 +54,8 @@ namespace SpaceStation.Repositories
             string name = model.Name;
             if (model != null)
             {
-                bool exists = this.models.Exists(x => x.Name == name);
+                List<IPlanet> data = this.models.ToList();
+                bool exists = data.Exists(x => x.Name == name);
                 if (exists)
                 {
                     this.models.Remove(model);
