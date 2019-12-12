@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using SpaceStation.Models;
+using SpaceStation.Models.Astronauts.Contracts;
+using SpaceStation.Utilities.Messages;
 
 namespace SpaceStation.Repositories
 {
-    public class AstronautRepository<IAstronaut> : IRepository<IAstronaut>
+    public class AstronautRepository : IRepository<IAstronaut>
     {
-        private List<IAstronaut> models;
+        private ICollection<IAstronaut> models;
 
         public AstronautRepository()
         {
@@ -18,22 +20,51 @@ namespace SpaceStation.Repositories
 
         public IReadOnlyCollection<IAstronaut> Models
         {
-            get { return (this.models).ToList().AsReadOnly(); }
+            get
+            {
+                List<IAstronaut> data = this.models.ToList();
+                return data.AsReadOnly();
+            }
         }
 
         public void Add(IAstronaut model)
         {
-            bool exists = this.models.Select(x => x.)
+            if (model == null)
+            {
+                string name = model.Name;
+                List<IAstronaut> data = this.models.ToList();
+                bool exists = data.Exists(x => x.Name == name);
+
+                if (!exists)
+                {
+                    this.models.Add(model);
+                }
+                else
+                {
+
+                }
+            }
+            
         }
 
         public IAstronaut FindByName(string name)
         {
-            throw new NotImplementedException();
+            var astronaut = this.models.Where(x => x.Name == name).FirstOrDefault();
+            return astronaut;
         }
 
         public bool Remove(IAstronaut model)
         {
-            throw new NotImplementedException();
+            string name = model.Name;
+            List<IAstronaut> data = this.models.ToList();
+            bool exists = data.Exists(x => x.Name == name);
+
+            if (exists)
+            {
+                this.models.Remove(model);
+                return true;
+            }
+            return false;
         }
     }
 }

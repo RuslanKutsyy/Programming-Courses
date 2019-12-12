@@ -16,7 +16,8 @@ namespace SpaceStation.Models
         public Astronaut(string name, double oxygen)
         {
             this.Name = name;
-            this.oxygen = oxygen;
+            this.Oxygen = oxygen;
+            this.bag = new Backpack();
         }
 
         public string Name
