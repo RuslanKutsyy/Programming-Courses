@@ -49,7 +49,7 @@ namespace AquaShop.Models.Fish
         public int Size
         {
             get { return this.size; }
-            private set { this.size = value; }
+            set { this.size = value; }
         }
 
         public decimal Price
