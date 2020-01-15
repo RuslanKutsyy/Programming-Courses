@@ -1,15 +1,15 @@
-function StringLength(input) {
-    let sumOfLengths = 0;
-    let word = input.shift();
-    let count = 0;
-    
-    while (word != null) {
-        sumOfLengths+= word.length;
-        count++;
-        word = input.shift();
-    }
-    console.log(`${sumOfLengths}`);
-    console.log(`${Math.floor(sumOfLengths/count)}`);
+function StringLength(arg1, arg2, arg3) {
+    let sumOfLengths;
+    let averageLength;
+
+    let first = arg1.length;
+    let second = arg2.length;
+    let third = arg3.length;
+    sumOfLengths = first + second + third;
+    averageLength = Math.floor(sumOfLengths/3);
+
+    console.log(sumOfLengths);
+    console.log(averageLength);
 }
 
-StringLength(["chocolate", "ice cream", "cake"]);
+StringLength("chocolate", "ice cream", "cake");
