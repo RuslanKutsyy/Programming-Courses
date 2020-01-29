@@ -1,20 +1,12 @@
 function sumByTown(input) {
-    let citiesObj = [];
+    let citiesObj = {};
 
     for (let i = 0; i < input.length; i+=2) {
-        let cityName = input[i];
-        let cityValue = Number(input[i + 1]);
-        let neededObj = citiesObj.filter(el => Object.keys(el).some(key => key == cityName));
-
-        if (neededObj.length === 0 ) {
-            let city = {
-                [cityName] : cityValue
-            }
-
-            citiesObj.push(city);
-        } else {
-            neededObj[0][cityName] +=cityValue;
+        if (! citiesObj.hasOwnProperty(input[i])) {
+            citiesObj[input[i]] = 0;
         }
+           
+        citiesObj[input[i]] += Number(input[i + 1]);
     }
 
     console.log(JSON.stringify(citiesObj));
