@@ -1,7 +1,16 @@
 function countWords(input) {
-    let arr = input.split([' ', ","]);
+    let data = {};
+    let arr = input[0].split(/[\s,.\-']+/).filter(item => item);
 
-    console.log(arr.join(" "));
+    for (let i = 0; i < arr.length; i++) {
+        if (!data.hasOwnProperty(arr[i])) {
+            data[arr[i]] = 0;
+        }
+
+        data[arr[i]]++;
+    }
+
+    console.log(JSON.stringify(data));
 }
 
-countWords(['Far too slow, you\'re far too slow.']);
+countWords(['JS devs use Node.js for server-side JS.-- JS for devs']);
