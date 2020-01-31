@@ -17,7 +17,7 @@ function productSorting(input) {
 
         for (let prod of Array.from(catalog.keys()).sort()) {
             if (prod.startsWith(char)) {
-                console.log(`  ${prod}:${catalog.get(prod)}`);
+                console.log(`  ${prod}: ${catalog.get(prod)}`);
             }
         }
     }
