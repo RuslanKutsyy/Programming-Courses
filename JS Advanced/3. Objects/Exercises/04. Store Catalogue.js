@@ -1,18 +1,26 @@
 function productSorting(input) {
-    let parsedData = input.reduce((acc, product) => {
-        let [name, price] = product.split(':').map(x => x.trim());
+    let catalog = new Map();
 
-        if (acc[name[0]]) {
-            acc[name[0]] = [...acc[name[0]], product];
-        } else {
-            acc[name[0]] = [product];
+    for (let line of input) {
+        let data = line.split(' : ');
+        let product = data[0];
+        let price = data[1];
+        catalog.set(product, price);
+    }
+
+    let chars = new Set();
+
+    Array.from(catalog.keys()).forEach(x => chars.add(x[0]));
+
+    for (let char of Array.from(chars.keys()).sort()) {
+        console.log(char);
+
+        for (let prod of Array.from(catalog.keys()).sort()) {
+            if (prod.startsWith(char)) {
+                console.log(`  ${prod}:${catalog.get(prod)}`);
+            }
         }
-
-        return acc;
-
-    },  {})
-
-    console.log(parsedData)
+    }
 
 }
 
