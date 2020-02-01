@@ -1,37 +1,23 @@
 function componentsList(input) {
-    let systems = new Map();
+    let originalSystems = new Map();
 
     for (let line of input) {
         let data = line.split(' | ');
-        let system = data[0];
-        let component = data[1];
-        let subcomponent = data[2];
-
-        if (!systems.get(system)) {
-            systems.set(system, new Map());
-        }
-
-        if (!systems.get(system).get(component)) {
-            systems.get(system).set(component, []);
-        }
-
-        systems.get(system).get(component).push(subcomponent);
-    }
-
-    let orderedSystems = Array.from(systems.keys()).sort((a, b) => sortSystems(a, b));
-
-
-    function sortSystems(a, b) {
-        if (systems.ge) {
-            
-        }
-    }
-
-    function sortComponents() {
         
+        if (!originalSystems.has(data[0])) {
+            originalSystems.set(data[0], new Map());
+        }
+
+        if (!originalSystems.get(data[0]).has(data[1])) {
+            originalSystems.get(data[0]).set(data[1], []);
+        }
+
+        if (!originalSystems.get(data[0]).get(data[1])) {
+            originalSystems.get(data[0]).get(data[1]).push(data[2]);
+        }
     }
 
-    console.log(orderedSystems);
+    console.log(originalSystems);
 }
 
 componentsList(['SULS | Main Site | Home Page',
