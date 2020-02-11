@@ -1,36 +1,19 @@
 function almostIncreasingSequence(sequence) {
-    let increaseCheck;
-    for (let i = 0; i < sequence.length; i++){
-        let tempArr = [];
+    let fails = 0;
+    let max = Math.pow(-10, 5);
+    let secondMax = Math.pow(-10, 5);
 
-        for (let el of sequence) {
-            if (el != sequence[i]) {
-                tempArr.push(el);
-            }
-        }
+    sequence.map(element => {
+        if (element > max) {
+            secondMax = max;
+            max = element;
+        } else if (element > secondMax){
+            max = element;
+            fails++;
+        } else fails++;
+    });
 
-        increaseCheck = increasing(tempArr);
-
-        if (increaseCheck === true) {
-            break;
-        }
-
-    }
-
-    console.log(increaseCheck);
-
-
-    function increasing(someArray) {
-        let current = someArray[0];
-        for (let i = 1; i < someArray.length; i++) {
-            if (someArray[i] <= current) {
-                return false;
-            }
-            current = someArray[i];
-        }
-
-        return true;
-    }
+    return fails <= 1;
 }
 
-almostIncreasingSequence([1, 1, 1, 2, 3]);
+almostIncreasingSequence([10, 1, 2, 3, 4, 5]);
