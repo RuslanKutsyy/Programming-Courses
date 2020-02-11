@@ -5,6 +5,6 @@ function adjacentElementsProduct(inputArray) {
         if (temp > max) {
             max = temp;
         }
-        }
+    }
     return max;
 }
