@@ -1,7 +1,5 @@
-function solution(x) {
-    return function addNumbers(y){
-        return x + y;
-    }
+function solution(num) {
+    return (input) => input + num;
 }
 
 let add5 = solution(5);
