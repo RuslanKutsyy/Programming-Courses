@@ -39,7 +39,9 @@ function arenaTierFunc(input) {
                 }
             }
             
-        }        
+        } else {
+            break;
+        }  
     }
     
     let orderedArena = Array.from(arena.keys()).sort((a, b) => sorting(a, b));
@@ -68,20 +70,31 @@ function arenaTierFunc(input) {
         for (let key of orderedArena) {
             let totalSkill = Array.from(arena.get(key).values()).reduce((sum, currentValue) => sum + currentValue);
             console.log(`${key}: ${totalSkill} skill`);
-            for (let [technique, skill] of arena.get(key)) {
-                console.log(`- ${technique} <!> ${skill}`);
+            
+            let valuesArr = Array.from(arena.get(key).keys()).sort((a, b) => compareSkills(a, b, key));
+
+            for (let technique of valuesArr) {
+                console.log(`- ${technique} <!> ${arena.get(key).get(technique)}`);
             }
         }
     }
+
+    function compareSkills(a, b, key) {
+        let skillNumA = arena.get(key).get(a);
+        let skillNumB = arena.get(key).get(b);
+
+        if (skillNumA !== skillNumB) {
+            return skillNumB - skillNumA;
+        } else {
+            return a.localeCompare(b);
+        }
+
+    }
 }
 
-arenaTierFunc(['Pesho -> Duck -> 400',
-    'Julius -> Shield -> 150',
-    'Gladius -> Heal -> 200',
-    'Gladius -> Support -> 250',
-    'Gladius -> Shield -> 250',
-    'Pesho vs Gladius',
-    'Gladius vs Julius',
-    'Gladius vs Gosho',
+arenaTierFunc(['Pesho -> BattleCry -> 400',
+    'Gosho -> PowerPunch -> 300',
+    'Stamat -> Duck -> 200',
+    'Stamat -> Tiger -> 250',
     'Ave Cesar']
     );
