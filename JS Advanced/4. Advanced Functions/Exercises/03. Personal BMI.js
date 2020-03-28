@@ -1,45 +1,28 @@
-function analyzeBMI(name, age, weight, height) {
-    var somePatient = new Patient(name, age, weight, height);
-
-    somePatient = statusCheck(somePatient);
-
-    return somePatient;
-
-
-    function statusCheck(object) {
-        let status;
-
-        if (object.BMI < 18.5) {
-            status = "underweight";
-        } else if (object.BMI < 25){
-            status = "normal";
-        } else if (object.BMI < 30){
-            status = "overweight";
-        } else if (object.BMI >= 30){
-            status = "obese";
-        }
-
-        object.status = status;
-        object.BMI = Math.round(object.BMI);
-
-        if (status === "obese") {
-            object.recommendation = 'admission required';
-        }
-
-        return object;
+function analyzePersonalBMI(name, age, weight, height) {
+    let person = {
+        name: name,
+        personalInfo: {
+            age: age,
+            weight: weight,
+            height: height
+        },
+        BMI: weight / Math.pow(height / 100, 2),
+        status: ''
     }
 
-    function Patient(name, age, weight, height) {
-        this.name = name;
-        this.personalInfo = {
-            'age' : age,
-            'weight': weight,
-            'height' : height
-        }
-        this.BMI = Math.round(weight / (height / 100) / (height / 100));
-
-        return this;
+    if (person.BMI < 18.5) {
+        person.status = 'underweight';
+    } else if (person.BMI >= 18.5 && person.BMI < 25){
+        person.status = 'normal';
+    } else if (person.BMI >= 25 && person.BMI < 30) {
+        person.status = 'overweight';
+    } else if (person.BMI >= 30) {
+        person.status = 'obese';
+        person.recommendation = 'admission required';
     }
+    person.BMI = Number(person.BMI.toFixed());
+
+    return person;
 }
 
-analyzeBMI("Honey Boo Boo", 9, 57, 137);
+console.log(analyzePersonalBMI("Honey Boo Boo", 9, 57, 137));
