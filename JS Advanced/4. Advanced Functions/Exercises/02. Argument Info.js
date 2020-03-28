@@ -1,20 +1,16 @@
-function analyse(...arguments) {
-    let store = new Map();
-
-    for (let el of arguments) {
-        let type =  typeof el;
-
-        console.log(`${type}: ${el}`);
-
-        if (!store.get(type)) {
-            store.set(type, 0);
+function analyze(...info) {
+    let types = {};
+    for (let data of info) {
+        let type = typeof(data);
+        console.log(`${type}: ${data}`);
+        if (!types.hasOwnProperty(type)) {
+            types[type] = 0;
         }
-
-        store.set(type, store.get(type) + 1);
+        types[type]++;
     }
 
-    [...store].sort((a, b) => b[1] - a[1]).forEach(el => console.log(`${el[0]} = ${el[1]}`));
-    
+    Object.keys(types).sort((a, b) => types[b] - types[a]).forEach(el => console.log(`${el} = ${types[el]}`))
 }
 
-analyse(42);
+analyze('cat', 15, 42, function () { console.log('Hello world!'); });
+//string: cat
