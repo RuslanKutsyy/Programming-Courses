@@ -1,6 +1,6 @@
 let solution = (function() {
     let microelements = {
-        carb : 0,
+        carbohydrate : 0,
         flavour : 0,
         fat : 0,
         protein : 0
@@ -8,15 +8,15 @@ let solution = (function() {
 
     let recipes = {
         apple : {
-            carb : 1,
+            carbohydrate : 1,
             flavour : 2
         },
         lemonade : {
-            carb : 10,
+            carbohydrate : 10,
             flavour : 20
         },
         burger : {
-            carb : 5,
+            carbohydrate : 5,
             fat : 7,
             flavour : 3
         },
@@ -27,9 +27,9 @@ let solution = (function() {
         },
         turkey : {
             protein : 10,
-            carb : 10,
+            carbohydrate : 10,
             fat : 10,
-            flavour : 10
+            flavour : 10,
         }
     }
 
@@ -43,29 +43,51 @@ let solution = (function() {
                     microelements[microel] += quantity;
                     return 'Success';
                 }
-                return `Error: not enough ${microel} in stock`;
             };
             case 'prepare': {
                 let meal = data[1];
                 let quantity = Number(data[2]);
                 if (recipes[meal] !== 'undefined') {
-
+                    return preparationProcess(meal, quantity);
                 }
-            }
+            };
+            case 'report': {
+                let storageAsString = `protein=${microelements.protein} carbohydrate=${microelements.carbohydrate} fat=${microelements.fat} flavour=${microelements.flavour}`;
+                return storageAsString;
+            };
         }
     }
 
-    function preparationCheck(meal){
-        
+    function preparationProcess(meal, quantity){
+        let check = enoughMicroelements();
+        if (typeof(check) === 'boolean') {
+
+            Object.keys(recipes[meal]).forEach(el => microelements[el] -= recipes[meal][el] * quantity);
+
+            return 'Success';
+        }
+
+        return `Error: not enough ${check} in stock`;
+
+        function enoughMicroelements() {
+            let answer = undefined;
+            answer = Object.keys(recipes[meal]).find((el) => recipes[meal][el] * quantity > microelements[el]);
+            if (typeof(answer) === 'undefined') {
+                answer = true;
+            }
+            return answer;
+        }
     }
 
-    return function (input) {
-        commandProcessing(input);
-    }
+    return (input) => commandProcessing(input);
 
     
 });
 
 let manager = solution();
-manager("restock flavour 50");  // Success
-manager("prepare lemonade 4");  // Error: not enough carbohydrate in stock
+manager("restock carbohydrate 10");  // Success
+manager("restock flavour 10"); // Success
+manager("prepare apple 1"); // Success
+manager("restock fat 10"); // Success
+manager("prepare burger 1"); // Success
+manager("report");
