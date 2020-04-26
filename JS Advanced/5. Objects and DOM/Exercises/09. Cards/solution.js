@@ -1,51 +1,52 @@
 function solve() {
-   let firstPlayerCards = Array.from(document.getElementById("player1Div").children);
-   let secondPlayerCards = Array.from(document.getElementById("player2Div").children);
-   let firstSpan = document.getElementById("result").children[0];
-   let secondSpan = document.getElementById("result").children[2];
-   let history = document.getElementById("history");
-   let firstCardValue, secondCardValue;
+   let firstPlayer = document.getElementById('player1Div');
+   let secondPlayer = document.getElementById('player2Div');
+   let result = document.getElementById('result').children;
+   let history = document.getElementById('history');
+   let firstPlayerCard = '';
+   let secondPlayerCard = '';
 
-   firstPlayerCards.forEach( card => card.addEventListener('click', cardsComparison));
-   secondPlayerCards.forEach( card => card.addEventListener('click', cardsComparison));
+   [firstPlayer, secondPlayer].forEach(player => player.addEventListener('click', function(){
+      if (event.target.name !== undefined) {
+         compareValues(player, event);
+      }
+   }));
 
-   function cardsComparison() {
-      if (event.target.parentElement.id === "player1Div") {
-         firstCardValue = Number(event.target.getAttribute('name'));
-         firstSpan.innerText = firstCardValue;
-         event.target.src = "images/whiteCard.jpg";
-      } else if (event.target.parentElement.id === "player2Div") {
-         secondCardValue = Number(event.target.getAttribute('name'));
-         secondSpan.innerText = secondCardValue;
-         event.target.src = "images/whiteCard.jpg";
+   function compareValues(cardPlayer, clickEvent) {
+      if (cardPlayer === firstPlayer) {
+         firstPlayerCard = clickEvent.target;
+         result[0].textContent = clickEvent.target.name;
+      } else {
+         secondPlayerCard = clickEvent.target;
+         result[2].textContent = clickEvent.target.name;
       }
 
+      clickEvent.target.src = "images/whiteCard.jpg";
 
-      if (firstCardValue != undefined && secondCardValue != undefined) {
-         let firstTarget = firstPlayerCards.find(x => x.getAttribute('name') === `${firstCardValue}`);
-         let secondTarget = secondPlayerCards.find(x => x.getAttribute('name') === `${secondCardValue}`);
-
-         if (firstCardValue > secondCardValue) {
-            firstTarget.style.border = '2px solid green';
-            secondTarget.style.border = '2px solid red';
-            addToHistory(`[${firstCardValue} vs ${secondCardValue}]`);
-
+      if (result[0].textContent !== '' && result[2].textContent !== '') {
+         if (Number(result[0].textContent) > Number(result[2].textContent)) {
+            colorCards(firstPlayerCard, secondPlayerCard);
          } else {
-            firstTarget.style.border = '2px solid red';
-            secondTarget.style.border = '2px solid green';
-            let text = `[${firstCardValue} vs ${secondCardValue}]`;
-            addToHistory(text);
+            colorCards(secondPlayerCard, firstPlayerCard);
          }
-         firstCardValue = null;
-         secondCardValue = null;
+         addToHistory(firstPlayerCard, secondPlayerCard);
+         defaultSettings();
       }
+   }
+   function colorCards(card1, card2) {
+      card1.style.border = "2px solid green";
+      card2.style.border = "2px solid red";
+   }
 
+   function addToHistory(player1, player2){
+      let text = `[${player1.name} vs ${player2.name}] `;
+      history.innerHTML += text;
+   }
 
-      function addToHistory(text){
-         history.innerHTML += text + "&nbsp";
-
-         firstSpan.innerText = '';
-         secondSpan.innerText = '';
-      }
+   function defaultSettings() {
+      firstPlayerCard = null;
+      secondPlayerCard = null;
+      result[0].textContent = null;
+      result[2].textContent = null;
    }
 }
