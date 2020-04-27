@@ -6,22 +6,22 @@ function solve() {
    let firstPlayerCard = '';
    let secondPlayerCard = '';
 
-   [firstPlayer, secondPlayer].map(player => player.addEventListener('click', function(){
-      if (event.target !== undefined) {
-         compareValues(player, event);
+   [firstPlayer, secondPlayer].map(player => player.addEventListener('click', function(e){
+      if (e.target !== undefined) {
+         compareValues(player, e);
       }
    }));
 
-   function compareValues(cardPlayer, clickEvent) {
-      if (cardPlayer === firstPlayer) {
-         firstPlayerCard = clickEvent.target;
-         result[0].textContent = clickEvent.target.name;
+   function compareValues(player, e) {
+      if (player === firstPlayer) {
+         firstPlayerCard = e.target;
+         result[0].textContent = e.target.name;
       } else {
-         secondPlayerCard = clickEvent.target;
-         result[2].textContent = clickEvent.target.name;
+         secondPlayerCard = e.target;
+         result[2].textContent = e.target.name;
       }
 
-      clickEvent.target.src = "images/whiteCard.jpg";
+      e.target.src = "images/whiteCard.jpg";
 
       if (result[0].textContent !== '' && result[2].textContent !== '') {
          if (Number(result[0].textContent) > Number(result[2].textContent)) {
@@ -29,7 +29,7 @@ function solve() {
          } else {
             colorCards(secondPlayerCard, firstPlayerCard);
          }
-         addToHistory(firstPlayerCard, secondPlayerCard);
+         addToHistory();
          defaultSettings();
       }
    }
@@ -38,14 +38,14 @@ function solve() {
       card2.style.border = "2px solid red";
    }
 
-   function addToHistory(card1, card2) {
-      history.innerHTML += `[${card1.name} vs ${card2.name}] `;
+   function addToHistory() {
+      history.textContent += `[${firstPlayerCard.name} vs ${secondPlayerCard.name}] `;
    }
 
    function defaultSettings() {
-      firstPlayerCard = null;
-      secondPlayerCard = null;
-      result[0].textContent = null;
-      result[2].textContent = null;
+      firstPlayerCard = '';
+      secondPlayerCard = '';
+      result[0].textContent = '';
+      result[2].textContent = '';
    }
 }
