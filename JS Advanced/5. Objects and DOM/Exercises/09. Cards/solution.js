@@ -6,8 +6,8 @@ function solve() {
    let firstPlayerCard = '';
    let secondPlayerCard = '';
 
-   [firstPlayer, secondPlayer].forEach(player => player.addEventListener('click', function(){
-      if (event.target.name !== undefined) {
+   [firstPlayer, secondPlayer].map(player => player.addEventListener('click', function(){
+      if (event.target !== undefined) {
          compareValues(player, event);
       }
    }));
@@ -38,9 +38,8 @@ function solve() {
       card2.style.border = "2px solid red";
    }
 
-   function addToHistory(player1, player2){
-      let text = `[${player1.name} vs ${player2.name}] `;
-      history.innerHTML += text;
+   function addToHistory(card1, card2) {
+      history.innerHTML += `[${card1.name} vs ${card2.name}] `;
    }
 
    function defaultSettings() {
