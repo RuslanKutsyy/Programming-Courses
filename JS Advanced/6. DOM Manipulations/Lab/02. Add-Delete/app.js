@@ -8,8 +8,6 @@ function addItem() {
     deleteURL.href = '#';
     deleteURL.addEventListener('click', function(e){
         this.parentElement.remove();
-
-        //e.preventDefault();
     })
 
     list.appendChild(newElement);
