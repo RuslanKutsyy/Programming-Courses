@@ -1,6 +1,5 @@
-package com.company;
-import com.company.Animal;
-import com.company.Dog;
+import Single_Inheritance.*;
+
 public class Main {
 
     public static void main(String[] args) {

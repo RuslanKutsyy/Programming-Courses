@@ -1,5 +1,4 @@
-package com.company;
-import com.company.Animal;
+package Single_Inheritance;
 
 public class Dog extends Animal {
     public void bark(){
