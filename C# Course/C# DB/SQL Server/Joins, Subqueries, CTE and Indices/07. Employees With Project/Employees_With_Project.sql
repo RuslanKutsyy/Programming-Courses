@@ -1,0 +1,6 @@
+SELECT TOP(5) e.EmployeeID, e.FirstName, p.Name
+FROM Employees AS e
+JOIN EmployeesProjects AS ep ON e.EmployeeID = ep.EmployeeID
+JOIN Projects AS p ON ep.ProjectID = p.ProjectID
+WHERE p.StartDate > CONVERT(date, '13/08/2002', 104) AND p.EndDate IS NULL
+ORDER BY e.EmployeeID
