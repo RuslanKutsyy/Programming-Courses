@@ -1,0 +1,1 @@
+SELECT MAX(LongestMagicWand) FROM WizzardDeposits
