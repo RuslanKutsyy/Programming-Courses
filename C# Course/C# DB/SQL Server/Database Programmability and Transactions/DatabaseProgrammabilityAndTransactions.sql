@@ -28,3 +28,21 @@ AS
 	WHERE LEFT(t.Name, LEN(@StartPhrase)) LIKE @StartPhrase
 
 GO
+
+-- Problem 4 - Employees from Town
+
+CREATE PROCEDURE usp_GetEmployeesFromTown @townName VARCHAR(50)
+AS
+	SELECT e.FirstName AS [First Name], e.LastName AS [Last Name]
+	FROM Employees AS e
+	JOIN Addresses AS ad
+		ON e.AddressID = ad.AddressID
+	JOIN Towns AS t
+		ON ad.TownID = t.TownID
+	WHERE t.Name = @townName
+
+GO
+
+EXEC usp_GetEmployeesFromTown @townName = 'Sofia'
+
+GO
