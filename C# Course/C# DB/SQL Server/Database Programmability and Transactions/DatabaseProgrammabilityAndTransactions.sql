@@ -49,7 +49,7 @@ GO
 
 -- Problem 5 - Salary Level Function
 
-CREATE FUNCTION ufn_GetSalaryLevel (@salary MONEY)
+CREATE OR ALTER FUNCTION ufn_GetSalaryLevel (@salary MONEY)
 RETURNS NVARCHAR(10)
 AS
 BEGIN
@@ -71,3 +71,23 @@ AS
 	WHERE dbo.ufn_GetSalaryLevel(e.Salary) = @level
 
 GO
+
+-- Problem 7 - Define Function
+
+CREATE FUNCTION ufn_IsWordComprised(@setOfLetters VARCHAR(MAX), @word VARCHAR(MAX))
+RETURNS BIT
+AS
+BEGIN
+	DECLARE @isComprised BIT = 0;
+	DECLARE @counter INT = 1;
+	DECLARE @letter CHAR = '';
+
+	WHILE (@counter <= LEN(@word))
+	BEGIN
+		SET @letter = SUBSTRING(@word, @counter, 1);
+		IF (CHARINDEX(@letter, @setOfLetters) = 0)
+			RETURN @isComprised;
+		SET @counter +=1;
+	END
+	RETURN @isComprised + 1;
+END;
