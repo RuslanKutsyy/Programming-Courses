@@ -46,3 +46,18 @@ GO
 EXEC usp_GetEmployeesFromTown @townName = 'Sofia'
 
 GO
+
+-- Problem 5 - Salary Level Function
+
+CREATE FUNCTION ufn_GetSalaryLevel (@salary MONEY)
+RETURNS NVARCHAR(10)
+AS
+BEGIN
+	DECLARE @result VARCHAR(10)
+	IF (@salary < 30000) SET @result = 'Low'
+	ELSE IF (@salary >= 30000 AND @salary <= 50000) SET @result = 'Average'
+	ELSE SET @result = 'High'
+RETURN @result
+END;
+
+GO
