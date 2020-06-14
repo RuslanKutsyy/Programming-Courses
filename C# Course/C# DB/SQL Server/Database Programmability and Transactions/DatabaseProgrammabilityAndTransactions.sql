@@ -18,3 +18,13 @@ AS
 	WHERE e.Salary >= @SalaryLevel
 
 GO
+
+-- Problem 3 - Town Names Starting With
+
+CREATE PROCEDURE usp_GetTownsStartingWith @StartPhrase VARCHAR(MAX)
+AS
+	SELECT t.Name
+	FROM Towns AS t
+	WHERE LEFT(t.Name, LEN(@StartPhrase)) LIKE @StartPhrase
+
+GO
