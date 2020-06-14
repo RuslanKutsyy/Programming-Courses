@@ -61,3 +61,13 @@ RETURN @result
 END;
 
 GO
+
+-- Problem 6 - Employees by Salary Level
+
+CREATE PROCEDURE usp_EmployeesBySalaryLevel @level VARCHAR(10)
+AS
+	SELECT e.FirstName, e.LastName
+	FROM Employees AS e
+	WHERE dbo.ufn_GetSalaryLevel(e.Salary) = @level
+
+GO
