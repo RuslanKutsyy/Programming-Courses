@@ -20,3 +20,17 @@ AS
 	ORDER BY ah.FirstName, ah.LastName
 
 GO
+
+-- Problem 11 - Future Value Function
+
+CREATE FUNCTION ufn_CalculateFutureValue(@sum MONEY, @yearInterestRate float, @numOfYears INT)
+RETURNS MONEY
+AS
+BEGIN
+	DECLARE @futureSum MONEY;
+	SET @futureSum = @sum * POWER(1 + @yearInterestRate, @numOfYears);
+	SET @futureSum = ROUND(@futureSum, 4);
+	RETURN @futureSum;
+END
+
+GO
