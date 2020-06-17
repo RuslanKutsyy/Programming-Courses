@@ -47,3 +47,17 @@ AS
 	WHERE a.Id = @AccountId
 
 GO
+
+-- Problem 13 - *Cash in User Games Odd Rows
+
+CREATE FUNCTION ufn_CashInUsersGames (@gameName NVARCHAR(MAX))
+RETURNS TABLE AS
+RETURN
+		SELECT SUM(a.Cash) AS [SumCash] FROM
+		(SELECT ug.Cash AS Cash, ROW_NUMBER() OVER(ORDER BY ug.Cash DESC) AS [RowNum], g.Name
+		FROM UsersGames AS ug
+		JOIN Games AS g ON g.Id = ug.GameId
+		WHERE g.Name = @gameName) AS a
+		WHERE a.RowNum % 2 = 1
+
+GO
