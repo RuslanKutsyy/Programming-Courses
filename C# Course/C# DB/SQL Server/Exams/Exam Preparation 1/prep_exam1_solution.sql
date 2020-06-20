@@ -88,3 +88,9 @@ WHERE Destination = 'Ayn Halagim')
 
 DELETE FROM Flights
 WHERE Destination = 'Ayn Halagim'
+
+
+--05. The "Tr" Planes
+
+SELECT p.Id, p.Name, p.Seats, p.Range FROM Planes AS p
+WHERE p.Name LIKE '%tr%'
