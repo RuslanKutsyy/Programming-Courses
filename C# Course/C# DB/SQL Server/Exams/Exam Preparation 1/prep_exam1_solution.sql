@@ -77,3 +77,14 @@ SET Price = 1.13 * Price
 WHERE Tickets.FlightId IN
 (SELECT f.Id FROM Flights AS f
 WHERE f.Destination = 'Carlsbad')
+
+
+--04. Delete
+
+DELETE FROM Tickets
+WHERE FlightId IN
+(SELECT Id FROM Flights
+WHERE Destination = 'Ayn Halagim')
+
+DELETE FROM Flights
+WHERE Destination = 'Ayn Halagim'
