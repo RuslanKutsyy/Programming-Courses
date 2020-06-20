@@ -101,3 +101,14 @@ SELECT t.FlightId, SUM(t.Price) AS Price
 FROM Tickets as t
 GROUP BY t.FlightId
 ORDER BY Price DESC, t.FlightId
+
+
+--07. Passenger Trips
+
+SELECT  p.FirstName + ' ' + p.LastName AS [Full Name],
+		f.Origin,
+		f.Destination
+FROM Passengers AS p
+JOIN Tickets AS t ON p.Id = t.PassengerId
+JOIN Flights AS f ON t.FlightId = f.Id
+ORDER BY [Full Name], Origin, Destination
