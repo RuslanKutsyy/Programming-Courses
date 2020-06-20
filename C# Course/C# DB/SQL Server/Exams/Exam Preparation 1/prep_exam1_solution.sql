@@ -142,3 +142,15 @@ JOIN LuggageTypes AS lt
 	ON l.LuggageTypeId = lt.Id
 ORDER BY [Full Name], [Plane Name],
 		 f.Origin, f.Destination, [Luggage Type]
+
+
+--10. PSP
+
+SELECT p.Name, p.Seats, COUNT(t.Id) AS [Passengers Count]
+FROM Planes AS p
+LEFT JOIN Flights AS f
+	ON p.Id = f.PlaneId
+LEFT JOIN Tickets AS t
+	ON f.Id = t.FlightId
+GROUP BY p.Name, p.Seats
+ORDER BY [Passengers Count] DESC, p.Name, p.Seats
