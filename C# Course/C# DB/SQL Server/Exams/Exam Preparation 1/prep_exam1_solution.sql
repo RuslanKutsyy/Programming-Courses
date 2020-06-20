@@ -112,3 +112,12 @@ FROM Passengers AS p
 JOIN Tickets AS t ON p.Id = t.PassengerId
 JOIN Flights AS f ON t.FlightId = f.Id
 ORDER BY [Full Name], Origin, Destination
+
+
+--08. Non Adventures People
+
+SELECT p.FirstName, p.LastName, p.Age
+FROM Passengers as p
+WHERE p.Id NOT IN
+(SELECT t.PassengerId FROM Tickets AS t)
+ORDER BY P.Age DESC, p.FirstName, p.LastName
