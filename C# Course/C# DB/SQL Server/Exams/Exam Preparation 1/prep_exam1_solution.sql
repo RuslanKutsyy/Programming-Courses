@@ -94,3 +94,10 @@ WHERE Destination = 'Ayn Halagim'
 
 SELECT p.Id, p.Name, p.Seats, p.Range FROM Planes AS p
 WHERE p.Name LIKE '%tr%'
+
+--06. Flight Profits
+
+SELECT t.FlightId, SUM(t.Price) AS Price
+FROM Tickets as t
+GROUP BY t.FlightId
+ORDER BY Price DESC, t.FlightId
