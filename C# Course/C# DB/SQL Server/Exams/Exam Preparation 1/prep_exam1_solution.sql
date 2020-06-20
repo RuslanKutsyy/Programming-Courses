@@ -154,3 +154,35 @@ LEFT JOIN Tickets AS t
 	ON f.Id = t.FlightId
 GROUP BY p.Name, p.Seats
 ORDER BY [Passengers Count] DESC, p.Name, p.Seats
+
+GO
+--11. Vacation
+
+CREATE OR ALTER FUNCTION udf_CalculateTickets (@origin NVARCHAR(100), @destination NVARCHAR(100), @peopleCount INT)
+RETURNS NVARCHAR(MAX)
+AS
+BEGIN
+
+IF(@peopleCount <= 0)
+	BEGIN
+		RETURN 'Invalid people count!';
+	END
+
+DECLARE @flightID INT = (SELECT f.Id FROM Flights AS f
+						JOIN Tickets AS t ON f.Id = t.FlightId
+						WHERE Origin = @origin AND
+						Destination = @destination);
+		
+IF (@flightID IS NULL)
+	BEGIN
+		RETURN 'Invalid flight!';
+	END
+
+DECLARE @ticketPrice MONEY = (SELECT Price FROM Tickets AS t
+					JOIN Flights AS f ON t.FlightId = f.Id
+					WHERE f.Origin = @origin and f.Destination = @destination);
+DECLARE @totalPrice MONEY = @ticketPrice * @peopleCount;
+RETURN CONCAT('Total price ', @totalPrice);
+END
+
+GO
