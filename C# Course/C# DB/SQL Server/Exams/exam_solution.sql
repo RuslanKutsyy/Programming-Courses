@@ -105,3 +105,20 @@ JOIN Cities AS c
 	ON h.CityId = c.Id
 GROUP BY c.Name
 ORDER BY Hotels DESC, City
+
+--07. Longest and Shortest Trips
+SELECT info.AccountId, info.FullName, MAX(info.LongestTrip) AS LongestTrip,
+		MIN(info.ShortestTrip) AS ShortestTrip
+FROM 
+(SELECT  atr.AccountId,
+		a.FirstName + ' ' + a.LastName AS FullName,
+		DATEDIFF(DAY, t.ArrivalDate, t.ReturnDate) AS LongestTrip,
+		DATEDIFF(DAY, t.ArrivalDate, t.ReturnDate) AS ShortestTrip
+FROM Trips AS t
+JOIN AccountsTrips AS atr
+	ON t.Id = atr.TripId
+JOIN Accounts AS a
+	ON atr.AccountId = a.Id
+WHERE a.MiddleName IS NULL AND t.CancelDate IS NULL) AS info
+GROUP BY info.AccountId, info.FullName
+ORDER BY LongestTrip DESC, ShortestTrip
