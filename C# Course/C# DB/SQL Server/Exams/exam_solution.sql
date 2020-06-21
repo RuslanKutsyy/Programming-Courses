@@ -52,7 +52,7 @@ CREATE TABLE AccountsTrips
 (
 	AccountId INT NOT NULL FOREIGN KEY REFERENCES Accounts(Id),
 	TripId INT NOT NULL FOREIGN KEY REFERENCES Trips(Id),
-	Luggage INT NOT NULL DEFAULT 0
+	Luggage INT NOT NULL
 	CONSTRAINT PK_AccountTrips PRIMARY KEY (AccountId, TripId)
 )
 
@@ -73,3 +73,10 @@ VALUES
 (103, '2013-07-17',	'2013-07-23', '2013-07-24',	NULL),
 (104, '2012-03-17',	'2012-03-31', '2012-04-01',	2012-01-10),
 (109, '2017-08-07',	'2017-08-28', '2017-08-29',	NULL)
+
+
+--03. Update
+
+UPDATE Rooms
+SET Price = Price * 1.14
+WHERE HotelId IN (5, 7, 9)
