@@ -239,3 +239,41 @@ RETURN @result
 END
 
 GO
+
+
+
+--12. Switch Room
+
+CREATE PROCEDURE usp_SwitchRoom(@TripId INT, @TargetRoomId INT)
+AS
+DECLARE @currentHotelID INT = (SELECT r.HotelId
+							   FROM Trips AS tr
+							   JOIN Rooms AS r ON tr.RoomId = r.Id
+							   WHERE tr.Id = @TripId);
+
+DECLARE @targetHotelId INT = (SELECT HotelId FROM Rooms WHERE Id = @TargetRoomId);
+
+IF(@currentHotelID != @targetHotelId)
+BEGIN;
+	THROW 50000, 'Target room is in another hotel!', 1;
+END
+
+DECLARE @bedsInTagetRoom INT = (SELECT Beds FROM Rooms WHERE Id = @TargetRoomId);
+DECLARE @bedsInCurrentRoom INT = (SELECT r.Beds FROM Rooms AS r
+								  JOIN Trips AS tr ON tr.RoomId = r.Id
+								  WHERE tr.Id = @TripId)
+
+IF(@bedsInTagetRoom < @bedsInCurrentRoom)
+	BEGIN;
+	THROW 50001, 'Not enough beds in target room!', 1;
+	END
+
+UPDATE Trips
+SET RoomId = @TargetRoomId
+WHERE Id = @TripId
+
+GO
+
+EXEC usp_SwitchRoom 10, 8
+
+SELECT RoomId FROM Trips WHERE Id = 10
