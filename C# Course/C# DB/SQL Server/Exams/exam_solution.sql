@@ -13,7 +13,7 @@ CREATE TABLE Hotels
 	[Name] NVARCHAR(30) NOT NULL,
 	CityId INT NOT NULL FOREIGN KEY REFERENCES Cities(Id),
 	EmployeeCount INT NOT NULL,
-	BaseRate MONEY
+	BaseRate DECIMAL(15, 2)
 )
 
 CREATE TABLE Rooms
@@ -33,8 +33,6 @@ CREATE TABLE Trips
 	ArrivalDate DATE NOT NULL,
 	ReturnDate DATE NOT NULL,
 	CancelDate DATE
-	--CONSTRAINT CH_BookDate CHECK(ArrivalDate > BookDate),
-	--CONSTRAINT CH_ArrivalDate CHECK(ReturnDate > ArrivalDate)
 )
 
 CREATE TABLE Accounts
@@ -45,7 +43,7 @@ CREATE TABLE Accounts
 	LastName NVARCHAR(50) NOT NULL,
 	CityId INT NOT NULL FOREIGN KEY REFERENCES Cities(Id),
 	BirthDate DATE NOT NULL,
-	Email VARCHAR(100) NOT NULL UNIQUE
+	Email NVARCHAR(100) NOT NULL UNIQUE
 )
 
 CREATE TABLE AccountsTrips
@@ -53,7 +51,7 @@ CREATE TABLE AccountsTrips
 	AccountId INT NOT NULL FOREIGN KEY REFERENCES Accounts(Id),
 	TripId INT NOT NULL FOREIGN KEY REFERENCES Trips(Id),
 	Luggage INT NOT NULL
-	CONSTRAINT PK_AccountTrips PRIMARY KEY (AccountId, TripId)
+	PRIMARY KEY (AccountId, TripId)
 )
 
 
@@ -86,3 +84,14 @@ WHERE HotelId IN (5, 7, 9)
 
 DELETE FROM AccountsTrips
 WHERE AccountId = 47
+
+
+--05. EEE-Mails
+
+SELECT a.FirstName, a.LastName, FORMAT(a.BirthDate, 'MM-dd-yyyy') AS BirthDate,
+		c.Name AS Hometown, a.Email
+FROM Accounts as a
+JOIN Cities AS c
+	ON a.CityId = c.Id
+WHERE Email LIKE 'e%'
+ORDER BY Hometown
