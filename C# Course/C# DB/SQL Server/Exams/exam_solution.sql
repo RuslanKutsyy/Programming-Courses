@@ -134,3 +134,25 @@ JOIN Accounts AS a
 	ON c.Id = a.CityId
 GROUP BY c.Id, c.Name, c.CountryCode
 ORDER BY Accounts DESC
+
+
+--09. Romantic Getaways
+
+
+SELECT * FROM 
+(SELECT ac.Id, ac.Email, c.Name AS City, COUNT(atr.TripId) AS Trips
+FROM Accounts AS ac
+JOIN AccountsTrips AS atr
+	ON ac.Id = atr.AccountId
+JOIN Trips AS tr
+	ON atr.TripId = tr.Id
+JOIN Rooms AS r
+	ON r.Id = tr.RoomId
+JOIN Hotels AS h
+	ON h.Id = r.HotelId
+JOIN Cities AS c
+	ON c.Id = h.CityId
+WHERE ac.CityId = h.CityId
+GROUP BY ac.Id, ac.Email, c.Name) AS info
+WHERE info.Trips >= 1
+ORDER BY info.Trips DESC, info.Id
