@@ -156,3 +156,29 @@ WHERE ac.CityId = h.CityId
 GROUP BY ac.Id, ac.Email, c.Name) AS info
 WHERE info.Trips >= 1
 ORDER BY info.Trips DESC, info.Id
+
+
+--10. GDPR Violation
+
+SELECT  tr.Id,
+		acc.FirstName + ' ' + ISNULL(acc.MiddleName, '') + ' ' + acc.LastName AS [Full Name],
+		cFrom.Name AS [From],
+		cTo.Name AS [To],
+		CASE
+			WHEN (tr.CancelDate IS NULL) THEN CONCAT(DATEDIFF(DAY, tr.ArrivalDate, tr.ReturnDate), ' days')
+			ELSE 'Canceled'
+		END AS Duration
+FROM Trips AS tr
+JOIN AccountsTrips AS atr
+	ON tr.Id = atr.TripId
+JOIN Accounts AS acc
+	ON atr.AccountId = acc.Id
+JOIN Cities AS cFrom
+	ON cFrom.Id = acc.CityId
+JOIN Rooms AS r
+	ON r.Id = tr.RoomId
+JOIN Hotels AS h
+	ON h.Id = r.HotelId
+JOIN Cities AS cTo
+	ON cTo.Id = h.CityId
+ORDER BY [Full Name], tr.Id
