@@ -85,6 +85,8 @@ WHERE HotelId IN (5, 7, 9)
 DELETE FROM AccountsTrips
 WHERE AccountId = 47
 
+SELECT COUNT(*) FROM AccountsTrips
+
 
 --05. EEE-Mails
 
@@ -126,7 +128,7 @@ ORDER BY LongestTrip DESC, ShortestTrip
 
 --08. Metropolis
 
-SELECT  c.Id, c.Name AS City,
+SELECT TOP(10) c.Id, c.Name AS City,
 		c.CountryCode AS Country,
 		COUNT(a.Id) AS Accounts
 FROM Cities AS c
@@ -182,3 +184,58 @@ JOIN Hotels AS h
 JOIN Cities AS cTo
 	ON cTo.Id = h.CityId
 ORDER BY [Full Name], tr.Id
+
+GO
+
+--11. Available Room (IN Progress)
+
+CREATE OR ALTER FUNCTION udf_GetAvailableRoom(@HotelId INT, @Date DATE, @People INT)
+RETURNS NVARCHAR(MAX)
+AS
+BEGIN
+DECLARE @result NVARCHAR(MAX);
+DECLARE @takenRoomId INT;
+DECLARE @roomTable TABLE (
+	Id INT NOT NULL,
+	[Type] NVARCHAR(MAX) NOT NULL,
+	Beds INT NOT NULL,
+	Price MONEY NOT NULL
+)
+
+SET @takenRoomId = (SELECT TOP(1) r.Id
+		FROM Rooms AS r
+		JOIN Trips AS tr
+			ON tr.RoomId = r.Id
+		WHERE r.HotelId = @HotelId
+		AND tr.CancelDate IS NULL AND r.Beds >= @People
+		AND (@Date NOT BETWEEN tr.ArrivalDate AND tr.ReturnDate)
+		ORDER BY r.Price DESC);
+
+IF(@takenRoomId IS NOT NULL)
+BEGIN
+	RETURN 'No rooms available';
+END
+
+INSERT INTO @roomTable
+SELECT TOP(1) r.Id, r.Type, r.Beds, r.Price
+	FROM Rooms AS r
+	JOIN Trips AS tr
+		ON tr.RoomId = r.Id
+	WHERE r.HotelId = @HotelId
+	AND tr.CancelDate IS NULL AND r.Beds >= @People
+	AND (@Date NOT BETWEEN tr.ArrivalDate AND tr.ReturnDate)
+	ORDER BY r.Price DESC;
+
+DECLARE @roomID INT = (SELECT Id FROM @roomTable);
+DECLARE @roomType NVARCHAR(MAX) = (SELECT [Type] FROM @roomTable);
+DECLARE @rooBedsCount INT = (SELECT Beds FROM @roomTable);
+DECLARE @roomPrice MONEY = (SELECT Price FROM @roomTable);
+DECLARE @HotelBaseRate MONEY = CAST((SELECT h.BaseRate FROM Hotels AS h WHERE h.Id = @HotelId) AS MONEY);
+DECLARE @PRICE MONEY = (@HotelBaseRate + @roomPrice) * @People;
+
+SET @result = CONCAT('Room ', @roomID, ': ', @roomType, ' (', @rooBedsCount, ' beds) - $', @PRICE);
+
+RETURN @result
+END
+
+GO
