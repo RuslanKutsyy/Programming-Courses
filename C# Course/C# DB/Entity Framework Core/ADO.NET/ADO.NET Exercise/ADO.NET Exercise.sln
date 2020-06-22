@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADO.NET Exercise", "ADO.NET Exercise\ADO.NET Exercise.csproj", "{B15090A1-7474-4325-9F97-F00BFBF73A53}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Villain_Names", "ADO.NET Exercise\Villain_Names.csproj", "{B15090A1-7474-4325-9F97-F00BFBF73A53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minion_Names", "Minion_Names\Minion_Names.csproj", "{A6EBF6AA-6153-45BA-9E8D-D9A5B60D0065}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{B15090A1-7474-4325-9F97-F00BFBF73A53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B15090A1-7474-4325-9F97-F00BFBF73A53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B15090A1-7474-4325-9F97-F00BFBF73A53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6EBF6AA-6153-45BA-9E8D-D9A5B60D0065}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6EBF6AA-6153-45BA-9E8D-D9A5B60D0065}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6EBF6AA-6153-45BA-9E8D-D9A5B60D0065}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6EBF6AA-6153-45BA-9E8D-D9A5B60D0065}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
