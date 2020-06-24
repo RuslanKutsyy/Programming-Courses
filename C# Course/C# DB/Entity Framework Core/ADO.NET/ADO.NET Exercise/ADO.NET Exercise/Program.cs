@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Data.SqlClient;
 
-namespace ADO.NET_Exercise
+namespace Villain_Names
 {
     class Program
     {
         static void Main(string[] args)
         {
-            string connectionString = "Server=SQLSRV;Database=MinionsDB;User ID = RemoteAdmin; Password=*******";
+            string connectionString = "Server=SQLSRV;Database=MinionsDB;User ID = RemoteAdmin; Password=P@ssword1";
 
             SqlConnection sqlConnection = new SqlConnection(connectionString);
             sqlConnection.Open();
