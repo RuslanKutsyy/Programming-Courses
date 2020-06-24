@@ -17,10 +17,9 @@ namespace Minion_Names
             dbConn.Open();
             List<string> queries = new List<string>();
 
-            string queryText = $"SELECT 'Villain: ' + Name FROM Villains WHERE Id = {id}";
-            string anotherQuery = "SELECT m.Name, m.Age FROM MinionsVillains AS mv " +
-                            "JOIN Minions AS m ON mv.MinionId = m.Id " +
-                            $"WHERE mv.VillainId = {id}";
+            string queryText = @"SELECT 'Villain: ' + Name FROM Villains WHERE Id = @id";
+            string anotherQuery = @"SELECT m.Name, m.Age FROM MinionsVillains AS mv
+                                  JOIN Minions AS m ON mv.MinionId = m.Id WHERE mv.VillainId = @id";
             queries.Add(queryText);
             queries.Add(anotherQuery);
 
@@ -40,6 +39,7 @@ namespace Minion_Names
             using (connection)
             {
                 SqlCommand sqlCmd = new SqlCommand(queries[0], connection);
+                sqlCmd.Parameters.AddWithValue("@id", id);
                 string villainData = (string)sqlCmd.ExecuteScalar();
 
                 if (villainData == null)
@@ -50,6 +50,7 @@ namespace Minion_Names
                 sb.AppendLine(villainData);
 
                 sqlCmd = new SqlCommand(queries[1], connection);
+                sqlCmd.Parameters.AddWithValue("@id", id);
 
                 SqlDataReader reader = sqlCmd.ExecuteReader();
                 int counter = 1;
