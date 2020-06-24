@@ -1,26 +1,20 @@
 function solve() {
-  let originalText = document.getElementById("input").innerText;
-  let textArr = originalText.split('.').filter(x => x);
-  let resultArr = [];
-  let text = '';
-  if (textArr.length <= 3) {
-    textArr.forEach(x => text += x);
-    resultArr.push(text);
-  } else {
-    while (textArr.length){
-      let tempArr = textArr.slice(0, 3);
-      text = tempArr.join(". ") + ".";
-      resultArr.push(text);
-      textArr.splice(0, 3);
-    }
+  let input = document.querySelector("div > p");
+  let output = document.getElementById("output");
+
+  if (input == null) {
+    throw new Error("Missing input.");
   }
 
-  let exerciseSection = document.getElementById('output');
+  let txt = input.innerHTML.split(".").filter(x => x !== '');
 
-  for (let el of resultArr) {
-    let par = document.createElement('p');
-    let textNode = document.createTextNode(el);
-    par.appendChild(textNode);
-    exerciseSection.appendChild(par);
+  for (let i = 0; i < txt.length; i+=3) {
+    let p = document.createElement("p");
+    p.innerHTML = txt.slice(i, i+3).join(". ") + '.';
+    output.appendChild(p);
   }
 }
+
+document.addEventListener("DOMContentLoaded", function(){
+  document.getElementById("formatItBtn").addEventListener("click", solve);
+});
