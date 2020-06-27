@@ -123,3 +123,15 @@ JOIN Jobs AS j
 ORDER BY m.MechanicId, j.IssueDate, j.JobId
 
 GO
+
+
+--06. Current Clients
+
+SELECT  c.FirstName + ' ' + c.LastName AS Client,
+		DATEDIFF(DAY, j.IssueDate, CAST('24 April 2017' AS date)) AS [Days going],
+		j.Status
+FROM Clients AS c
+JOIN Jobs AS j
+	ON c.ClientId = j.ClientId
+WHERE j.FinishDate IS NULL
+ORDER BY [Days going] DESC, c.ClientId
