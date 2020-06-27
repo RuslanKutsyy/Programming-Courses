@@ -89,3 +89,14 @@ INSERT INTO Parts (SerialNumber, [Description], Price, VendorId) VALUES
 ('WPY055980', 'High Temperature Adhesive', 13.94, 3)
 
 GO
+
+
+--03. Update
+
+
+UPDATE Jobs
+SET MechanicId = 3, Status = 'In Progress'
+WHERE Status = 'Pending'
+
+GO
+
