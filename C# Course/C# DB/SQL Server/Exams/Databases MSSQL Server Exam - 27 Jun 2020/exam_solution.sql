@@ -110,3 +110,16 @@ DELETE FROM Orders
 WHERE OrderId = 19
 
 GO
+
+
+--05. Mechanic Assignments
+
+SELECT  m.FirstName + ' ' + m.LastName AS Mechanic,
+		j.Status,
+		j.IssueDate
+FROM Mechanics as m
+JOIN Jobs AS j
+	ON j.MechanicId = m.MechanicId
+ORDER BY m.MechanicId, j.IssueDate, j.JobId
+
+GO
