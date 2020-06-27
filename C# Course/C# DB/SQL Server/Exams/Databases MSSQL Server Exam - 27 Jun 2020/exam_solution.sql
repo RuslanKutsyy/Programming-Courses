@@ -135,3 +135,18 @@ JOIN Jobs AS j
 	ON c.ClientId = j.ClientId
 WHERE j.FinishDate IS NULL
 ORDER BY [Days going] DESC, c.ClientId
+
+GO
+
+
+--07. Mechanic Performance
+
+SELECT  m.FirstName + ' ' + m.LastName AS Mechanic,
+		AVG(DATEDIFF(DAY, j.IssueDate, j.FinishDate)) AS [Average Days]
+FROM Mechanics AS m
+JOIN Jobs AS j ON M.MechanicId = j.MechanicId
+WHERE j.FinishDate IS NOT NULL
+GROUP BY m.FirstName + ' ' + m.LastName, m.MechanicId
+ORDER BY m.MechanicId
+
+GO
