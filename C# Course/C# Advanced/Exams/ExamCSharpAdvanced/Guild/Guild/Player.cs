@@ -6,8 +6,8 @@ namespace Guild
 {
     public class Player
     {
-        public string Name { get;}
-        public string Class { get;}
+        public string Name { get; private set; }
+        public string Class { get; private set; }
 
         public string Rank { get; set; }
 
@@ -28,7 +28,7 @@ namespace Guild
             sb.AppendLine($"Rank: {this.Rank}");
             sb.AppendLine($"Description: {this.Description}");       
 
-            return sb.ToString().Trim();
+            return sb.ToString().TrimEnd();
         }
     }
 }
