@@ -24,5 +24,12 @@ namespace SoftUni
 
             return sb.ToString().TrimEnd();
         }
+
+        public static string GetEmployeesWithSalaryOver50000(SoftUniContext context)
+        {
+            var sb = new StringBuilder();
+            context.Employees.Where(x => x.Salary > 50000).OrderBy(x => x.FirstName).Select(x => sb.AppendLine($"{x.FirstName} - {x.Salary:F2}")).ToList();
+            return sb.ToString().TrimEnd();
+        }
     }
 }
