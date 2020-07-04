@@ -41,5 +41,24 @@ namespace SoftUni
 
             return sb.ToString().TrimEnd();
         }
+
+        public static string AddNewAddressToEmployee(SoftUniContext context)
+        {
+            var address = new Address();
+            address.AddressText = "Vitoshka 15";
+            address.TownId = 4; ;
+            context.Addresses.Add(address);
+
+            var worker = context.Employees.Where(x => x.LastName.Equals("Nakov")).FirstOrDefault();
+            worker.Address = address;
+            address.Employees.Add(worker);
+            context.SaveChanges();
+
+            var sb = new StringBuilder();
+
+            context.Employees.OrderByDescending(x => x.AddressId).Take(10).Select(x => sb.AppendLine($"{x.Address.AddressText}")).ToList();
+
+            return sb.ToString().TrimEnd();
+        }
     }
 }
