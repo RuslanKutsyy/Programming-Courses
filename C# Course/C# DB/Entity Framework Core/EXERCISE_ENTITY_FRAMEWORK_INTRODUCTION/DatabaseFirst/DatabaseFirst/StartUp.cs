@@ -17,7 +17,7 @@ namespace SoftUni
 
             using (var dbData = new SoftUniContext())
             {
-                Console.WriteLine(DeleteProjectById(dbData));
+                Console.WriteLine(RemoveTown(dbData));
             }        
         }
 
@@ -276,6 +276,27 @@ namespace SoftUni
             }
 
             return sb.ToString().TrimEnd();
+        }
+
+
+        public static string RemoveTown(SoftUniContext context)
+        {
+            var employeesInSeattle = context.Employees.Where(e => e.Address.Town.Name == "Seattle").ToList();
+
+            foreach (var e in employeesInSeattle)
+            {
+                e.AddressId = null;
+            }
+
+            var addressesInSeattle = context.Addresses.Where(addr => addr.Town.Name == "Seattle").ToList();
+            var towns = context.Towns.Where(x => x.Name == "Seattle").ToList();
+            int count = addressesInSeattle.Count();
+
+            context.Addresses.RemoveRange(addressesInSeattle);
+            context.Towns.RemoveRange(towns);
+            context.SaveChanges();
+
+            return $"{count} addresses in Seattle were deleted";
         }
     }
 }
