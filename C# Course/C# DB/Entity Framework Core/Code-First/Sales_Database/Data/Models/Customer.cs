@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace P03_SalesDatabase.Data
+namespace P03_SalesDatabase.Data.Models
 {
     public class Customer
     {

@@ -1,7 +1,6 @@
-﻿using P03_SalesDatabase.Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Sales_Database.Data
+namespace P03_SalesDatabase.Data.Models
 {
     public class Store
     {

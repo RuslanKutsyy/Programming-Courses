@@ -1,7 +1,6 @@
-﻿using Sales_Database.Data;
-using System;
+﻿using System;
 
-namespace P03_SalesDatabase.Data
+namespace P03_SalesDatabase.Data.Models
 {
     public class Sale
     {
