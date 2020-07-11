@@ -6,6 +6,13 @@ namespace P01_HospitalDatabase.Data.Models
 {
     public class Patient
     {
+        public Patient()
+        {
+            this.Visitations = new HashSet<Visitation>();
+            this.Diagnoses = new HashSet<Diagnose>();
+            this.Prescriptions = new HashSet<PatientMedicament>();
+        }
+
         public int PatientId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

@@ -1,8 +1,6 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.SqlServer;
-using P01_HospitalDatabase.Data;
 
-namespace P01_HospitalDatabase
+namespace P03_SalesDatabase
 {
     class StartUp
     {

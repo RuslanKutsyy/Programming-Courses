@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore.SqlServer;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using P01_HospitalDatabase.Data.Models;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace P01_HospitalDatabase.Data
 {
@@ -20,19 +15,15 @@ namespace P01_HospitalDatabase.Data
         }
 
 
-        public virtual DbSet<Patient> Patients { get; set; }
-        public virtual DbSet<Diagnose> Diagnoses { get; set; }
-        public virtual DbSet<Medicament> Medicaments { get; set; }
-        public virtual DbSet<Visitation> Visitations { get; set; }
-        public virtual DbSet<PatientMedicament> Prescriptions { get; set; }
+        public DbSet<Patient> Patients { get; set; }
+        public DbSet<Diagnose> Diagnoses { get; set; }
+        public DbSet<Medicament> Medicaments { get; set; }
+        public DbSet<Visitation> Visitations { get; set; }
+        public DbSet<PatientMedicament> Prescriptions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(Configuration.ConnectionString);
-            }
-            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseSqlServer(Configuration.ConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -40,54 +31,56 @@ namespace P01_HospitalDatabase.Data
             modelBuilder.Entity<Patient>(entity =>
             {
                 entity.HasKey(p => p.PatientId);
-                
+
                 entity.Property(p => p.FirstName)
                 .HasMaxLength(50)
-                .IsUnicode(true)
-                .IsRequired(true);
+                .IsUnicode();
 
                 entity.Property(p => p.LastName)
                 .HasMaxLength(50)
-                .IsUnicode(true)
-                .IsRequired();
+                .IsUnicode();
 
                 entity.Property(p => p.Address)
                 .HasMaxLength(250)
-                .IsUnicode(true)
-                .IsRequired(true);
+                .IsUnicode();
 
                 entity.Property(p => p.Email)
-                .HasColumnType("VARCHAR(80)")
                 .HasMaxLength(80)
-                .IsRequired(true)
                 .IsUnicode(false);
 
-                entity.Property(p => p.HasInsurance).IsRequired();
+                //entity.Property(p => p.HasInsurance)
+                //.IsRequired();
 
-                entity.HasMany(p => p.Prescriptions)
-                .WithOne(pm => pm.Patient);
+                //entity.HasMany(p => p.Prescriptions)
+                //.WithOne(pr => pr.Patient)
+                //.HasForeignKey(p => p.PatientId);
 
-                entity.HasMany(p => p.Diagnoses)
-                .WithOne(d => d.Patient);
+                //entity.HasMany(p => p.Diagnoses)
+                //.WithOne(d => d.Patient)
+                //.HasForeignKey(d => d.DiagnoseId);
 
-                entity.HasMany(p => p.Visitations)
-                .WithOne(v => v.Patient);
+                //entity.HasMany(p => p.Visitations)
+                //.WithOne(v => v.Patient)
+                //.HasForeignKey(v => v.VisitationId);
             });
 
             modelBuilder.Entity<Visitation>(entity =>
             {
                 entity.HasKey(v => v.VisitationId);
 
-                entity.Property(v => v.Date).IsRequired();
-
                 entity.Property(v => v.Comments)
                 .HasMaxLength(250)
-                .IsUnicode(true)
-                .IsRequired(true);
+                .IsUnicode();
 
                 entity.HasOne(v => v.Patient)
                 .WithMany(p => p.Visitations)
+                .OnDelete(DeleteBehavior.Restrict)
                 .HasForeignKey(v => v.PatientId);
+
+                entity.HasOne(v => v.Doctor)
+                .WithMany(d => d.Visitations)
+                .HasForeignKey(v => v.DoctorId)
+                .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<Diagnose>(entity =>
@@ -96,17 +89,16 @@ namespace P01_HospitalDatabase.Data
 
                 entity.Property(d => d.Name)
                 .HasMaxLength(50)
-                .IsUnicode(true)
-                .IsRequired(true);
+                .IsUnicode();
 
                 entity.Property(d => d.Comments)
                 .HasMaxLength(250)
-                .IsUnicode(true)
-                .IsRequired(true);
+                .IsUnicode();
 
                 entity.HasOne(d => d.Patient)
                 .WithMany(p => p.Diagnoses)
-                .HasForeignKey(d => d.PatientId);
+                .HasForeignKey(d => d.PatientId)
+                .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<Medicament>(entity =>
@@ -115,21 +107,41 @@ namespace P01_HospitalDatabase.Data
 
                 entity.Property(m => m.Name)
                 .HasMaxLength(50)
-                .IsUnicode(true)
-                .IsRequired(false);
+                .IsUnicode();
+
+                //entity.HasMany(m => m.Prescriptions)
+                //.WithOne(m => m.Medicament)
+                //.HasForeignKey(m => m.MedicamentId);
             });
 
             modelBuilder.Entity<PatientMedicament>(entity =>
             {
-                entity.HasKey(pm => new { pm.MedicamentId, pm.PatientId });
+                entity.HasKey(pm => new { pm.PatientId, pm.MedicamentId });
 
                 entity.HasOne(pm => pm.Medicament)
                 .WithMany(m => m.Prescriptions)
-                .HasForeignKey(pm => pm.MedicamentId);
+                .HasForeignKey(pm => pm.MedicamentId)
+                .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(pm => pm.Patient)
                 .WithMany(p => p.Prescriptions)
-                .HasForeignKey(pm => pm.PatientId);
+                .HasForeignKey(pm => pm.PatientId)
+                .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<Doctor>(entity =>
+            {
+                entity.HasKey(d => d.DoctorId);
+
+                entity.Property(d => d.Name)
+                .HasMaxLength(100)
+                .IsUnicode()
+                .IsRequired();
+
+                entity.Property(d => d.Specialty)
+                .HasMaxLength(100)
+                .IsUnicode()
+                .IsRequired();
             });
         }
     }
