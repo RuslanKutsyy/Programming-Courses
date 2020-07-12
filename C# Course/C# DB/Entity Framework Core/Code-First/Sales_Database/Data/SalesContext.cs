@@ -38,6 +38,11 @@ namespace P03_SalesDatabase.Data
                 .IsUnicode()
                 .IsRequired();
 
+                entity.Property(p => p.Description)
+                .HasDefaultValue("No description")
+                .HasMaxLength(250)
+                .IsUnicode();
+
                 entity.Property(p => p.Quantity)
                 .IsRequired();
 
@@ -77,6 +82,7 @@ namespace P03_SalesDatabase.Data
                 entity.HasKey(s => s.SaleId);
 
                 entity.Property(s => s.Date)
+                .HasDefaultValueSql("GETDATE()")
                 .IsRequired();
 
                 entity.HasOne(s => s.Product)
