@@ -3,7 +3,9 @@
     using BookShop.Models.Enums;
     using Data;
     using Initializer;
+    using Microsoft.EntityFrameworkCore.Internal;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
     using System.Security.Cryptography.X509Certificates;
@@ -14,10 +16,10 @@
         public static void Main()
         {
             using var db = new BookShopContext();
-            //DbInitializer.ResetDatabase(db);
+            DbInitializer.ResetDatabase(db);
 
-            int year = int.Parse(Console.ReadLine());
-            Console.WriteLine(GetBooksNotReleasedIn(db, year));
+            var command = Console.ReadLine();
+            Console.WriteLine(GetBooksByCategory(db, command));
         }
 
         public static string GetBooksByAgeRestriction(BookShopContext context, string command)
@@ -72,6 +74,27 @@
                 {
                     x.Title
                 }).ToList().ForEach(x => sb.AppendLine(x.Title));
+
+            return sb.ToString().TrimEnd();
+        }
+
+        public static string GetBooksByCategory(BookShopContext context, string input)
+        {
+            StringBuilder sb = new StringBuilder();
+            var data = new List<string>();
+
+            var splittedInput = input.ToLower().Split(" ").ToList();
+            var books = context.Books.Select(b => new
+            {
+                b.Title,
+                BooksCategories = b.BookCategories.Select(x => x.Category.Name.ToLower()).ToList()
+            }).OrderBy(x => x.Title).ToList()
+            .Where(x => x.BooksCategories.Any(item => splittedInput.Contains(item)));
+
+            foreach (var book in books)
+            {
+                sb.AppendLine(book.Title);
+            }
 
             return sb.ToString().TrimEnd();
         }
