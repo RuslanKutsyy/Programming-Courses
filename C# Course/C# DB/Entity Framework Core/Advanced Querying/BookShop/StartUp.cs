@@ -14,9 +14,9 @@
         public static void Main()
         {
             using var db = new BookShopContext();
-            DbInitializer.ResetDatabase(db);
+            //DbInitializer.ResetDatabase(db);
 
-            Console.WriteLine(GetGoldenBooks(db));
+            Console.WriteLine(GetBooksByPrice(db));
         }
 
         public static string GetBooksByAgeRestriction(BookShopContext context, string command)
@@ -43,6 +43,21 @@
                     x.Title
                 })
                 .ToList().ForEach(x => sb.AppendLine(x.Title));
+
+            return sb.ToString().TrimEnd();
+        }
+
+        public static string GetBooksByPrice(BookShopContext context)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            context.Books.Where(x => x.Price > 40)
+                .OrderByDescending(x => x.Price)
+                .Select(x => new
+                {
+                    x.Title,
+                    x.Price
+                }).ToList().ForEach(x => sb.AppendLine($"{x.Title} - ${x.Price:F2}"));
 
             return sb.ToString().TrimEnd();
         }
