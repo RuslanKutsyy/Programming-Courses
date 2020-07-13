@@ -6,6 +6,7 @@
     using Microsoft.EntityFrameworkCore.Internal;
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Reflection;
     using System.Security.Cryptography.X509Certificates;
@@ -16,10 +17,10 @@
         public static void Main()
         {
             using var db = new BookShopContext();
-            DbInitializer.ResetDatabase(db);
+            //DbInitializer.ResetDatabase(db);
 
-            var command = Console.ReadLine();
-            Console.WriteLine(GetBooksByCategory(db, command));
+            var date = Console.ReadLine();
+            Console.WriteLine(GetBooksReleasedBefore(db, date));
         }
 
         public static string GetBooksByAgeRestriction(BookShopContext context, string command)
@@ -95,6 +96,24 @@
             {
                 sb.AppendLine(book.Title);
             }
+
+            return sb.ToString().TrimEnd();
+        }
+
+        public static string GetBooksReleasedBefore(BookShopContext context, string date)
+        {
+            StringBuilder sb = new StringBuilder();
+            var dateAsDate = DateTime.ParseExact(date, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+
+            context.Books.Where(x => x.ReleaseDate < dateAsDate)
+                .OrderByDescending(x => x.ReleaseDate)
+                .Select(x => new
+                {
+                    x.Title,
+                    x.EditionType,
+                    x.Price
+                }).ToList().ForEach(x => sb.AppendLine($"{x.Title} - {x.EditionType} - ${x.Price:F2}"));
+
 
             return sb.ToString().TrimEnd();
         }
