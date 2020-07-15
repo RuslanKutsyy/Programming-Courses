@@ -20,7 +20,7 @@
             //DbInitializer.ResetDatabase(db);
 
             var input = Console.ReadLine();
-            Console.WriteLine(GetAuthorNamesEndingIn(db, input));
+            Console.WriteLine(GetBookTitlesContaining(db, input));
         }
 
         public static string GetBooksByAgeRestriction(BookShopContext context, string command)
@@ -129,6 +129,20 @@
                 })
                 .OrderBy(x => x.FullName)
                 .ToList().ForEach(x => sb.AppendLine(x.FullName));
+
+            return sb.ToString().TrimEnd();
+        }
+
+        public static string GetBookTitlesContaining(BookShopContext context, string input)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            context.Books.Where(x => x.Title.ToLower().Contains(input.ToLower()))
+                .Select(x => new
+                {
+                    x.Title
+                })
+                .OrderBy(x => x.Title).ToList().ForEach(x => sb.AppendLine(x.Title));
 
             return sb.ToString().TrimEnd();
         }
