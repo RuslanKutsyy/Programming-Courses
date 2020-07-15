@@ -20,7 +20,7 @@
             //DbInitializer.ResetDatabase(db);
 
             //var input = int.Parse(Console.ReadLine());
-            Console.WriteLine(GetTotalProfitByCategory(db));
+            IncreasePrices(db);
         }
 
         public static string GetBooksByAgeRestriction(BookShopContext context, string command)
@@ -195,6 +195,45 @@
                 .ForEach(x => sb.AppendLine($"{x.Name} ${x.TotalProfit:F2}"));
 
             return sb.ToString().TrimEnd();
+        }
+
+        public static string GetMostRecentBooks(BookShopContext context)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            var data = context.Categories.Select(x => new
+            {
+                x.Name,
+                Books = x.CategoryBooks.Select(b => new
+                {
+                    b.Book.Title,
+                    ReleaseDate = b.Book.ReleaseDate.Value,
+                }).OrderByDescending(x => x.ReleaseDate).Take(3)
+            }).OrderBy(x => x.Name).ToList();
+
+            foreach (var category in data)
+            {
+                sb.AppendLine($"--{category.Name}");
+
+                foreach (var book in category.Books)
+                {
+                    sb.AppendLine($"{book.Title} ({book.ReleaseDate.Year})");
+                }
+            }
+
+            return sb.ToString().TrimEnd();
+        }
+
+        public static void IncreasePrices(BookShopContext context)
+        {
+            var books = context.Books.Where(x => x.ReleaseDate.Value.Year < 2010).ToList();
+
+            foreach (var book in books)
+            {
+                book.Price += 5;
+            }
+
+            context.SaveChanges();
         }
     }
 }
