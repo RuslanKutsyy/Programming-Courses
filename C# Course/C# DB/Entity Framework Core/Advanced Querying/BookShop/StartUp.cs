@@ -19,8 +19,8 @@
             using var db = new BookShopContext();
             //DbInitializer.ResetDatabase(db);
 
-            var input = Console.ReadLine();
-            Console.WriteLine(GetBooksByAuthor(db, input));
+            var input = int.Parse(Console.ReadLine());
+            Console.WriteLine(CountBooks(db, input));
         }
 
         public static string GetBooksByAgeRestriction(BookShopContext context, string command)
@@ -161,6 +161,11 @@
                 .ToList().ForEach(x => sb.AppendLine($"{x.Title} ({x.FullName})"));
 
             return sb.ToString().TrimEnd();
+        }
+
+        public static int CountBooks(BookShopContext context, int lengthCheck)
+        {
+            return context.Books.Where(x => x.Title.Length > lengthCheck).Count();
         }
     }
 }
