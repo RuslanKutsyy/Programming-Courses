@@ -20,7 +20,7 @@
             //DbInitializer.ResetDatabase(db);
 
             //var input = int.Parse(Console.ReadLine());
-            Console.WriteLine(CountCopiesByAuthor(db));
+            Console.WriteLine(GetTotalProfitByCategory(db));
         }
 
         public static string GetBooksByAgeRestriction(BookShopContext context, string command)
@@ -177,6 +177,22 @@
                 FullName = x.FirstName + " " + x.LastName,
                 Sum = x.Books.Sum(a => a.Copies)
             }).OrderByDescending(x => x.Sum).ToList().ForEach(x => sb.AppendLine($"{x.FullName} - {x.Sum}"));
+
+            return sb.ToString().TrimEnd();
+        }
+
+        public static string GetTotalProfitByCategory(BookShopContext context)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            context.Categories.Select(x => new
+            {
+                x.Name,
+                TotalProfit = x.CategoryBooks.Sum(a => a.Book.Price * a.Book.Copies)
+            })
+                .OrderByDescending(x => x.TotalProfit)
+                .ThenBy(x => x.Name).ToList()
+                .ForEach(x => sb.AppendLine($"{x.Name} ${x.TotalProfit:F2}"));
 
             return sb.ToString().TrimEnd();
         }
