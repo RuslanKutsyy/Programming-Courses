@@ -14,7 +14,8 @@ namespace ProductShop
         public static void Main(string[] args)
         {
             var dbContext = new ProductShopContext();
-            Console.WriteLine(ImportCategories(dbContext, File.ReadAllText(@"C:\\Users\rusla\\Documents\\GitHub\\SoftUniCourses\\C# Course\\C# DB\\Entity Framework Core\\JSON PROCESSING\\Product Shop\\ProductShop\\Datasets\\categories.json")));
+
+            Console.WriteLine(ImportCategoryProducts(dbContext, File.ReadAllText(@"C:\\Users\rusla\\Documents\\GitHub\\SoftUniCourses\\C# Course\\C# DB\\Entity Framework Core\\JSON PROCESSING\\Product Shop\\ProductShop\\Datasets\\categories-products.json")));
         }
 
         public static string ImportUsers(ProductShopContext context, string inputJson)
@@ -46,13 +47,13 @@ namespace ProductShop
             return $"Successfully imported {jsonData.Count()}";
         }
 
-        //public static string ImportCategoryProducts(ProductShopContext context, string inputJson)
-        //{
-        //    var jsonData = JsonConvert.DeserializeObject<List<CategoryProduct>>(inputJson);
-        //    context.CategoryProducts.AddRange(jsonData);
-        //    context.SaveChanges();
+        public static string ImportCategoryProducts(ProductShopContext context, string inputJson)
+        {
+            var jsonData = JsonConvert.DeserializeObject<List<CategoryProduct>>(inputJson);
+            context.CategoryProducts.AddRange(jsonData);
+            var count = context.SaveChanges();
 
-        //    return $"Successfully imported {jsonData.Count}";
-        //}
+            return $"Successfully imported {count}";
+        }
     }
 }
