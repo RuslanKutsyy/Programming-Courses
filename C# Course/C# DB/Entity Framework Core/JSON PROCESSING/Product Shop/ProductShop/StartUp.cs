@@ -16,7 +16,7 @@ namespace ProductShop
         {
             var dbContext = new ProductShopContext();
 
-            Console.WriteLine(GetProductsInRange(dbContext));
+            Console.WriteLine(GetSoldProducts(dbContext));
         }
 
         public static string ImportUsers(ProductShopContext context, string inputJson)
@@ -67,6 +67,27 @@ namespace ProductShop
                     seller = $"{x.Seller.FirstName} {x.Seller.LastName}"
                 })
                 .OrderBy(x => x.price)
+                .ToList(), Formatting.Indented);
+        }
+
+        public static string GetSoldProducts(ProductShopContext context)
+        {
+            return JsonConvert.SerializeObject(context.Users.Where(x => x.ProductsSold.Any(y => y.Buyer != null))
+                .OrderBy(x => x.LastName).ThenBy(x => x.FirstName)
+                .Select(x => new UsersWithBuyersView
+                {
+                    firstName = x.FirstName,
+                    lastName = x.LastName,
+                    soldProducts = x.ProductsSold
+                    .Where(p => p.Buyer != null)
+                    .Select(p => new SoldProductView
+                    {
+                        name = p.Name,
+                        price = (double)p.Price,
+                        buyerFirstName = p.Buyer.FirstName,
+                        buyerLastName = p.Buyer.LastName
+                    }).ToList()
+                })
                 .ToList(), Formatting.Indented);
         }
     }
