@@ -16,7 +16,7 @@ namespace ProductShop
         {
             var dbContext = new ProductShopContext();
 
-            Console.WriteLine(GetSoldProducts(dbContext));
+            Console.WriteLine(GetCategoriesByProductsCount(dbContext));
         }
 
         public static string ImportUsers(ProductShopContext context, string inputJson)
@@ -89,6 +89,25 @@ namespace ProductShop
                     }).ToList()
                 })
                 .ToList(), Formatting.Indented);
+        }
+
+        public static string GetCategoriesByProductsCount(ProductShopContext context)
+        {
+            var exportCategories = context.Categories
+                .OrderByDescending(c => c.CategoryProducts.Count())
+                .Select(c => new CategoryExportView
+                {
+                    category = c.Name,
+                    productsCount = c.CategoryProducts.Count(),
+                    averagePrice = $@"{c.CategoryProducts
+                    .Sum(p => p.Product.Price) / c.CategoryProducts.Count():F2}",
+                    totalRevenue = $"{c.CategoryProducts.Sum(p => p.Product.Price):F2}"
+                })
+                .ToList();
+
+            var json = JsonConvert.SerializeObject(exportCategories, Formatting.Indented);
+
+            return json;
         }
     }
 }
