@@ -6,6 +6,7 @@ using Castle.Core.Internal;
 using Newtonsoft.Json;
 using ProductShop.Data;
 using ProductShop.Models;
+using ProductShop.Views;
 
 namespace ProductShop
 {
@@ -15,7 +16,7 @@ namespace ProductShop
         {
             var dbContext = new ProductShopContext();
 
-            Console.WriteLine(ImportCategoryProducts(dbContext, File.ReadAllText(@"C:\\Users\rusla\\Documents\\GitHub\\SoftUniCourses\\C# Course\\C# DB\\Entity Framework Core\\JSON PROCESSING\\Product Shop\\ProductShop\\Datasets\\categories-products.json")));
+            Console.WriteLine(GetProductsInRange(dbContext));
         }
 
         public static string ImportUsers(ProductShopContext context, string inputJson)
@@ -54,6 +55,19 @@ namespace ProductShop
             var count = context.SaveChanges();
 
             return $"Successfully imported {count}";
+        }
+
+        public static string GetProductsInRange(ProductShopContext context)
+        {
+            return JsonConvert.SerializeObject(context.Products.Where(x => x.Price >= 500 && x.Price <= 1000)
+                .Select(x => new FilteredProductView
+                { 
+                    name = x.Name,
+                    price = (double)x.Price,
+                    seller = $"{x.Seller.FirstName} {x.Seller.LastName}"
+                })
+                .OrderBy(x => x.price)
+                .ToList(), Formatting.Indented);
         }
     }
 }
