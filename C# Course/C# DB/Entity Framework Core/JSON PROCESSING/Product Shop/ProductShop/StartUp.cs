@@ -16,7 +16,7 @@ namespace ProductShop
         {
             var dbContext = new ProductShopContext();
 
-            Console.WriteLine(GetCategoriesByProductsCount(dbContext));
+            Console.WriteLine(GetUsersWithProducts(dbContext));
         }
 
         public static string ImportUsers(ProductShopContext context, string inputJson)
@@ -82,10 +82,10 @@ namespace ProductShop
                     .Where(p => p.Buyer != null)
                     .Select(p => new SoldProductView
                     {
-                        name = p.Name,
-                        price = (double)p.Price,
-                        buyerFirstName = p.Buyer.FirstName,
-                        buyerLastName = p.Buyer.LastName
+                        Name = p.Name,
+                        Price = (double)p.Price,
+                        BuyerFirstName = p.Buyer.FirstName,
+                        BuyerLastName = p.Buyer.LastName
                     }).ToList()
                 })
                 .ToList(), Formatting.Indented);
@@ -106,6 +106,44 @@ namespace ProductShop
                 .ToList();
 
             var json = JsonConvert.SerializeObject(exportCategories, Formatting.Indented);
+
+            return json;
+        }
+
+        public static string GetUsersWithProducts(ProductShopContext context)
+        {
+            var allUsers = context.Users
+                .AsEnumerable()
+                .Where(x => x.ProductsSold.Any(p => p.Buyer != null))
+                .OrderByDescending(x => x.ProductsSold.Count(ps => ps.Buyer != null))
+                .Select(x => new UserView
+                 {
+                     FirstName = x.FirstName,
+                     LastName = x.LastName,
+                     Age = x.Age,
+                     SoldProducts = new AllSoldProductsView
+                     {
+                         Count = x.ProductsSold.Where(ps => ps.Buyer != null).Count(),
+                         Products = x.ProductsSold.Where(ps => ps.Buyer != null)
+                        .Select(ps => new ProductView
+                        {
+                            Name = ps.Name,
+                            Price = ps.Price
+                        }).ToList()
+                     }
+                 }).ToList();
+
+            var data = new AllUsersView
+            {
+                UsersCount = allUsers.Count,
+                Users = allUsers
+            };
+
+            var json =  JsonConvert.SerializeObject(data, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                Formatting = Formatting.Indented
+            });
 
             return json;
         }
