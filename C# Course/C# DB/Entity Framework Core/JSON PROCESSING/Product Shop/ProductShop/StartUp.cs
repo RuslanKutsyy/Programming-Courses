@@ -113,7 +113,6 @@ namespace ProductShop
         public static string GetUsersWithProducts(ProductShopContext context)
         {
             var allUsers = context.Users
-                .AsEnumerable()
                 .Where(x => x.ProductsSold.Any(p => p.Buyer != null))
                 .OrderByDescending(x => x.ProductsSold.Count(ps => ps.Buyer != null))
                 .Select(x => new UserView
