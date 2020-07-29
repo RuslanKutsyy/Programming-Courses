@@ -22,8 +22,7 @@ namespace CarDealer
             var suppliers = File.ReadAllText(@"C:\\Users\rusla\\Documents\\GitHub\\SoftUniCourses\\C# Course\\C# DB\\Entity Framework Core\\JSON PROCESSING\\Car Dealer\\CarDealer\\Datasets\\suppliers.json");
 
             ImportSuppliers(context, suppliers);
-            //ImportParts(context, parts);
-            //ImportCars(context, cars);
+            ImportCars(context, cars);
             //ImportCustomers(context, customers);
             //ImportSales(context, sales);
         }
@@ -35,6 +34,15 @@ namespace CarDealer
             context.SaveChanges();
 
             return $"Successfully imported {suppliers.Count()}.";
+        }
+        public static string ImportParts(CarDealerContext context, string inputJson)
+        {
+            var parts = JsonConvert.DeserializeObject<List<Part>>(inputJson)
+                .Where(p => context.Suppliers.Any(x => x.Id == p.SupplierId));
+            context.Parts.AddRange(parts);
+            var count = context.SaveChanges();
+
+            return $"Successfully imported {count}.";
         }
     }
 }
