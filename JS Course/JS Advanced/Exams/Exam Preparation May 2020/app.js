@@ -11,26 +11,40 @@ function solve() {
 
     document.querySelector("#add").addEventListener("click", addTask);
 
-    function createNewTask() {
-        let task = document.createElement("article");
-        task.innerHTML =
-        `<h3>${taskTitle}</h3>
-        <p>${taskDescription}</p>
-        <p>${taskDueDate}</p>
-        <div>
-            <button class = "green">Start</button>
-            <button class = "red">Delete</button>
-        </div>`;
-
-        return task;
-    }
-
     function addTask(e){
         e.preventDefault();
 
         if (taskTitle.value !== "" && taskDescription.value !== "" && taskDueDate.value !== "") {
-            let article = createNewTask();
-            openSection.appendChild(article);
+            const btnStart = createEl("button", "start", {className: "green"});
+            const btnDelete = createEl("button", "delete", {className: "red"});
+            const btnFinish = createEl("button", "finish", {className: "orange"});
+            
+            const task = createEl("article", [
+                createEl("h3", taskTitle.value)
+            ])
         }
+    }
+
+    function createEl(type, content, attributes) {
+        const el = document.createElement(type);
+
+        if (attributes !== undefined) {
+            Object.assign(el, attributes);
+        }
+
+        if (Array.isArray(content)) {
+            content.forEach(append);
+        } else {
+            append(content);
+        }
+
+        function append(node) {
+            if (typeof node === 'string') {
+                node = document.createTextNode(node);
+            }
+            el.appendChild(node);
+        }
+
+        return el;
     }
 }
