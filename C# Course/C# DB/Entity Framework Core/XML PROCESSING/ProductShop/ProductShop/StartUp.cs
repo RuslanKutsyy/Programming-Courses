@@ -4,6 +4,7 @@ using ProductShop.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml;
 
 namespace ProductShop
@@ -13,12 +14,14 @@ namespace ProductShop
         public static void Main(string[] args)
         {
             var usersXml = File.ReadAllText("../../../Datasets/users.xml");
+            var productsXml = File.ReadAllText("../../../Datasets/products.xml");
             var context = new ProductShopContext();
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
-            var result = ImportUsers(context, usersXml);
-            Console.WriteLine(result);
+            Console.WriteLine(ImportUsers(context, usersXml));
+            Console.WriteLine(ImportProducts(context, productsXml));
+
         }
 
         public static string ImportUsers(ProductShopContext context, string inputXml)
@@ -43,6 +46,26 @@ namespace ProductShop
             context.SaveChanges();
 
             return $"Successfully imported {users.Count}";
+        }
+
+        public static string ImportProducts(ProductShopContext context, string inputXml)
+        {
+            const string rootElement = "Products";
+            var productsDtos = XmlConverter.Deserializer<ImportProductDto>(inputXml, rootElement);
+
+            var products = productsDtos.Select(x => new Product
+            {
+                Name = x.Name,
+                Price = x.Price,
+                SellerId = x.SellerId,
+                BuyerId = x.BuyerId
+            }).ToArray();
+
+            context.Products.AddRange(products);
+            context.SaveChanges();
+
+
+            return $"Successfully imported {products.Length}";
         }
     }
 }
