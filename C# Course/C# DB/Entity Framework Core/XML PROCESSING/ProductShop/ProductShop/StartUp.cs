@@ -16,6 +16,7 @@ namespace ProductShop
             var usersXml = File.ReadAllText("../../../Datasets/users.xml");
             var productsXml = File.ReadAllText("../../../Datasets/products.xml");
             var categoriesXml = File.ReadAllText("../../../Datasets/categories.xml");
+            var categoryProductsXml = File.ReadAllText("../../../Datasets/categories-products.xml");
             var context = new ProductShopContext();
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
@@ -23,6 +24,7 @@ namespace ProductShop
             Console.WriteLine(ImportUsers(context, usersXml));
             Console.WriteLine(ImportProducts(context, productsXml));
             Console.WriteLine(ImportCategories(context, categoriesXml));
+            Console.WriteLine(ImportCategoryProducts(context, categoryProductsXml));
 
         }
 
@@ -83,6 +85,25 @@ namespace ProductShop
             context.SaveChanges();
 
             return $"Successfully imported {categories.Length}";
+        }
+
+        public static string ImportCategoryProducts(ProductShopContext context, string inputXml)
+        {
+            const string rootElement = "CategoryProducts";
+
+            var categoriesProductsResult = XmlConverter.Deserializer<ImportCategoryProductDto>(inputXml, rootElement);
+
+            var categoriesCount = context.Categories.Count();
+            var productsCount = context.Products.Count();
+
+            var categoriesProducts = categoriesProductsResult
+                .Where(x => x.CategoryId <= categoriesCount && x.ProductId <= productsCount)
+                .Select(x => new CategoryProduct { CategoryId = x.CategoryId, ProductId = x.ProductId })
+                .ToArray();
+            context.AddRange(categoriesProducts);
+            context.SaveChanges();
+
+            return $"Successfully imported {categoriesProducts.Length}";
         }
     }
 }
