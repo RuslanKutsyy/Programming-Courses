@@ -15,12 +15,14 @@ namespace ProductShop
         {
             var usersXml = File.ReadAllText("../../../Datasets/users.xml");
             var productsXml = File.ReadAllText("../../../Datasets/products.xml");
+            var categoriesXml = File.ReadAllText("../../../Datasets/categories.xml");
             var context = new ProductShopContext();
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
             Console.WriteLine(ImportUsers(context, usersXml));
             Console.WriteLine(ImportProducts(context, productsXml));
+            Console.WriteLine(ImportCategories(context, categoriesXml));
 
         }
 
@@ -64,8 +66,23 @@ namespace ProductShop
             context.Products.AddRange(products);
             context.SaveChanges();
 
-
             return $"Successfully imported {products.Length}";
+        }
+
+        public static string ImportCategories(ProductShopContext context, string inputXml)
+        {
+            const string rootElement = "Categories";
+            var categoriesDto = XmlConverter.Deserializer<ImportCategoryDto>(inputXml, rootElement);
+
+            var categories = categoriesDto.Select(x => new Category
+            {
+                Name = x.Name
+            }).ToArray();
+
+            context.Categories.AddRange(categories);
+            context.SaveChanges();
+
+            return $"Successfully imported {categories.Length}";
         }
     }
 }
