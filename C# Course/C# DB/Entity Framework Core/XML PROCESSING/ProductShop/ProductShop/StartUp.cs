@@ -1,4 +1,5 @@
 ﻿using ProductShop.Data;
+using ProductShop.Dtos.Export;
 using ProductShop.Dtos.Import;
 using ProductShop.Models;
 using System;
@@ -13,19 +14,21 @@ namespace ProductShop
     {
         public static void Main(string[] args)
         {
-            var usersXml = File.ReadAllText("../../../Datasets/users.xml");
-            var productsXml = File.ReadAllText("../../../Datasets/products.xml");
-            var categoriesXml = File.ReadAllText("../../../Datasets/categories.xml");
-            var categoryProductsXml = File.ReadAllText("../../../Datasets/categories-products.xml");
+            //var usersXml = File.ReadAllText("../../../Datasets/users.xml");
+            //var productsXml = File.ReadAllText("../../../Datasets/products.xml");
+            //var categoriesXml = File.ReadAllText("../../../Datasets/categories.xml");
+            //var categoryProductsXml = File.ReadAllText("../../../Datasets/categories-products.xml");
             var context = new ProductShopContext();
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            //context.Database.EnsureDeleted();
+            //context.Database.EnsureCreated();
 
-            Console.WriteLine(ImportUsers(context, usersXml));
-            Console.WriteLine(ImportProducts(context, productsXml));
-            Console.WriteLine(ImportCategories(context, categoriesXml));
-            Console.WriteLine(ImportCategoryProducts(context, categoryProductsXml));
+            //Console.WriteLine(ImportUsers(context, usersXml));
+            //Console.WriteLine(ImportProducts(context, productsXml));
+            //Console.WriteLine(ImportCategories(context, categoriesXml));
+            //Console.WriteLine(ImportCategoryProducts(context, categoryProductsXml));
 
+            var productsInRange = GetProductsInRange(context);
+            File.WriteAllText("../../../Results/productsInRange.xml", productsInRange);
         }
 
         public static string ImportUsers(ProductShopContext context, string inputXml)
@@ -104,6 +107,23 @@ namespace ProductShop
             context.SaveChanges();
 
             return $"Successfully imported {categoriesProducts.Length}";
+        }
+
+        public static string GetProductsInRange(ProductShopContext context)
+        {
+            const string rootElement = "Products";
+            var products = context.Products.Where(p => p.Price >= 500 && p.Price <= 1000)
+                .Select(x => new ExportProductInfoDto
+                {
+                    Name = x.Name,
+                    Price = x.Price,
+                    Buyer = x.Buyer.FirstName + " " + x.Buyer.LastName
+
+                })
+                .OrderBy(x => x.Price)
+                .Take(10).ToList();
+
+            return XmlConverter.Serialize(products, rootElement);
         }
     }
 }
