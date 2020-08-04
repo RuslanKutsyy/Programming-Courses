@@ -30,8 +30,11 @@ namespace ProductShop
             //var productsInRange = GetProductsInRange(context);
             //File.WriteAllText("../../../Results/productsInRange.xml", productsInRange);
 
-            var soldProducts = GetSoldProducts(context);
-            File.WriteAllText("../../../Results/soldProducts.xml", soldProducts);
+            //var soldProducts = GetSoldProducts(context);
+            //File.WriteAllText("../../../Results/soldProducts.xml", soldProducts);
+
+            var categories = GetCategoriesByProductsCount(context);
+            File.WriteAllText("../../../Results/cateforiesByProductsCount.xml", categories);
         }
 
         public static string ImportUsers(ProductShopContext context, string inputXml)
@@ -149,6 +152,26 @@ namespace ProductShop
                 }).ToList();
 
             return XmlConverter.Serialize(usersWithSoldProducts, rootElement);
+        }
+
+        public static string GetCategoriesByProductsCount(ProductShopContext context)
+        {
+            const string rootElement = "Categories";
+
+            var categories = context.Categories
+                .Select(c => new ExportCategoryInfoDto
+                {
+                    Name = c.Name,
+                    Count = c.CategoryProducts.Count,
+                    AveragePrice = c.CategoryProducts.Average(x => x.Product.Price),
+                    TotalRevenue = c.CategoryProducts.Sum(x => x.Product.Price)
+                })
+                .OrderByDescending(c => c.Count)
+                .ThenBy(c => c.TotalRevenue)
+                .ToList();
+
+            return XmlConverter.Serialize(categories, rootElement);
+
         }
     }
 }
