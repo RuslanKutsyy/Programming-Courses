@@ -26,7 +26,7 @@
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.;Database=CarDealer;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=SQLSRV;Database=CarDealer;User ID=RemoteAdmin;Password=P@ssword1;");
             }
         }
 
