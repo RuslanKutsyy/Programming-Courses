@@ -33,8 +33,11 @@ namespace ProductShop
             //var soldProducts = GetSoldProducts(context);
             //File.WriteAllText("../../../Results/soldProducts.xml", soldProducts);
 
-            var categories = GetCategoriesByProductsCount(context);
-            File.WriteAllText("../../../Results/cateforiesByProductsCount.xml", categories);
+            //var categories = GetCategoriesByProductsCount(context);
+            //File.WriteAllText("../../../Results/cateforiesByProductsCount.xml", categories);
+
+            var usersWithProducts = GetUsersWithProducts(context);
+            File.WriteAllText("../../../Results/usersWithProducts.xml", usersWithProducts);
         }
 
         public static string ImportUsers(ProductShopContext context, string inputXml)
@@ -171,7 +174,38 @@ namespace ProductShop
                 .ToList();
 
             return XmlConverter.Serialize(categories, rootElement);
+        }
 
+        public static string GetUsersWithProducts(ProductShopContext context)
+        {
+            const string rootElement = "Users";
+            var allUsers = context.Users
+                .Where(u => u.ProductsSold.Any())
+                .OrderByDescending(u => u.ProductsSold.Count())
+                .Select(u => new ExportUserWithProductsDto
+                {
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Age = u.Age,
+                    SoldProducts = new ExportSoldProductsInfoDto
+                    {
+                        Count = u.ProductsSold.Count(),
+                        Products = u.ProductsSold.Select(p => new ExportUserProductInfoDto
+                        {
+                            Name = p.Name,
+                            Price = p.Price
+                        }).OrderByDescending(x => x.Price)
+                        .ToList()
+                    }
+                }).Take(10).ToList();
+
+            var result = new ExportGeneralUserInfoDto
+            {
+                Count = context.Users.Count(x => x.ProductsSold.Any()),
+                Users = allUsers
+            };
+
+            return XmlConverter.Serialize(result, rootElement);
         }
     }
 }
