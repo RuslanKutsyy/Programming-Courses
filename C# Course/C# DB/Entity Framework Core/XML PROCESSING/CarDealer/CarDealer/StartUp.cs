@@ -8,6 +8,7 @@ using CarDealer.Dtos.Import;
 using System.Collections.Generic;
 using System.Linq;
 using CarDealer.Models;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace CarDealer
 {
@@ -16,14 +17,17 @@ namespace CarDealer
         public static void Main(string[] args)
         {
             CarDealerContext context = new CarDealerContext();
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            //context.Database.EnsureDeleted();
+            //context.Database.EnsureCreated();
 
-            var suppliers = File.ReadAllText("../../../Datasets/suppliers.xml");
-            Console.WriteLine(ImportSuppliers(context, suppliers));
+            //var suppliers = File.ReadAllText("../../../Datasets/suppliers.xml");
+            //Console.WriteLine(ImportSuppliers(context, suppliers));
 
-            var parts = File.ReadAllText("../../../Datasets/parts.xml");
-            Console.WriteLine(ImportParts(context, parts));
+            //var parts = File.ReadAllText("../../../Datasets/parts.xml");
+            //Console.WriteLine(ImportParts(context, parts));
+
+            //var cars = File.ReadAllText("../../../Datasets/cars.xml");
+            //Console.WriteLine(ImportCars(context, cars));
         }
 
         public static string ImportSuppliers(CarDealerContext context, string inputXml)
