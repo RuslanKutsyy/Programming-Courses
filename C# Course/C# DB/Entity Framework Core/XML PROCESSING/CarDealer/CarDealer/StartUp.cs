@@ -21,6 +21,9 @@ namespace CarDealer
 
             var suppliers = File.ReadAllText("../../../Datasets/suppliers.xml");
             Console.WriteLine(ImportSuppliers(context, suppliers));
+
+            var parts = File.ReadAllText("../../../Datasets/parts.xml");
+            Console.WriteLine(ImportParts(context, parts));
         }
 
         public static string ImportSuppliers(CarDealerContext context, string inputXml)
@@ -44,6 +47,40 @@ namespace CarDealer
             context.SaveChanges();
 
             return $"Successfully imported {suppliers.Count()}";
+        }
+
+        public static string ImportParts(CarDealerContext context, string inputXml)
+        {
+            var xmlSerializer = new XmlSerializer(typeof(List<ImportPartsDto>), new XmlRootAttribute("Parts"));
+            var partsDtos = (List<ImportPartsDto>)xmlSerializer.Deserialize(new StringReader(inputXml));
+
+            var parts = new List<Part>();
+
+            foreach (var partDto in partsDtos)
+            {
+                var supplier = context.Suppliers.FirstOrDefault(x => x.Id == partDto.SupplierId);
+
+                if (supplier == null)
+                {
+                    continue;
+                }
+
+                var part = new Part()
+                {
+                    Name = partDto.Name,
+                    Price = partDto.Price,
+                    Quantity = partDto.Quantity,
+                    SupplierId = partDto.SupplierId,
+                    Supplier = supplier
+                };
+
+                parts.Add(part);
+            }
+
+            context.Parts.AddRange(parts);
+            context.SaveChanges();
+
+            return $"Successfully imported {parts.Count()}";
         }
     }
 }
