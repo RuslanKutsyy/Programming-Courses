@@ -96,3 +96,10 @@ SET OriginCountryId = 14
 WHERE OriginCountryId = 8
 
 GO;
+
+--04. Delete
+
+DELETE FROM Feedbacks
+WHERE CustomerId = 14 OR ProductId = 5
+
+GO;
