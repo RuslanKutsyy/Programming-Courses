@@ -103,3 +103,11 @@ DELETE FROM Feedbacks
 WHERE CustomerId = 14 OR ProductId = 5
 
 GO;
+
+--05. Products By Price
+
+SELECT p.Name, p.Price, p.Description
+FROM Products as p
+ORDER BY p.Price DESC, p.Name
+
+GO;
