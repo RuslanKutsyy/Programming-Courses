@@ -7,7 +7,7 @@ function solveClasses() {
         }
 
         addComment(comment){
-            if (this.comments.findIndex(comment) < 0){
+            if (!this.comments.includes(comment)){
                 this.comments.push(comment);
                 return "Comment is added.";
             } else {
@@ -20,9 +20,9 @@ function solveClasses() {
         }
 
         toString(){
-            let textToReturn = `Here is ${ this.owner }'s pet ${ this.name }.`;
+            let textToReturn = `Here is ${ this.owner }\'s pet ${ this.name }.`;
             if (this.comments.length > 0){
-                textToReturn += `Special requirements: ${this.comments.join(", ")}`;
+                textToReturn += "\n" + `Special requirements: ${this.comments.join(", ")}`;
             }
 
             return textToReturn;
@@ -41,7 +41,7 @@ function solveClasses() {
         }
 
         toString() {
-            let text = `Main information:\n ${ this.name } is a cat with ${ this.insideHabits }`
+            let text = `Main information:\n${ this.name } is a cat with ${ this.insideHabits }`
             if (this.scratching){
                 text += ", but beware of scratches.";
             }
@@ -74,22 +74,3 @@ function solveClasses() {
         Dog
     }
 }
-
-let classes = solveClasses();
-let pet = new classes.Pet('Ann', 'Merry');
-console.log(pet.addComment('likes bananas'));
-console.log(pet.addComment('likes sweets'));
-console.log(pet.feed());
-console.log(pet.toString());
-
-let cat = new classes.Cat('Jim', 'Sherry', 'very good habits', true);
-console.log(cat.addComment('likes to be brushed'));
-console.log(cat.addComment('sleeps a lot'));
-console.log(cat.feed());
-console.log(cat.toString());
-
-let dog = new classes.Dog('Susan', 'Max', 5, 'good');
-console.log(dog.addComment('likes to be brushed'));
-console.log(dog.addComment('sleeps a lot'));
-console.log(dog.feed());
-console.log(dog.toString());
