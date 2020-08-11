@@ -128,7 +128,7 @@ SELECT c.FirstName + ' ' + c.LastName AS CustomerName,
 	   c.PhoneNumber,
 	   c.Gender
 FROM Customers AS c
-WHERE C.Id NOT IN 
+WHERE c.Id NOT IN 
 (SELECT f.CustomerId FROM Feedbacks AS f)
 ORDER BY c.Id
 
@@ -211,5 +211,40 @@ JOIN Countries AS cnt
 SELECT TOP 5 *
  FROM v_UserWithCountries
 ORDER BY Age
+
+GO;
+
+--12. Delete Products
+
+CREATE TRIGGER tr_DeleteProducts
+    ON Products
+    INSTEAD OF DELETE
+AS
+  BEGIN
+	DELETE
+	FROM Feedbacks
+	WHERE ProductId IN 
+	(SELECT P.Id FROM Products AS P
+	JOIN deleted AS D
+		ON P.Id = D.Id)
+
+	DELETE FROM ProductsIngredients
+	WHERE ProductId IN 
+	(SELECT P.Id FROM Products AS P
+	JOIN deleted AS D
+		ON P.Id = D.Id)
+
+	DELETE FROM Products
+	WHERE Products.Id  IN 
+	(SELECT P.Id FROM Products AS P
+	JOIN deleted AS D
+		ON P.Id = D.Id)
+  END
+
+Delete from Products
+where Id = 30
+
+DELETE FROM Feedbacks
+WHERE ProductId = 5
 
 GO;
