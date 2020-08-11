@@ -178,3 +178,21 @@ WHERE d.AverageRate >= 5 AND d.AverageRate <= 8
 ORDER BY d.DistributorName, d.IngredientName, d.ProductName
 
 GO;
+
+--10. Country Representative
+
+SELECT d.CountryName, d.DisributorName
+FROM (SELECT  c.Name AS CountryName,
+		dist.Name AS DisributorName,
+		COUNT(ing.Id) AS IngredientsCount,
+		DENSE_RANK()
+		OVER(PARTITION BY c.Name ORDER BY COUNT(ing.Id) DESC) AS [Rank]
+FROM Countries AS c
+LEFT JOIN Distributors AS dist
+	ON c.Id = dist.CountryId
+LEFT JOIN Ingredients AS ing
+	ON dist.Id = ing.DistributorId
+GROUP BY c.Name, dist.Name) AS d
+WHERE d.Rank = 1
+
+GO;
