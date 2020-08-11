@@ -146,6 +146,17 @@ ORDER BY D.Id
 
 GO;
 
+--08. Customers by Criteria
+
+SELECT c.FirstName, c.Age, c.PhoneNumber
+FROM Customers AS c
+JOIN Countries AS cnt
+	ON C.CountryId = cnt.Id
+WHERE (c.Age >= 21 AND C.FirstName LIKE '%an%') OR (c.PhoneNumber LIKE '%38' AND cnt.Name NOT LIKE 'Greece')
+ORDER BY c.FirstName, c.Age DESC
+
+GO;
+
 --09. Middle Range Distributors
 
 SELECT *
