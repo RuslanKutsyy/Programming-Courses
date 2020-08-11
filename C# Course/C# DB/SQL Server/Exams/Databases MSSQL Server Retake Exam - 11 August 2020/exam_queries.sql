@@ -121,3 +121,28 @@ WHERE f.Rate < 5
 ORDER BY f.ProductId DESC, f.Rate
 
 GO;
+
+--07. Customers without Feedback
+--3 OUF 6 FOR NOW
+SELECT c.FirstName + ' ' + c.LastName AS CustomerName,
+	   c.PhoneNumber,
+	   c.Gender
+FROM Customers AS c
+WHERE C.Id NOT IN 
+(SELECT f.CustomerId FROM Feedbacks AS f)
+ORDER BY c.Id
+
+SELECT d.CustomerName, d.PhoneNumber, d.Gender
+FROM (SELECT c.FirstName + ' ' + c.LastName AS CustomerName,
+	   c.PhoneNumber,
+	   c.Gender, COUNT(f.Id) as FeedbackCount,
+	   c.Id
+FROM Customers AS c
+LEFT JOIN Feedbacks AS f
+	ON c.Id = f.CustomerId
+GROUP BY c.Id, c.FirstName + ' ' + c.LastName, c.PhoneNumber, c.Gender) AS d
+WHERE d.FeedbackCount = 0
+ORDER BY D.Id
+
+GO;
+
