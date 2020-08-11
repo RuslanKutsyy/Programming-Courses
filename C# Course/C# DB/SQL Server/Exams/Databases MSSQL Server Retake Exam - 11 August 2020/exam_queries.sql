@@ -146,3 +146,24 @@ ORDER BY D.Id
 
 GO;
 
+--09. Middle Range Distributors
+
+SELECT *
+FROM (SELECT  dist.Name AS DistributorName,
+		i.Name AS IngredientName,
+		prod.Name AS ProductName,
+		AVG(f.Rate) AS AverageRate
+FROM Ingredients AS i
+JOIN ProductsIngredients AS pi
+	ON i.Id = pi.IngredientId
+JOIN Products AS prod
+	ON pi.ProductId = prod.Id
+JOIN Distributors AS dist
+	ON i.DistributorId = dist.Id
+JOIN Feedbacks AS f
+	ON prod.Id = f.ProductId
+GROUP BY dist.Name, i.Name, prod.Name) AS d
+WHERE d.AverageRate >= 5 AND d.AverageRate <= 8
+ORDER BY d.DistributorName, d.IngredientName, d.ProductName
+
+GO;
