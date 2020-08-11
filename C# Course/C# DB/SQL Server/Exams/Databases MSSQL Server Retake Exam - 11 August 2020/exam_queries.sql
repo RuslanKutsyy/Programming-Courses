@@ -196,3 +196,20 @@ GROUP BY c.Name, dist.Name) AS d
 WHERE d.Rank = 1
 
 GO;
+
+--11. Customers With Countries
+
+CREATE VIEW v_UserWithCountries AS
+SELECT  c.FirstName + ' ' + c.LastName AS CustomerName,
+		C.Age,
+		c.Gender,
+		cnt.Name
+FROM Customers AS c
+JOIN Countries AS cnt
+	ON c.CountryId = cnt.Id
+
+SELECT TOP 5 *
+ FROM v_UserWithCountries
+ORDER BY Age
+
+GO;
