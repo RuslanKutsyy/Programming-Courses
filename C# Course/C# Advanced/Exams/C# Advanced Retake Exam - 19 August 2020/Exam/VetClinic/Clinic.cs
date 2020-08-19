@@ -28,34 +28,22 @@ namespace VetClinic
         {
             var pet = this.data.FirstOrDefault(x => x.Name == name);
 
-            if (pet == null)
-            {
-                return false;
-            }
-
-            this.data.Remove(pet);
-            return true;
+            return this.data.Remove(pet);
         }
 
         public Pet GetPet(string name, string owner)
         {
-            var pet = this.data.FirstOrDefault(p => p.Name == name && p.Owner == owner);
-
-            return pet;
+            return this.data.FirstOrDefault(p => p.Name == name && p.Owner == owner);
         }
 
         public Pet GetOldestPet()
         {
-            var pet = this.data.OrderByDescending(p => p.Age).FirstOrDefault();
-            return pet;
+            return this.data.OrderByDescending(p => p.Age).FirstOrDefault();
         }
 
         public int Count
         {
-            get
-            {
-                return this.data.Count;
-            }
+            get => this.data.Count;
         }
 
         public string GetStatistics()
@@ -65,7 +53,7 @@ namespace VetClinic
             sb.AppendLine("The clinic has the following patients:");
             foreach (var pet in this.data)
             {
-                sb.AppendLine(pet.ToString());
+                sb.AppendLine($"Pet {pet.Name} with owner: {pet.Owner}");
             }
 
             return sb.ToString().TrimEnd();

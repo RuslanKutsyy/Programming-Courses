@@ -19,7 +19,7 @@ namespace VetClinic
 
         public override string ToString()
         {
-            return $"{this.Name} {this.Age} ({this.Owner})";
+            return $"Name: {Name} Age: {Age} Owner: {Owner}";
         }
     }
 }
