@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30320.27
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VetClinic", "VetClinic\VetClinic.csproj", "{995ACA06-A3CC-4A17-B0BD-F73EC342CAAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlowerWreaths", "FlowerWreaths\FlowerWreaths.csproj", "{AAE0D914-3826-4551-8E94-789F45B48142}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{995ACA06-A3CC-4A17-B0BD-F73EC342CAAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{995ACA06-A3CC-4A17-B0BD-F73EC342CAAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{995ACA06-A3CC-4A17-B0BD-F73EC342CAAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{995ACA06-A3CC-4A17-B0BD-F73EC342CAAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAE0D914-3826-4551-8E94-789F45B48142}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAE0D914-3826-4551-8E94-789F45B48142}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAE0D914-3826-4551-8E94-789F45B48142}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAE0D914-3826-4551-8E94-789F45B48142}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E42AD417-89D1-4AEF-9B13-E92C94200810}
+	EndGlobalSection
+EndGlobal
