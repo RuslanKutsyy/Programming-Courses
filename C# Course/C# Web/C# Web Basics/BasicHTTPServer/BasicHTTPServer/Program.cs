@@ -12,39 +12,44 @@ namespace BasicHTTPServer
     {
         static async Task Main(string[] args)
         {
-            const string newLine = "\r\n";
             TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 12345);
             tcpListener.Start();
 
             while (true)
             {
                 var client = tcpListener.AcceptTcpClient();
-                using (var stream = client.GetStream())
-                {
-                    int byteLength = 0;
-                    byte[] buffer = new byte[1000000];
-                    var length = stream.Read(buffer, byteLength, buffer.Length);
+                await ProcessClientAsync(client);
+            }
+        }
 
-                    string requestString = Encoding.UTF8.GetString(buffer, 0, length);
+        public static async Task ProcessClientAsync(TcpClient client)
+        {
+            const string newLine = "\r\n";
+            using (var stream = client.GetStream())
+            {
+                int byteLength = 0;
+                byte[] buffer = new byte[1000000];
+                var length = await stream.ReadAsync(buffer, byteLength, buffer.Length);
 
-                    Console.WriteLine(requestString);
+                string requestString = Encoding.UTF8.GetString(buffer, 0, length);
 
-                    string html = $"<h1>Hello from RusServer {DateTime.Now}</h1>" +
-                                  $"<form><input name=username /><input name=text />" +
-                                  $"<input type=submit /></form>";
+                Console.WriteLine(requestString);
 
-                    string response = "HTTP/1.1 200 OK" + newLine +
-                        "Server: RusServer2020" + newLine +
-                        "Content-Type: text/html; charset=utf-8" + newLine +
-                        "Content-Length: " + html.Length + newLine +
-                        newLine + html + newLine;
+                string html = $"<h1>Hello from RusServer {DateTime.Now}</h1>" +
+                              $"<form><input name=username /><input name=text />" +
+                              $"<input type=submit /></form>";
 
-                    byte[] responseBytes = Encoding.UTF8.GetBytes(response);
+                string response = "HTTP/1.1 200 OK" + newLine +
+                    "Server: RusServer2020" + newLine +
+                    "Content-Type: text/html; charset=utf-8" + newLine +
+                    "Content-Length: " + html.Length + newLine +
+                    newLine + html + newLine;
 
-                    stream.Write(responseBytes);
+                byte[] responseBytes = Encoding.UTF8.GetBytes(response);
 
-                    Console.WriteLine(new string('=', 70));
-                }
+                stream.Write(responseBytes);
+
+                Console.WriteLine(new string('=', 70));
             }
         }
 
