@@ -1,11 +1,8 @@
-﻿using SISServer.Contracts;
-using System;
+﻿using Chronometer.Contracts;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
-using System.Threading;
 
-namespace SISServer
+namespace Chronometer
 {
     public class Chronometer : IChronometer
     {

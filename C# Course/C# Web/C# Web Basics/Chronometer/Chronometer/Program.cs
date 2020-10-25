@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SISServer
+namespace Chronometer
 {
     class Program
     {
