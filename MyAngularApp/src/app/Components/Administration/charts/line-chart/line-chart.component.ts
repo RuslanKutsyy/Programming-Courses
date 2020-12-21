@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LINE_CHART_COLORS } from '../../shared/chart.colors';
+import { LINE_CHART_COLORS } from '../../../../shared/chart.colors';
 
 const LINE_CHART_SAMPLE_DATA: any[] = [
   { data: [32, 14, 46, 23, 38, 56], label: 'Sentiment Analysis'},

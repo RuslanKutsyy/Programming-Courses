@@ -11,7 +11,13 @@
 }
 
 .logo-right{
+    color: black;
     padding: 3px 5px 3px 8px;
     margin-left: -5px;
     border-radius: 4px;
 }
+
+#navigation-bar-left, #navigation-bar-right{
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
