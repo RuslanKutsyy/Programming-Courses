@@ -8,12 +8,13 @@ html {
 
 body {
     font-family: 'Source Sans Pro', sans-serif;
-    /* background-color: #1c2228; */
+    background-color: #1c2228;
+    color: #f7fff7;
     height: 100%;
 }
 
 a {
-    color: black
+    color: #44a4cd
 }
 
 a:hover{
