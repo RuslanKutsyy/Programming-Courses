@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { SectionSalesComponent } from "./app/Sections/section-sales/section-sales.component";
-import { SectionOrdersComponent } from "./app/Sections/section-orders/section-orders.component";
-import { SectionHealthComponent } from "./app/Sections/section-health/section-health.component";
+import { SectionSalesComponent } from "./app/Components/sections/section-sales/section-sales.component";
+import { SectionOrdersComponent } from "./app/Components/sections/section-orders/section-orders.component";
+import { SectionHealthComponent } from "./app/Components/sections/section-health/section-health.component";
 
 export const appRoutes: Routes = [
     { path: 'sales', component: SectionSalesComponent},

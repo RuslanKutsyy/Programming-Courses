@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Server } from '../../shared/server';
+import { Server } from '../../../shared/server';
 
 const SAMPLE_SERVERS = [
   {id: 1, name: 'dev-web', isOnline: true},

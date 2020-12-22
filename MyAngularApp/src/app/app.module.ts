@@ -7,14 +7,14 @@ import { NgModule } from '@angular/core';
 import { ChartsModule } from 'ng2-charts';
 
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { SectionSalesComponent } from './Sections/section-sales/section-sales.component';
-import { SectionOrdersComponent } from './Sections/section-orders/section-orders.component';
-import { SectionHealthComponent } from './Sections/section-health/section-health.component';
-import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
-import { LineChartComponent } from './charts/line-chart/line-chart.component';
-import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
+import { NavbarComponent } from './Components/navbar/navbar.component';
+import { SidebarComponent } from './Components/sidebar/sidebar.component';
+import { SectionSalesComponent } from './Components/sections/section-sales/section-sales.component';
+import { SectionOrdersComponent } from './Components/sections/section-orders/section-orders.component';
+import { SectionHealthComponent } from './Components/sections/section-health/section-health.component';
+import { BarChartComponent } from './Components/charts/bar-chart/bar-chart.component';
+import { LineChartComponent } from './Components/charts/line-chart/line-chart.component';
+import { PieChartComponent } from './Components/charts/pie-chart/pie-chart.component';
 import { ServerComponent } from './server/server.component';
 
 @NgModule({
