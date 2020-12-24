@@ -1,0 +1,74 @@
+[
+  {
+    "TotalPrice": 124.5,
+    "Placed": "2020-05-24 13:09:20",
+    "Completed": "2020-08-20 07:16:40",
+    "CustomerId": 1
+  },
+  {
+    "TotalPrice": 150,
+    "Placed": "2020-07-13 10:03:45",
+    "Completed": "2020-09-01 18:00:00",
+    "CustomerId": 2
+  },
+  {
+    "TotalPrice": 90.5,
+    "Placed": "2020-06-06 01:24:16",
+    "Completed": "2020-08-07 11:52:08",
+    "CustomerId": 3
+  },
+  {
+    "TotalPrice": 200,
+    "Placed": "2020-07-20 09:13:53",
+    "Completed": "2020-09-04 14:10:11",
+    "CustomerId": 4
+  },
+  {
+    "TotalPrice": 225.6,
+    "Placed": "2020-07-21 15:10:12",
+    "Completed": "2020-08-29 14:09:08",
+    "CustomerId": 5
+  },
+  {
+    "TotalPrice": 1245.7,
+    "Placed": "2020-08-13 18:44:32",
+    "Completed": "2020-09-23 11:53:12",
+    "CustomerId": 6
+  },
+  {
+    "TotalPrice": 70,
+    "Placed": "2020-10-10 19:19:17",
+    "Completed": "2020-11-20 20:12:18",
+    "CustomerId": 7
+  },
+  {
+    "TotalPrice": 174.9,
+    "Placed": "2020-12-24 11:15:10",
+    "Completed": null,
+    "CustomerId": 8
+  },
+  {
+    "TotalPrice": 144.2,
+    "Placed": "2020-08-08 11:45:33",
+    "Completed": "2020-09-20 04:20:11",
+    "CustomerId": 9
+  },
+  {
+    "TotalPrice": 238.3,
+    "Placed": "2020-08-09 10:44:20",
+    "Completed": "2020-10-20 16:19:04",
+    "CustomerId": 10
+  },
+  {
+    "TotalPrice": 329.6,
+    "Placed": "2020-10-03 12:23:12",
+    "Completed": "2020-11-14 15:12:55",
+    "CustomerId": 2
+  },
+  {
+    "TotalPrice": 350,
+    "Placed": "2020-12-12 11:13:10",
+    "Completed": null,
+    "CustomerId": 3
+  }
+]

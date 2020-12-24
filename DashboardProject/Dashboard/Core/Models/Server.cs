@@ -10,5 +10,6 @@ namespace Core.Models
     {
         public string Name { get; set; }
         public bool IsOnline { get; set; }
+        public DateTime? LastDownDate { get; set; }
     }
 }

@@ -1,0 +1,72 @@
+[
+  {
+    "FirstName": "Ivan",
+    "LastName": "Ivanov",
+    "Email": "ivanov@gmail.com",
+    "City": "Sofia",
+    "Address": "Mladost 3"
+  },
+  {
+    "FirstName": "Ruslan",
+    "LastName": "Kutsyy",
+    "Email": "ruslan.kutsiy@gmail.com",
+    "City": "Sofia",
+    "Address": "Mladost 2"
+  },
+  {
+    "FirstName": "Kseniya",
+    "LastName": "Margarit",
+    "Email": "margarit@gmail.com",
+    "City": "Sofia",
+    "Address": "Mladost 2"
+  },
+  {
+    "FirstName": "Max",
+    "LastName": "Zakharchuk",
+    "Email": "zakharchuk@gmail.com",
+    "City": "Sofia",
+    "Address": "Lozenets"
+  },
+  {
+    "FirstName": "Alex",
+    "LastName": "Ivanov",
+    "Email": "a.ivanov@gmail.com",
+    "City": "Varna",
+    "Address": "bul. Slivnitsa, 15"
+  },
+  {
+    "FirstName": "Dimitar",
+    "LastName": "Petkov",
+    "Email": "dim@outlook.com",
+    "City": "Stara Zagora",
+    "Address": "bul. Tsar Simeon Veliki, 22"
+  },
+  {
+    "FirstName": "Fiodor",
+    "LastName": "Skorozhenko",
+    "Email": "skor@gmail.com",
+    "City": "Sofia",
+    "Address": "Mladost 4"
+  },
+  {
+    "FirstName": "John",
+    "LastName": "Smith",
+    "Email": "jsmith@gmail.com",
+    "City": "Sofia",
+    "Address": "Studentski grad"
+  },
+  {
+    "FirstName": "Roman",
+    "LastName": "Shubin",
+    "Email": "r.shubin@gmail.com",
+    "City": "Sofia",
+    "Address": "Strelbishte"
+  },
+  {
+    "FirstName": "Irina",
+    "LastName": "Kutsa",
+    "Email": "irina.kutsa@gmail.com",
+    "City": "Kyiv",
+    "Address": "Pozniaky"
+  }
+]
