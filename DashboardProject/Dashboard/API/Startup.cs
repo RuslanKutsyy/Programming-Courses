@@ -1,3 +1,4 @@
+using Core.Models;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace API
 {
@@ -24,9 +26,12 @@ namespace API
         {
             connectionString = Configuration["secretConnectionString"];
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+
             services.AddDbContext<StoreContext>(options => options.UseSqlServer(connectionString));
             services.AddTransient<DataSeed>();
+            services.AddScoped(typeof(IGenericRepository<>), typeof(CustomersRepository<>));
             services.AddLogging();
         }
 
@@ -48,7 +53,10 @@ namespace API
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "api/{controller=Home}/{action}/{id?}"
+                    );
             });
         }
     }

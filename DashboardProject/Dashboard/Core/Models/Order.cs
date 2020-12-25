@@ -10,12 +10,15 @@ namespace Core.Models
 {
     public class Order : BaseEntity
     {
+        [Required]
         [Column(TypeName = "decimal(18,4)")]
         public decimal TotalPrice { get; set; }
+        [Required]
         [DataType(DataType.Date)]
         public DateTime Placed { get; set; }
         public DateTime? Completed { get; set; }
         public Customer Customer { get; set; }
+        [Required]
         public int CustomerId { get; set; }
     }
 }
