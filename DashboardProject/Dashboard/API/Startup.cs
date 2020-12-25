@@ -31,8 +31,11 @@ namespace API
 
             services.AddDbContext<StoreContext>(options => options.UseSqlServer(connectionString));
             services.AddTransient<DataSeed>();
-            services.AddScoped(typeof(IGenericRepository<>), typeof(CustomersRepository<>));
             services.AddLogging();
+            services.AddCors(opt => {
+                opt.AddPolicy("CorsPolicy",
+                    c => c.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials())
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +45,8 @@ namespace API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("CorsPolicy");
 
             seed.Seed(context, loggerFactory);
 
@@ -55,7 +60,7 @@ namespace API
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "api/{controller=Home}/{action}/{id?}"
+                    pattern: "api/{controller}/{action}/{id?}"
                     );
             });
         }

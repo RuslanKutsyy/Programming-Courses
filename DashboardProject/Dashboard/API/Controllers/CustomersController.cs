@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using Core.Models;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace API.Controllers
 {
@@ -13,25 +13,27 @@ namespace API.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        private readonly IGenericRepository<Customer> repository;
+        private readonly StoreContext context;
 
-        public CustomersController(IGenericRepository<Customer> repository)
+        public CustomersController(StoreContext context)
         {
-            this.repository = repository;
+            this.context = context;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCustomersAsync()
+        public async Task<IActionResult> ListAllCustomers()
         {
-            var customer = await this.repository.GetAllAsync();
+            var customer = await this.context.Customers.ToListAsync();
 
-            return Ok(customer.ToList());
+            return Ok(customer);
         }
 
         [HttpGet("{id}", Name = "GetCustomerAsync")]
         public async Task<IActionResult> GetCustomerByIdAsync(int id)
         {
-            var customer = await this.repository.GetByIdAsync(id);
+            var customer = await this.context.Customers
+                .Include(c => c.Orders).FirstAsync(c => c.Id == id);
+                
             if (customer == null)
             {
                 return NotFound();
@@ -43,15 +45,9 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddNewCustomerAsync([FromBody] Customer customer)
         {
-            try
-            {
-                await this.repository.AddAsync(customer);
-                return CreatedAtRoute("GetCustomerAsync", new { id = customer.Id }, customer);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            await this.context.Customers.AddAsync(customer);
+            await this.context.SaveChangesAsync();
+            return CreatedAtRoute("GetCustomerAsync", new { id = customer.Id }, customer);
         }
     }
 }
