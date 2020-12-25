@@ -34,7 +34,7 @@ namespace API
             services.AddLogging();
             services.AddCors(opt => {
                 opt.AddPolicy("CorsPolicy",
-                    c => c.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials())
+                    c => c.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             });
         }
 

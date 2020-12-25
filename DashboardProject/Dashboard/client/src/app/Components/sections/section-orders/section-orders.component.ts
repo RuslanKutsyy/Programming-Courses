@@ -35,4 +35,11 @@ export class SectionOrdersComponent implements OnInit {
     this.orders = orders;
   }
 
+  goToPrevious() : void {
+    console.log("previous"); 
+  }
+
+  goToNext() : void {
+    console.log("next");    
+  }
 }
