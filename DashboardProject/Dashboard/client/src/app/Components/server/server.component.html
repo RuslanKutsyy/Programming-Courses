@@ -1,0 +1,20 @@
+<div class="card mb-3 shadow block-status" [ngStyle]="{'background-color': color}">
+    <div class="card-header name">
+        <label>Name: </label>
+        {{ serverInput.name }}
+    </div>
+    <div>
+        <div *ngIf="serverInput.isOnline" class="card-body status">
+            <span>Available</span>
+        </div>
+        <div *ngIf="serverInput.isOnline == false" class="card-body status">
+            <span>Unavailable</span>
+        </div>
+    </div>
+    <div class="card-body date">
+        <span>Last DownTime Date: </span>
+        <div *ngIf="serverInput.lastDownDate != null">{{ serverInput.lastDownDate | date: "short"}}</div>
+        <div *ngIf="serverInput.lastDownDate == null">No Info</div>
+    </div>
+    <button class="btn btn-secondary action" (click)="toggleStatus(serverInput.isOnline, serverInput.id)">{{ buttonText }}</button>
+</div>

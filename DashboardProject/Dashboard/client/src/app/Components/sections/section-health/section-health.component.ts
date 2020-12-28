@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { map } from 'rxjs/operators';
 import { Server } from '../../../shared/server';
+import { ServerDataService } from '../../services/server-service/server-data.service';
 
-const SAMPLE_SERVERS = [
-  {id: 1, name: 'dev-web', isOnline: true},
-  {id: 2, name: 'dev-mail', isOnline: false},
-  {id: 3, name: 'prod-web', isOnline: true},
-  {id: 4, name: 'prod-mail', isOnline: true}
-]
 
 @Component({
   selector: 'app-section-health',
@@ -15,11 +11,13 @@ const SAMPLE_SERVERS = [
 })
 export class SectionHealthComponent implements OnInit {
 
-  constructor() { }
+  servers: Server[];
 
-  servers: Server[] = SAMPLE_SERVERS;
-
-  ngOnInit(): void {
+  constructor(private srvSvc: ServerDataService) { 
+    
   }
 
+  ngOnInit(): void {
+    this.srvSvc.getServers().subscribe(response => this.servers = response);
+  }
 }

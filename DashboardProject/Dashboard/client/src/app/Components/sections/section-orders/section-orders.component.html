@@ -22,7 +22,7 @@
                 <td>{{ order.totalPrice }}</td>
                 <td>{{ order.placed | date: 'short' }}</td>
                 <ng-template [ngIf]="order.completed != null" [ngIfElse]="notCompleted">
-                    <td>{{ order.completed | date: 'medium' }}</td>
+                    <td>{{ order.completed | date: 'short' }}</td>
                     <td>{{ "Completed" }}</td>
                 </ng-template>
                 <ng-template #notCompleted>

@@ -16,7 +16,7 @@ import { SectionHealthComponent } from './Components/sections/section-health/sec
 import { BarChartComponent } from './Components/charts/bar-chart/bar-chart.component';
 import { LineChartComponent } from './Components/charts/line-chart/line-chart.component';
 import { PieChartComponent } from './Components/charts/pie-chart/pie-chart.component';
-import { ServerComponent } from './server/server.component';
+import { ServerComponent } from './Components/server/server.component';
 import { PaginationComponent } from './Components/pagination/pagination.component';
 import { FormsModule } from '@angular/forms';
 

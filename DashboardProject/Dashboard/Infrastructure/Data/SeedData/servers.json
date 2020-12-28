@@ -32,6 +32,31 @@
   {
     "Name": "recovery-dc",
     "IsOnline": true,
+    "LastDownDate": "2020-10-22 00:00:28"
+  },
+  {
+    "Name": "sec-srv-2",
+    "IsOnline": false,
+    "LastDownDate": "2020-11-07 08:20:28"
+  },
+  {
+    "Name": "temp-srv-rec",
+    "IsOnline": true,
+    "LastDownDate": null
+  },
+  {
+    "Name": "main-site-dc",
+    "IsOnline": true,
+    "LastDownDate": null
+  },
+  {
+    "Name": "sec-db-srv",
+    "IsOnline": true,
+    "LastDownDate": null
+  },
+  {
+    "Name": "recovery-dc-4",
+    "IsOnline": true,
     "LastDownDate": null
   }
 ]

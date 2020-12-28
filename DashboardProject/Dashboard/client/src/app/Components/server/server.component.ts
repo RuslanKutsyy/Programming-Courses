@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Server } from '../shared/server';
+import { Server } from '../../shared/server';
+import { ServerDataService } from '../services/server-service/server-data.service';
 
 @Component({
   selector: 'app-server',
@@ -8,7 +9,7 @@ import { Server } from '../shared/server';
 })
 export class ServerComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http: ServerDataService) { }
 
   color : string;
   buttonText: string;
@@ -31,7 +32,13 @@ export class ServerComponent implements OnInit {
     }
   }
 
-  toggleStatus(onlineStatus: boolean) : void {
-    this.setServerStatus(!onlineStatus);
+  toggleStatus(onlineStatus: boolean, id: number) : void {    
+    let message = onlineStatus ? "deactivate" : "activate";
+    this.http.updateServerStatus(id, message).toPromise().then((response => {
+      if (response == null){
+        this.setServerStatus(!onlineStatus);
+      }
+    })).catch(console.error);
   }
 }
+

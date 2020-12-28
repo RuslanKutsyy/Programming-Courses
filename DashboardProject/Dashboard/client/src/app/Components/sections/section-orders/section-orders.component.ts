@@ -46,14 +46,6 @@ export class SectionOrdersComponent implements OnInit {
   }
 
   getOrders() {
-    // this.salesService.getOrders(this.page, this.limit).subscribe((response) => {
-    //   this.totalPages = response['totalPages'];
-    //   this.totalOrders = response['page']['total'];
-    //   this.orders = response['page']['data'];
-    //   this.loading = false;
-    // });    
-
-
     this.salesService.getOrders(this.page, this.limit).pipe(map(response => {
       this.totalPages = response['totalPages'];
       this.totalOrders = response['page']['total'];
