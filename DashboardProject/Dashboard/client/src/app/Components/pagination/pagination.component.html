@@ -1,4 +1,23 @@
-<div>
-    <button class="btn btn-small btn-info" (click)="onPrev()">Previous Page</button>
-    <button class="btn btn-small btn-info" (click)="onNext()">Next Page</button>
+<div class="pages">
+
+    <div class="page-input-form" *ngIf="pagesToShow != 1">
+        <form (ngSubmit)="goToPage($event)">
+            <label for="page">Go to Page:</label>
+            <input type="number" class="input" name="page" min="1" [max]="pagesToShow">
+            <button class="btn btn-info sbmt">Go</button>
+        </form>
+    </div>
+
+    <div [ngClass]="isPageNumberValid ? 'valid-page-number' : 'invalid-page-number'">
+        Page number is not valid!
+    </div>
+    
+    <div class="page-nav">
+        <button class="btn btn-small btn-info" (click)="onPrev()" [disabled]="this.currentPage === 1">Previous Page</button>
+        <div class="page-nav-text">
+            <span class="">Page {{currentPage}} out of {{ pagesToShow }} in total</span>
+        </div>
+        <button class="btn btn-small btn-info btn-right" (click)="onNext()" [disabled]="isLast()">Next Page</button>
+    </div>
+    
 </div>

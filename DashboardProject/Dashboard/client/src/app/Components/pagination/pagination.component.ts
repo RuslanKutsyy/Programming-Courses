@@ -7,22 +7,23 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 })
 export class PaginationComponent implements OnInit {
 
+  isPageNumberValid : boolean = true;
 
-  @Input() page: number;
+  @Input() currentPage: number;
   @Input() count: number;
-  @Input() perPage: number;
+  @Input() pageSize: number;
   @Input() pagesToShow: number;
-  @Input() loading: boolean;
 
   @Output() goPrev = new EventEmitter<boolean>();
   @Output() goNext = new EventEmitter<boolean>();
+  @Output() goPage = new EventEmitter<number>();
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {   
   }
 
-  onPrev() : void {
+  onPrev() : void {   
     this.goPrev.emit(true);
   }
 
@@ -30,4 +31,27 @@ export class PaginationComponent implements OnInit {
     this.goNext.emit(true);
   }
 
+  onPage(n: number) : void {
+    this.goPage.emit(n);
+  }
+
+  // totalPages() : number {
+  //   return Math.ceil(this.count/this.pageSize) || 0
+  //   // return this.pagesToShow;
+  // }
+
+  isLast() : boolean {
+    return this.pageSize * this.currentPage >= this.count
+  }
+
+  goToPage(event: any) : void {
+    let value = Number(event.target[0].value);    
+    
+    if (value > 0 && value <= this.pagesToShow){
+      this.isPageNumberValid = true;
+      this.goPage.emit(value);
+    } else {
+      this.isPageNumberValid = false;
+    }
+  }
 }

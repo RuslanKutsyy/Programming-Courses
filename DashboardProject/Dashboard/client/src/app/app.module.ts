@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule} from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import { appRoutes} from '../routes';
 
@@ -17,6 +18,7 @@ import { LineChartComponent } from './Components/charts/line-chart/line-chart.co
 import { PieChartComponent } from './Components/charts/pie-chart/pie-chart.component';
 import { ServerComponent } from './server/server.component';
 import { PaginationComponent } from './Components/pagination/pagination.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { PaginationComponent } from './Components/pagination/pagination.componen
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
-    ChartsModule
+    ChartsModule,
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

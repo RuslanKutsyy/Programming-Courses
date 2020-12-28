@@ -23,7 +23,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult> ListAllOrders()
         {
-            var orders = await this.context.Orders.ToListAsync();
+            var orders = await this.context.Orders.Include(o => o.Customer).ToListAsync();
 
             return Ok(orders.ToList());
         }

@@ -6,26 +6,39 @@
         <thead class="thead-dark">
             <tr>
                 <th>ID</th>
-                <th>Customer</th>
+                <th>First Name</th>
+                <th>Last Name</th>
                 <th>Amount</th>
                 <th>Order Placed</th>
-                <th>Order Fulfilled</th>
+                <th>Order Completed</th>
                 <th>Status</th>
             </tr>
         </thead>
         <tbody class="t">
-            <tr *ngFor="let order of orders">
+            <tr *ngFor="let order of this.orders">
                 <td>{{ order.id }}</td>
-                <td>{{ order.customer.name }}</td>
-                <td>{{ order.total }}</td>
+                <td>{{ order.customer.firstName }}</td>
+                <td>{{ order.customer.lastName }}</td>
+                <td>{{ order.totalPrice }}</td>
                 <td>{{ order.placed | date: 'short' }}</td>
-                <td>{{ order.fulfilled | date: 'short' }}</td>
-                <td>Status</td>
+                <ng-template [ngIf]="order.completed != null" [ngIfElse]="notCompleted">
+                    <td>{{ order.completed | date: 'medium' }}</td>
+                    <td>{{ "Completed" }}</td>
+                </ng-template>
+                <ng-template #notCompleted>
+                    <td>{{ "No" }}</td>
+                    <td>{{ "Active" }}</td>
+                </ng-template>
             </tr>
         </tbody>
     </table>
     <app-pagination
+    (goPage)="goToPage($event)"
     (goPrev)="goToPrevious()"
     (goNext)="goToNext()"
+    [currentPage]="page"
+    [pageSize]="limit"
+    [count]="totalOrders"
+    [pagesToShow]="totalPages"
     ></app-pagination>
 </div>

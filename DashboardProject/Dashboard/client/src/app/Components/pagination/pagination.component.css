@@ -1,0 +1,45 @@
+.pages {
+    display: flexbox;
+}
+
+.go-to-page{
+    margin: 0 0 20px 0;
+}
+
+.input {
+    margin-left: 10px;
+}
+
+.sbmt{
+    margin-left: 10px;
+}
+
+.page-input-form {
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.page-nav {
+    display: flex;
+    justify-content: center;
+}
+
+.page-nav-text {
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 0 20px 0 20px;
+}
+
+.invalid-page-number {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    margin-bottom: 20px;
+    width: fit-content;
+    background-color: rgb(128, 48, 48);
+}
+
+.valid-page-number {
+    display: none;
+}

@@ -12,7 +12,7 @@ namespace Core.Helpers
         public IEnumerable<T> Data { get; set; }
         public PaginatedResponse(IEnumerable<T> data, int pageIndex, int pageSize)
         {
-            this.Data = data.Skip((pageSize - 1) * pageIndex).Take(pageSize).ToList();
+            this.Data = data.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
             this.Total = data.Count();
         }
     }
