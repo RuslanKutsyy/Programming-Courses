@@ -70,5 +70,23 @@
     "Placed": "2020-12-12 11:13:10",
     "Completed": null,
     "CustomerId": 3
+  },
+  {
+    "TotalPrice": 425.5,
+    "Placed": "2020-11-25 11:45:33",
+    "Completed": "2020-12-20 04:20:11",
+    "CustomerId": 6
+  },
+  {
+    "TotalPrice": 700,
+    "Placed": "2020-12-12 11:13:10",
+    "Completed": null,
+    "CustomerId": 2
+  },
+  {
+    "TotalPrice": 238.3,
+    "Placed": "2020-11-19 10:44:20",
+    "Completed": "2020-11-30 16:19:04",
+    "CustomerId": 3
   }
 ]

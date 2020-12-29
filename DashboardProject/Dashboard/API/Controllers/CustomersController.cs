@@ -42,6 +42,14 @@ namespace API.Controllers
             return Ok(customer);
         }
 
+        [HttpGet("GetTopCustomersAndOrders/{top}")]
+        public async Task<IActionResult> GetOrdersByTopCustomers(int top)
+        {
+            var data = await this.context.Customers.Include(x => x.Orders).OrderByDescending(cust => cust.Orders.Sum(x => x.TotalPrice)).Take(top).ToListAsync();
+
+            return Ok(data);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddNewCustomerAsync([FromBody] Customer customer)
         {

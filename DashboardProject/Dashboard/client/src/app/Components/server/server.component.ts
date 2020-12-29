@@ -17,16 +17,18 @@ export class ServerComponent implements OnInit {
   @Input() serverInput : Server;
 
   ngOnInit(): void {
-    this.setServerStatus(this.serverInput.isOnline);
+    this.setServerStatus(this.serverInput.isOnline, this.serverInput.lastDownDate);
   }
 
-  setServerStatus(isOnline: boolean){
+  setServerStatus(isOnline: boolean, lastDownTimeDate: Date){
     if (isOnline){
       this.serverInput.isOnline = true;
+      this.serverInput.lastDownDate = lastDownTimeDate;
       this.color = "#66BB6A";
       this.buttonText = "Shut Down";
     } else {
       this.serverInput.isOnline = false;
+      this.serverInput.lastDownDate = lastDownTimeDate;
       this.color = "#FF6B6B";
       this.buttonText = "Start";
     }
@@ -35,9 +37,8 @@ export class ServerComponent implements OnInit {
   toggleStatus(onlineStatus: boolean, id: number) : void {    
     let message = onlineStatus ? "deactivate" : "activate";
     this.http.updateServerStatus(id, message).toPromise().then((response => {
-      if (response == null){
-        this.setServerStatus(!onlineStatus);
-      }
+      let data = response as Server;
+      this.setServerStatus(data.isOnline, data.lastDownDate)
     })).catch(console.error);
   }
 }

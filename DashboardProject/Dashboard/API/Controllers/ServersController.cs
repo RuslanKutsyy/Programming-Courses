@@ -61,7 +61,7 @@ namespace API.Controllers
 
             await this.context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok(server);
         }
     }
 }
