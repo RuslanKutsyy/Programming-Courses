@@ -13,12 +13,11 @@ export class SalesDataServiceService {
     return this.http.get<any>(`http://localhost:5000/api/orders/${pageIndex}/${pageSize}`);
   }
 
-  getOrdersByCustomer(id: number){
-    return fetch(`http://localhost:5000/api/orders/ByCustomer/${id}`).then(res => res.json())
+  getOrdersByCustomer(id: number) : Observable<any> {
+    return this.http.get(`http://localhost:5000/api/orders/ByCustomer/${id}`);
   }
 
-  getOrdersByCity(){
-    return fetch(`http://localhost:5000/api/order/ByCity`).then(res => res.json());
+  getOrdersByCity() : Observable<any>{
+    return this.http.get(`http://localhost:5000/api/orders/ByCity`);
   }
-
 }

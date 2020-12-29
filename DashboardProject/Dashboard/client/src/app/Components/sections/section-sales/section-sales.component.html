@@ -14,7 +14,10 @@
                     <h5>Orders by Customer</h5>
                 </div>
                 <div class="card-body">
-                    <app-pie-chart></app-pie-chart>
+                    <app-pie-chart *ngIf="byCustomersData"
+                    [customersData]="byCustomersData"
+                    [limit] = '5'
+                    ></app-pie-chart>
                 </div>
             </div>
             <div class="card mb-3 shadow card-theme">
@@ -22,7 +25,10 @@
                     <h5>Orders by City</h5>
                 </div>
                 <div class="card-body">
-                    <app-pie-chart></app-pie-chart>
+                    <app-pie-chart *ngIf="byCitiesData"
+                    [customersData]="byCitiesData"
+                    [limit] = '5'
+                    ></app-pie-chart>
                 </div>
             </div>
         </div>
