@@ -9,7 +9,7 @@ namespace HackerRank_Problems
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(countingValleys(12, "UDDDUDUUDDUU"));
+            Console.WriteLine(jumpingOnClouds("0 1".Split(" ").Select(x => int.Parse(x)).ToArray()));
         }
 
 
@@ -56,6 +56,23 @@ namespace HackerRank_Problems
             }
 
             return count;
+        }
+
+        static int jumpingOnClouds(int[] c)
+        {
+            int steps = 0;
+
+            for (int i = 0; i < c.Length - 1; i++)
+            {
+                if (i + 2 < c.Length && c[i + 2] != 1)
+                {
+                    i++;
+                }
+
+                steps++;
+            }
+
+            return steps;
         }
     }
 }
