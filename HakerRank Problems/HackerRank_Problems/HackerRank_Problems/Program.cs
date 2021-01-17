@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 
 namespace HackerRank_Problems
 {
@@ -9,7 +10,7 @@ namespace HackerRank_Problems
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(jumpingOnClouds("0 1".Split(" ").Select(x => int.Parse(x)).ToArray()));
+            Console.WriteLine(repeatedString("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 534802106762));
         }
 
 
@@ -73,6 +74,19 @@ namespace HackerRank_Problems
             }
 
             return steps;
+        }
+
+        static long repeatedString(string s, long n)
+        {
+            int aCount = s.Count(x => x == 'a');
+            long countOfFullStr = n / s.Length;
+            long additionalLetters = s.Substring(0, (int)(n % s.Length)).Count(x => x == 'a');
+
+            return countOfFullStr * aCount + additionalLetters;
+
+            //return s.Count(x => x == 'a') * (n / s.Length) + s.Substring(0, (int)n % s.Length).Count(x => x == 'a');
+
+
         }
     }
 }
