@@ -9,14 +9,13 @@ namespace HackerRank_Problems
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(sockMerchant(9, "10 20 20 10 10 30 50 10 20".Split(" ").Select(x => int.Parse(x)).ToArray()));
+            Console.WriteLine(countingValleys(12, "UDDDUDUUDDUU"));
         }
 
 
         static int sockMerchant(int n, int[] ar)
         {
             int pairs = 0;
-
             var colors = new HashSet<int>();
 
             for (int i = 0; i < n; i++)
@@ -32,9 +31,31 @@ namespace HackerRank_Problems
                 }
             }
 
-            //pairs /= 2;
-
             return pairs;
+        }
+
+        public static int countingValleys(int steps, string path)
+        {
+            int count = 0;
+            int diff = 0;
+
+            for (int i = 0; i < steps; i++)
+            {
+                if (path[i] == 'U')
+                {
+                    diff++;
+                    if (diff == 0)
+                    {
+                        count++;
+                    }
+                }
+                else if (path[i] == 'D')
+                {
+                    diff--;
+                }
+            }
+
+            return count;
         }
     }
 }
