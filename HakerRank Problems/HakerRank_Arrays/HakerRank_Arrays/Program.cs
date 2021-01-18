@@ -9,7 +9,7 @@ namespace HakerRank_Arrays
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(String.Join(" ", rotLeft(new int[] { 1, 2, 3, 4, 5 }, 4)));
+            minimumBribes(new int[] { 1, 2, 5, 3, 7, 8, 6, 4 });
         }
 
         static int hourglassSum(int[][] arr)
@@ -70,6 +70,32 @@ namespace HakerRank_Arrays
             //list.AddRange(a.Take(realRotations));
 
             //return list.ToArray();
+        }
+
+
+        static void minimumBribes(int[] q)
+        {
+            int bribes = 0;
+
+            for (int position = q.Length - 1; position >= 0; position--)
+            {
+                if (q[position] - (position + 1) > 2)
+                {
+                    Console.WriteLine("Too chaotic");
+                    return;
+                }
+
+                int point = 0 > q[position] - 2 ? 0 : q[position] - 2;
+                for (int i = point; i < position; i++)
+                {
+                    if (q[i] > q[position])
+                    {
+                        bribes++;
+                    }
+                }
+            }
+
+            Console.WriteLine(bribes);
         }
     }
 }
