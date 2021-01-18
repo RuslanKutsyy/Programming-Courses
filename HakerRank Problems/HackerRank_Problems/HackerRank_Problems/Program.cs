@@ -84,9 +84,7 @@ namespace HackerRank_Problems
 
             return countOfFullStr * aCount + additionalLetters;
 
-            //return s.Count(x => x == 'a') * (n / s.Length) + s.Substring(0, (int)n % s.Length).Count(x => x == 'a');
-
-
+            //return s.Count(x => x == 'a') * (n / s.Length) + s.Substring(0, (int)(n % s.Length)).Count(x => x == 'a');
         }
     }
 }
